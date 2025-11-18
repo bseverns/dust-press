@@ -1,0 +1,13 @@
+Control,Parameter,Range,Scale,Default,Notes
+Drive,drive,0..36 dB,log,12 dB,Input gain to shaper
+Bias,bias,-1..+1,linear,0,Odd/even emphasis
+Curve,curve_index,0..3,int,0,0=tanh 1=cubic 2=diode 3=fold
+Env→Drive,env_to_drive,-12..+12 dB,linear,+6 dB,Envelope mod of drive
+GateComp,gate_comp,0..1,linear,0.2,Low-level gate before shaper
+Pre Tilt,pre_tilt_db_per_oct,-6..+6,linear,0,Tone before shaper
+Post Air,post_air_gain_db,-6..+6,linear,0,"Air shelf after shaper (10 kHz)"
+Mix,mix,0..100 %,linear,50 %,Parallel clean blend
+Chaos,chaos_level,0..7,int,0,Adds curve jitter & crackle prob
+Dirt,dirt_amount,0..1,linear,0.1,Soft clip pre-limiter
+Ceiling,limiter_ceiling_db,-6..0,linear,-1,Lookahead limiter ceiling
+Output,out_trim_db,-12..+6,linear,0,Final trim

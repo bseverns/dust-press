@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Tape Glow",
+    "curve": 0,
+    "drive_db": 10,
+    "bias": 0.0,
+    "env_to_drive_db": 3,
+    "mix": 0.6
+  },
+  {
+    "name": "Velvet Push",
+    "curve": 1,
+    "drive_db": 16,
+    "bias": 0.1,
+    "env_to_drive_db": 6,
+    "mix": 0.5
+  },
+  {
+    "name": "Soot Fuzz",
+    "curve": 2,
+    "drive_db": 24,
+    "bias": 0.4,
+    "env_to_drive_db": 0,
+    "mix": 0.35
+  },
+  {
+    "name": "Fold Storm",
+    "curve": 3,
+    "drive_db": 28,
+    "bias": -0.2,
+    "env_to_drive_db": 4,
+    "mix": 0.4,
+    "chaos": 4
+  }
+]
