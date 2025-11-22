@@ -1,25 +1,22 @@
 #pragma once
 
-#include <cmath>
+#include <cstddef>
 
 // Minimal tilt EQ: split into low/high via one-pole and rebalance.
 class TiltEQ {
 public:
-  void setSampleRate(float sr) { sampleRate = sr; updateCoeff(); }
-  void setSlope(float dbPerOct) { slope = dbPerOct; }
+  TiltEQ() = default;
 
-  float process(float x) {
-    // simple first order tilt: lowpass + highpass difference
-    low += coeff * (x - low);
-    const float high = x - low;
-    const float tilt = slope * 0.05f; // modest scaling to keep sane
-    return x + tilt * (high - low);
-  }
+  void setSampleRate(float sr);
+  void setSlope(float dbPerOct);
 
-  void reset(float value = 0.0f) { low = value; }
+  float process(float x);
+  void processBlock(float* buffer, std::size_t count);
+
+  void reset(float value = 0.0f);
 
 private:
-  void updateCoeff() { coeff = std::exp(-2.0f * 3.14159265f * 200.0f / sampleRate); }
+  void updateCoeff();
 
   float sampleRate = 44100.0f;
   float slope = 0.0f;
