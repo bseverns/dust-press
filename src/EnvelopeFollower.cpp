@@ -1,2 +1,3 @@
 #include "EnvelopeFollower.h"
-// TODO: implement EnvelopeFollower
+
+// Header-only style for now; translation unit exists for symmetry.

@@ -1,2 +1,3 @@
 #include "AirEQ.h"
-// TODO: implement AirEQ
+
+// Biquad math sits in the header to keep this portable and inlinable.

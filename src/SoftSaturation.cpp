@@ -1,2 +1,3 @@
 #include "SoftSaturation.h"
-// TODO: implement SoftSaturation
+
+// Math kept inline in the header to keep per-sample cost tiny.

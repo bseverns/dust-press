@@ -1,2 +1,3 @@
 #include "ParamSmoother.h"
-// TODO: implement ParamSmoother
+
+// Implementation lives in the header for inlining.

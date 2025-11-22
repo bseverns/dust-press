@@ -1,2 +1,3 @@
 #include "LimiterLookahead.h"
-// TODO: implement LimiterLookahead
+
+// Implementation is header-driven for performance; cpp exists for linkage.
