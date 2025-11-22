@@ -7,14 +7,16 @@ void TiltEQ::setSampleRate(float sr) {
   updateCoeff();
 }
 
-void TiltEQ::setSlope(float dbPerOct) { slope = dbPerOct; }
+void TiltEQ::setSlope(float dbPerOct) {
+  slope = dbPerOct;
+  updateGains();
+}
 
 float TiltEQ::process(float x) {
-  // simple first order tilt: lowpass + highpass difference
+  // One-pole split.
   low += coeff * (x - low);
   const float high = x - low;
-  const float tilt = slope * 0.05f; // modest scaling to keep sane
-  return x + tilt * (high - low);
+  return low * lowGain + high * highGain;
 }
 
 void TiltEQ::processBlock(float* buffer, std::size_t count) {
@@ -23,8 +25,20 @@ void TiltEQ::processBlock(float* buffer, std::size_t count) {
   }
 }
 
-void TiltEQ::reset(float value) { low = value; }
+void TiltEQ::reset(float value) {
+  low = value;
+}
 
 void TiltEQ::updateCoeff() {
-  coeff = std::exp(-2.0f * 3.14159265f * 200.0f / sampleRate);
+  // Pivot around ~650 Hz for a broad tone tilt.
+  const float cutoff = 650.0f;
+  coeff = std::exp(-2.0f * 3.14159265f * cutoff / sampleRate);
+  updateGains();
+}
+
+void TiltEQ::updateGains() {
+  // Convert slope dB/oct to complementary shelf gains.
+  const float gainHigh = std::pow(10.0f, slope / 20.0f);
+  highGain = gainHigh;
+  lowGain = 1.0f / gainHigh;
 }

@@ -17,9 +17,12 @@ public:
 
 private:
   void updateCoeff();
+  void updateGains();
 
   float sampleRate = 44100.0f;
   float slope = 0.0f;
   float coeff = 0.9f;
+  float lowGain = 1.0f;
+  float highGain = 1.0f;
   float low = 0.0f;
 };
