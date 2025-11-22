@@ -3,9 +3,8 @@
 A playable distortion whose curve morphs with input envelope and a chaos ladder. Whisper = silky saturation; push = crackle and
 foldback. Parallel clean path, pre/post EQ tilt, and a lookahead limiter keep it musical and safe.
 
-> Reality check (right now): the DSP node is still a pass-through stub while the curve math gets dialed. You should hear clean
-> input out. The diagram + listening tour below describe the intended behavior so you can wire UI and chase bugs without
-> guessing.
+> Reality check (today): the DSP core is awake—gate/comp, envelope-morphed drive, tilt/air EQ, limiter ceiling, mix, and trim
+> are wired up. Expect saturation that leans harder as you dig in while the lookahead limiter keeps the top end honest.
 
 ## Platform
 Teensy 4.x + SGTL5000 (Teensy Audio Library), 44.1 kHz / 128-sample blocks.
@@ -23,7 +22,7 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 * Envelope follower feeds Env→Drive; curve bank includes tanh/cubic/diode/foldback shapes.
 * Chaos sprinkles jitter and crackle probability onto the chosen curve.
 * Dirt soft-clips before the limiter so the limiter only catches true peaks.
-* AudioMath reality: `src/DustPress.cpp` currently just copies buffers. Expect dry audio until the processing stages are wired in.
+* AudioMath reality: `src/DustPress.cpp` is fully wired; envelope-morphed drive, tilt/air EQ, limiter ceiling, mix, and trim are live.
 
 ## Controls
 | Control | Parameter | Range | Scale | Default | What it does |
@@ -47,7 +46,7 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 3. Tools menu: set **Board** to Teensy 4.0/4.1, **USB Type** to what you need (usually Serial + MIDI), **CPU Speed** 600 MHz.
 4. Connect the Teensy Audio Shield to the Teensy 4.x (line inputs → audio). Plug in USB.
 5. Click **Upload**. If the linker complains about space, remove unused `Serial.print` debugging.
-6. With the current stub you should hear a clean through path; when the DSP is hooked up, verify drive/tilt/limit changes in Audio System Design Tool scopes or by ear.
+6. On current builds you should hear the full crush path; verify gate/drive/tilt/air/limit/mix moves in Audio System Design Tool scopes or by ear.
 7. Jam: feed line-level audio, tweak knobs or send control values over whatever UI you wire up.
 
 ## Preset listening tour

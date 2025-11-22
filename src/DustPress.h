@@ -27,6 +27,7 @@ public:
   void setPostAir(float gainDb);
   void setDirt(float amt);
   void setCeiling(float dB);
+  void setOutputTrimDb(float dB);
   void setMix(float m);
   virtual void update();
 private:
@@ -48,5 +49,6 @@ private:
   float dirt = 0.0f;
   float chaos = 0.0f;
   float ceilingDb = -1.0f;
+  float outputTrimDb = 0.0f;
   float mix = 1.0f;
 };

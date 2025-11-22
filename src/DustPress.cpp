@@ -19,6 +19,7 @@ void AudioDustPress::setPreTilt(float dBPerOct){ preTiltDbPerOct = dBPerOct; til
 void AudioDustPress::setPostAir(float gainDb){ postAirDb = gainDb; air.setGainDb(postAirDb); }
 void AudioDustPress::setDirt(float amt){ dirt = amt; curves.setDirt(dirt); }
 void AudioDustPress::setCeiling(float dB){ ceilingDb = dB; limiter.setCeilingDb(ceilingDb); }
+void AudioDustPress::setOutputTrimDb(float dB){ outputTrimDb = dB; }
 void AudioDustPress::setMix(float m){ mix = m; }
 
 void AudioDustPress::update(){
@@ -30,36 +31,50 @@ void AudioDustPress::update(){
   if(!outL || !outR){ if(outL) release(outL); if(outR) release(outR); release(inL); release(inR); return; }
 
   const float invInt = 1.0f / 32768.0f;
+  const float dryMix = 1.0f - mix;
+  const float trimLin = powf(10.0f, outputTrimDb / 20.0f);
+
+  curves.setChaos(chaos);
+  curves.setIndex(curveIndex);
+  curves.setBias(bias);
+  curves.setDirt(dirt);
+
   for(int i=0;i<AUDIO_BLOCK_SAMPLES;i++){
     const float dryL = inL->data[i] * invInt;
     const float dryR = inR->data[i] * invInt;
     const float envVal = env.process(0.5f * (fabsf(dryL) + fabsf(dryR)));
 
+    // Gate/comp opens with the envelope, lifts quiet tails, then feeds the shaper.
+    const float gateOpen = envVal * envVal;
+    const float gateGain = (1.0f - gateComp) + gateComp * gateOpen;
+    const float compMakeup = 1.0f + gateComp * 0.2f;
+
+    float wetL = dryL * gateGain * compMakeup;
+    float wetR = dryR * gateGain * compMakeup;
+
+    // Envelope-driven drive modulation.
     const float modulatedDrive = driveSmoother.process() + envVal * envToDriveDb;
     const float driveLin = powf(10.0f, modulatedDrive / 20.0f);
+    wetL *= driveLin;
+    wetR *= driveLin;
 
-    float wetL = dryL * driveLin;
-    float wetR = dryR * driveLin;
-
+    // Pre-tilt EQ before the shaper.
     wetL = tilt.process(wetL);
     wetR = tilt.process(wetR);
 
-    curves.setChaos(chaos);
-    curves.setIndex(curveIndex);
-    curves.setBias(bias - gateComp * envVal);
-    curves.setDirt(dirt + gateComp * 0.5f);
-
+    // Bias + chaos/dirt flavored curves.
     wetL = curves.process(wetL);
     wetR = curves.process(wetR);
 
+    // Post-air EQ and safety limiting.
     wetL = air.process(wetL);
     wetR = air.process(wetR);
 
     wetL = limiter.process(wetL);
     wetR = limiter.process(wetR);
 
-    const float mixedL = wetL * mix + dryL * (1.0f - mix);
-    const float mixedR = wetR * mix + dryR * (1.0f - mix);
+    const float mixedL = (wetL * mix + dryL * dryMix) * trimLin;
+    const float mixedR = (wetR * mix + dryR * dryMix) * trimLin;
 
     outL->data[i] = static_cast<int16_t>(fmaxf(-1.0f, fminf(1.0f, mixedL)) * 32767.0f);
     outR->data[i] = static_cast<int16_t>(fmaxf(-1.0f, fminf(1.0f, mixedR)) * 32767.0f);
