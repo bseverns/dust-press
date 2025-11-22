@@ -1,34 +1,25 @@
 #pragma once
 
-#include <cmath>
+#include <cstddef>
 
 // A light-weight envelope follower for control modulation.
 // Attack/release are intentionally simple to keep the code size tiny for
 // microcontrollers while still giving us a usable contour.
 class EnvelopeFollower {
 public:
-  EnvelopeFollower() { reset(); }
+  EnvelopeFollower();
 
-  void setSampleRate(float sr) { sampleRate = sr; updateCoeffs(); }
-  void setAttackMs(float ms) { attackMs = ms; updateCoeffs(); }
-  void setReleaseMs(float ms) { releaseMs = ms; updateCoeffs(); }
+  void setSampleRate(float sr);
+  void setAttackMs(float ms);
+  void setReleaseMs(float ms);
 
-  float process(float input) {
-    const float rectified = std::fabs(input);
-    const float coeff = rectified > state ? attackCoeff : releaseCoeff;
-    state = coeff * state + (1.0f - coeff) * rectified;
-    return state;
-  }
+  float process(float input);
+  void processBlock(const float* input, float* envelope, std::size_t count);
 
-  void reset(float value = 0.0f) { state = value; updateCoeffs(); }
+  void reset(float value = 0.0f);
 
 private:
-  void updateCoeffs() {
-    const float attackSamples = (attackMs * 0.001f) * sampleRate;
-    const float releaseSamples = (releaseMs * 0.001f) * sampleRate;
-    attackCoeff = attackSamples > 1.0f ? std::exp(-1.0f / attackSamples) : 0.0f;
-    releaseCoeff = releaseSamples > 1.0f ? std::exp(-1.0f / releaseSamples) : 0.0f;
-  }
+  void updateCoeffs();
 
   float sampleRate = 44100.0f;
   float attackMs = 5.0f;

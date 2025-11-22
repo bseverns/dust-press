@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cmath>
+#include <cstddef>
 #include <cstdint>
 
 // Small collection of drive curves used by DustPress.
@@ -8,40 +8,20 @@
 // still be pushed into weird territory via bias/dirt/chaos.
 class CurveBank {
 public:
-  void setIndex(uint8_t idx) { index = idx; }
-  void setBias(float b) { bias = b; }
-  void setDirt(float d) { dirt = d; }
-  void setChaos(float c) { chaos = c; }
+  CurveBank() = default;
 
-  float process(float x) {
-    x += bias;
-    x += dirt * x * x * 0.5f;
-    x += chaosSample() * chaos;
+  void setIndex(uint8_t idx);
+  void setBias(float b);
+  void setDirt(float d);
+  void setChaos(float c);
 
-    switch(index % 3) {
-      case 0: return std::tanh(x);
-      case 1: return cubicSoftClip(x);
-      default: return hardClip(x);
-    }
-  }
+  float process(float x);
+  void processBlock(float* samples, std::size_t count);
 
 private:
-  static float cubicSoftClip(float x) {
-    const float x2 = x * x;
-    return x - (x2 * x) * 0.333333f;
-  }
-
-  static float hardClip(float x) {
-    if(x > 1.0f) return 1.0f;
-    if(x < -1.0f) return -1.0f;
-    return x;
-  }
-
-  float chaosSample() {
-    // Tiny LCG for deterministic "chaos" modulation.
-    chaosState = chaosState * 1664525u + 1013904223u;
-    return (static_cast<int32_t>(chaosState >> 9) / 16777216.0f) - 1.0f;
-  }
+  static float cubicSoftClip(float x);
+  static float hardClip(float x);
+  float chaosSample();
 
   uint8_t index = 0;
   float bias = 0.0f;
