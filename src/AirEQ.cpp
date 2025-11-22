@@ -7,14 +7,16 @@ void AirEQ::setSampleRate(float sr) {
   updateCoeff();
 }
 
-void AirEQ::setGainDb(float g) { gainDb = g; }
+void AirEQ::setGainDb(float g) {
+  gainDb = g;
+  airGain = std::pow(10.0f, gainDb / 20.0f);
+}
 
 float AirEQ::process(float x) {
-  // crude high-pass emphasis
+  // One-pole high shelf anchored around 10 kHz.
   low += coeff * (x - low);
   const float high = x - low;
-  const float gain = std::pow(10.0f, gainDb / 20.0f);
-  return x + high * (gain - 1.0f);
+  return low + high * airGain;
 }
 
 void AirEQ::processBlock(float* buffer, std::size_t count) {
@@ -23,8 +25,12 @@ void AirEQ::processBlock(float* buffer, std::size_t count) {
   }
 }
 
-void AirEQ::reset(float value) { low = value; }
+void AirEQ::reset(float value) {
+  low = value;
+}
 
 void AirEQ::updateCoeff() {
-  coeff = std::exp(-2.0f * 3.14159265f * 8000.0f / sampleRate);
+  const float cutoff = 10000.0f;
+  coeff = std::exp(-2.0f * 3.14159265f * cutoff / sampleRate);
+  airGain = std::pow(10.0f, gainDb / 20.0f);
 }

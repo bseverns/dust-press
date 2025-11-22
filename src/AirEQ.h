@@ -21,5 +21,6 @@ private:
   float sampleRate = 44100.0f;
   float gainDb = 0.0f;
   float coeff = 0.8f;
+  float airGain = 1.0f;
   float low = 0.0f;
 };

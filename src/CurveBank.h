@@ -20,8 +20,11 @@ public:
 
 private:
   static float cubicSoftClip(float x);
+  static float diodeClip(float x);
+  static float foldback(float x);
   static float hardClip(float x);
   float chaosSample();
+  float applyCrackle(float x);
 
   uint8_t index = 0;
   float bias = 0.0f;
