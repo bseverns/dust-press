@@ -23,6 +23,7 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 * Chaos sprinkles jitter and crackle probability onto the chosen curve.
 * Dirt soft-clips before the limiter so the limiter only catches true peaks.
 * AudioMath reality: `src/DustPress.cpp` is fully wired; envelope-morphed drive, tilt/air EQ, limiter ceiling, mix, and trim are live.
+* Want the gory DSP path with tuning notes? Hit **[docs/DSP_ANATOMY.md](docs/DSP_ANATOMY.md)** for a block-by-block walkthrough from gate/comp through the limiter.
 
 ## Controls
 | Control | Parameter | Range | Scale | Default | What it does |
