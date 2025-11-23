@@ -1,6 +1,6 @@
 # Dust Press Usage Guide (Presets + Control Map)
 
-This is the zine-style cheat sheet for loading presets, decoding what each field means, and wiring hardware or MIDI so the knobs actually move the engine. Take it, tweak it, make noise.
+This is the zine-style cheat sheet for loading presets, decoding what each field means, and wiring hardware or MIDI so the knobs actually move the engine. Take it, tweak it, make noise. For a deep dive on the DSP blocks and how to tune them, peep **[docs/DSP_ANATOMY.md](./DSP_ANATOMY.md)**.
 
 ## Loading `presets/presets.json`
 - File is an array of preset objects. Each entry can include:
