@@ -28,7 +28,6 @@ void AudioDustPress::setEnvToDriveDb(float dB){
 void AudioDustPress::setGateComp(float amt){
   if(amt == gateComp) return;
   gateComp = amt;
-  setChaos(amt);
   compMakeup = 1.0f + gateComp * 0.2f;
 }
 void AudioDustPress::setPreTilt(float dBPerOct){

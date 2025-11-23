@@ -21,6 +21,7 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 ```
 * Envelope follower feeds Env→Drive; curve bank includes tanh/cubic/diode/foldback shapes.
 * Chaos sprinkles jitter and crackle probability onto the chosen curve.
+* GateComp only opens/closes the pre-drive gate + makeup stage. Chaos stays on its own knob—no stealth coupling.
 * Dirt soft-clips before the limiter so the limiter only catches true peaks.
 * AudioMath reality: `src/DustPress.cpp` is fully wired; envelope-morphed drive, tilt/air EQ, limiter ceiling, mix, and trim are live.
 
@@ -31,7 +32,7 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 | Bias | `bias` | -1..+1 | linear | 0 | Tilts the shape toward odd/even harmonics. |
 | Curve | `curve_index` | 0..3 | int | 0 | 0 = tanh, 1 = cubic, 2 = diode, 3 = foldback. |
 | Env→Drive | `env_to_drive` | -12..+12 dB | linear | +6 dB | Envelope modulation amount on Drive. |
-| GateComp | `gate_comp` | 0..1 | linear | 0.2 | Low-level gate before shaping. |
+| GateComp | `gate_comp` | 0..1 | linear | 0.2 | Low-level gate before shaping; lifts quiet tails without meddling with chaos. |
 | Pre Tilt | `pre_tilt_db_per_oct` | -6..+6 | linear | 0 | Broad tilt before the shaper (tone in). |
 | Post Air | `post_air_gain_db` | -6..+6 | linear | 0 | 10 kHz-ish air shelf after shaping. |
 | Mix | `mix` | 0..100 % | linear | 50 % | Parallel clean blend. |
