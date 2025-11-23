@@ -1,6 +1,6 @@
 // DUST PRESS preset loader demo — Teensy 4.x + Audio Shield
 // Reads presets/presets.json off SD or SerialFlash, clamps each field to the
-// control map ranges, and pushes the values into AudioDustPress setters.
+// control map ranges listed in docs/USAGE.md, and pushes the values into AudioDustPress setters.
 // Wiring cliff notes (Teensy Audio Shield): SD CS = pin 10 (or BUILTIN_SDCARD on 4.1),
 // SerialFlash CS = pin 6. Both use SPI and want 3.3V logic. Keep the traces short.
 
@@ -31,7 +31,7 @@ constexpr int SD_CS_PIN = BUILTIN_SDCARD; // Teensy 4.1 onboard slot
 #endif
 constexpr int SERIALFLASH_CS_PIN = 6; // Audio Shield default
 
-// Handy clamp helper — keeps wild presets from escaping the control map.
+// Handy clamp helper — keeps wild presets from escaping the canonical control map.
 template <typename T>
 T clampValue(T v, T lo, T hi) {
   if (v < lo) return lo;

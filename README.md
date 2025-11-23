@@ -28,20 +28,12 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 * Want the gory DSP path with tuning notes? Hit **[docs/DSP_ANATOMY.md](docs/DSP_ANATOMY.md)** for a block-by-block walkthrough from gate/comp through the limiter.
 
 ## Controls
-| Control | Parameter | Range | Scale | Default | What it does |
-| --- | --- | --- | --- | --- | --- |
-| Drive | `drive` | 0..36 dB | log | 12 dB | Input gain into the waveshaper. |
-| Bias | `bias` | -1..+1 | linear | 0 | Tilts the shape toward odd/even harmonics. |
-| Curve | `curve_index` | 0..3 | int | 0 | 0 = tanh, 1 = cubic, 2 = diode, 3 = foldback. |
-| Env→Drive | `env_to_drive` | -12..+12 dB | linear | +6 dB | Envelope modulation amount on Drive. |
-| GateComp | `gate_comp` | 0..1 | linear | 0.2 | Low-level gate before shaping; lifts quiet tails without meddling with chaos. |
-| Pre Tilt | `pre_tilt_db_per_oct` | -6..+6 | linear | 0 | Broad tilt before the shaper (tone in). |
-| Post Air | `post_air_gain_db` | -6..+6 | linear | 0 | 10 kHz-ish air shelf after shaping. |
-| Mix | `mix` | 0..100 % | linear | 50 % | Parallel clean blend. |
-| Chaos | `chaos_level` | 0..7 | int | 0 | Adds curve jitter & crackle probability. |
-| Dirt | `dirt_amount` | 0..1 | linear | 0.1 | Soft clip before limiter. |
-| Ceiling | `limiter_ceiling_db` | -6..0 | linear | -1 | Lookahead limiter ceiling. |
-| Output | `out_trim_db` | -12..+6 | linear | 0 | Final trim after mix/limit. |
+The canonical control map lives in **[docs/USAGE.md](docs/USAGE.md)** (mirrored by `docs/CONTROL_MAP.csv`). Peek there for the full
+table of ranges, tapers, and defaults; the presets loader clamps to that sheet so firmware, docs, and CSV all agree. TL;DR:
+
+- Drive/Bias/Curve/Env→Drive/Chaos sculpt the dirt shape and how the envelope leans into it.
+- GateComp/Pre Tilt/Post Air shape tone around the shaper.
+- Mix/Dirt/Ceiling/Output handle parallel blend, pre-limit soft clip, limiter ceiling, and final trim.
 
 ## Build + Upload (TeensyDuino)
 1. Install [Arduino IDE](https://www.arduino.cc/en/software) and [TeensyDuino](https://www.pjrc.com/teensy/td_download.html) (match versions).

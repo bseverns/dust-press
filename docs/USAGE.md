@@ -41,8 +41,8 @@ Preset loadPreset(const JsonObject& obj) {
 }
 ```
 
-## Control map + scaling (from `docs/CONTROL_MAP.csv`)
-Use these ranges whether you map pots, encoders, or MIDI. “Scale” hints at taper: `log` favors subtlety near zero; `int` means step quantization.
+## Control map + scaling (canonical)
+This table is the single source of truth for control ranges and defaults; `docs/CONTROL_MAP.csv` mirrors it for spreadsheets and firmware loaders. Use these ranges whether you map pots, encoders, or MIDI. “Scale” hints at taper: `log` favors subtlety near zero; `int` means step quantization.
 
 | Control | Parameter key | Range | Scale/taper | Default | Notes |
 | --- | --- | --- | --- | --- | --- |
