@@ -21,6 +21,7 @@ public:
   void setDriveDb(float dB);
   void setBias(float b);
   void setCurveIndex(uint8_t idx);
+  void setChaos(float amt);
   void setEnvToDriveDb(float dB);
   void setGateComp(float amt);
   void setPreTilt(float dBPerOct);

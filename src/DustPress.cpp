@@ -13,8 +13,12 @@ void AudioDustPress::setCurveIndex(uint8_t idx){
   curveIndex = idx;
   curves.setIndex(curveIndex);
 }
+void AudioDustPress::setChaos(float amt){
+  chaos = amt;
+  curves.setChaos(chaos);
+}
 void AudioDustPress::setEnvToDriveDb(float dB){ envToDriveDb = dB; }
-void AudioDustPress::setGateComp(float amt){ gateComp = amt; chaos = amt; }
+void AudioDustPress::setGateComp(float amt){ gateComp = amt; setChaos(amt); }
 void AudioDustPress::setPreTilt(float dBPerOct){ preTiltDbPerOct = dBPerOct; tilt.setSlope(preTiltDbPerOct); }
 void AudioDustPress::setPostAir(float gainDb){ postAirDb = gainDb; air.setGainDb(postAirDb); }
 void AudioDustPress::setDirt(float amt){ dirt = amt; curves.setDirt(dirt); }
@@ -33,11 +37,6 @@ void AudioDustPress::update(){
   const float invInt = 1.0f / 32768.0f;
   const float dryMix = 1.0f - mix;
   const float trimLin = powf(10.0f, outputTrimDb / 20.0f);
-
-  curves.setChaos(chaos);
-  curves.setIndex(curveIndex);
-  curves.setBias(bias);
-  curves.setDirt(dirt);
 
   for(int i=0;i<AUDIO_BLOCK_SAMPLES;i++){
     const float dryL = inL->data[i] * invInt;
