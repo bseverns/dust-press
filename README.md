@@ -44,6 +44,22 @@ table of ranges, tapers, and defaults; the presets loader clamps to that sheet s
 6. On current builds you should hear the full crush path; verify gate/drive/tilt/air/limit/mix moves in Audio System Design Tool scopes or by ear.
 7. Jam: feed line-level audio, tweak knobs or send control values over whatever UI you wire up.
 
+## PlatformIO + Horizon-ish control surface
+If you live in PlatformIO land (or want your rig to share the same control surface vibe as **Horizon**), the repo now ships with `platformio.ini` and a `src/main.cpp` sketch that wires ten knobs + two buttons into the whole control map. Think of it as the Horizon panel transplanted onto Dust Press.
+
+- `platformio.ini` gives you Teensy 4.0 + 4.1 environments out of the box. USB is set up for MIDI+Serial so you can still spam debug prints while twisting knobs.
+- `src/main.cpp` reads ten analog inputs (drive, bias, env→drive, gate/comp, pre-tilt, post-air, mix, dirt, limiter ceiling, output trim) and two buttons (curve select + chaos step). Pin labels at the top of the file are meant to be swapped to your harness.
+- Default parameter ranges are clamped to **[docs/CONTROL_MAP.csv](docs/CONTROL_MAP.csv)** so the panel can’t exceed the intended safe ranges.
+
+To build/upload via CLI:
+
+```bash
+pio run -e teensy41 -t upload    # or -e teensy40 if that’s your board
+pio device monitor               # watch serial/MIDI chatter
+```
+
+Want the long-form why/how? The new **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** walks through the Horizon-flavored layout and the mapping math.
+
 ## Preset listening tour
 | Preset | Expected vibe |
 | --- | --- |
