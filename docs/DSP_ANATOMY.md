@@ -82,6 +82,16 @@ flowchart LR
   - Dirt thickens hits before the curve; start around 0.1–0.2 when running low drive for “chewy” push.
   - Chaos 0–2 sprinkles movement; 3–5 gets audible crackle; 6–7 is glitch-land—lower `drive` or raise `mix` to keep it musical.
 
+### Curve snapshots (chaos sweeps)
+- **Tanh (tape-ish):** [low chaos 1.0](media/tanh_chaos-low.svg) | [mid chaos 3.0](media/tanh_chaos-mid.svg) | [high chaos 6.0](media/tanh_chaos-high.svg)
+  - Listen for the knee staying velvet even as chaos rises; mid chaos adds faint fizz, high chaos starts sprinkling hissy crackle on peaks.
+- **Cubic (console-ish):** [low chaos 1.0](media/cubic_chaos-low.svg) | [mid chaos 3.0](media/cubic_chaos-mid.svg) | [high chaos 6.0](media/cubic_chaos-high.svg)
+  - Low chaos is smooth glue; mid chaos introduces slight edge as the cubic flattening bumps; high chaos spits occasional grain but still hugs the curve.
+- **Diode pair:** [low chaos 1.0](media/diode_chaos-low.svg) | [mid chaos 3.0](media/diode_chaos-mid.svg) | [high chaos 6.0](media/diode_chaos-high.svg)
+  - Check the asymmetry: positive lobes bend harder. Chaos lifts a metallic rasp; by high chaos, crackle rides on the positive side first.
+- **Foldback:** [low chaos 1.0](media/foldback_chaos-low.svg) | [mid chaos 3.0](media/foldback_chaos-mid.svg) | [high chaos 6.0](media/foldback_chaos-high.svg)
+  - Low chaos already folds; mid chaos adds crystalline shatter as folds jitter; high chaos piles on metallicity and early crackle onset—great for industrial clang.
+
 ## Post Air EQ
 - `setPostAir` adjusts a high-shelf after the shaper (`air.process`), letting you restore or tame highs the shaper exaggerated.
 - **Tuning moves:**
