@@ -10,7 +10,8 @@ foldback. Parallel clean path, pre/post EQ tilt, and a lookahead limiter keep it
 Teensy 4.x + SGTL5000 (Teensy Audio Library), 44.1 kHz / 128-sample blocks.
 
 ## Quick Start
-- Open `examples/minimal/minimal.ino` in Arduino + TeensyDuino.
+- Open `examples/minimal/minimal.ino` in Arduino + TeensyDuino for the cleanest wiring demo.
+- Or crack open `examples/presets_demo/presets_demo.ino` to see SD/SerialFlash preset loading with JSON clamping.
 - Select Teensy 4.0/4.1 and upload.
 - Feed audio into the Audio Shield; twist `Drive`, `Bias`, and `Env→Drive`.
 
@@ -60,7 +61,7 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 
 ## Folders
 - `src/` — core classes (engine, curve bank, envelope follower, EQs, limiter, smoother).
-- `examples/` — minimal wiring sketch.
+- `examples/` — minimal wiring sketch plus `presets_demo` for SD/SerialFlash preset loading.
 - `presets/` — starter presets JSON.
 - `docs/` — control map CSV.
 
