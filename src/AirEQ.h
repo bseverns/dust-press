@@ -5,7 +5,7 @@
 // Tiny high-shelf style "air" control.
 class AirEQ {
 public:
-  AirEQ() = default;
+  AirEQ();
 
   void setSampleRate(float sr);
   void setGainDb(float g);

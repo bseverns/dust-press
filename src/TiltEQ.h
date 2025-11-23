@@ -5,7 +5,7 @@
 // Minimal tilt EQ: split into low/high via one-pole and rebalance.
 class TiltEQ {
 public:
-  TiltEQ() = default;
+  TiltEQ();
 
   void setSampleRate(float sr);
   void setSlope(float dbPerOct);

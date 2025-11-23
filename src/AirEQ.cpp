@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+AirEQ::AirEQ() { updateCoeff(); }
+
 void AirEQ::setSampleRate(float sr) {
   sampleRate = sr;
   updateCoeff();

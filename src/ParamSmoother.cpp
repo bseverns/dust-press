@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+ParamSmoother::ParamSmoother() { updateCoeff(); }
+
 void ParamSmoother::setSampleRate(float sr) {
   sampleRate = sr;
   updateCoeff();

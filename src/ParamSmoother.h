@@ -5,7 +5,7 @@
 // Quick one-pole smoother for parameter modulation.
 class ParamSmoother {
 public:
-  ParamSmoother() = default;
+  ParamSmoother();
 
   void setSampleRate(float sr);
   void setTimeMs(float ms);
