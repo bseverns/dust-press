@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+TiltEQ::TiltEQ() { updateCoeff(); }
+
 void TiltEQ::setSampleRate(float sr) {
   sampleRate = sr;
   updateCoeff();
