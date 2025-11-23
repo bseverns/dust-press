@@ -2,29 +2,62 @@
 #include <cmath>
 
 void AudioDustPress::setDriveDb(float dB){
+  if(dB == driveDb) return;
   driveDb = dB;
   driveSmoother.setTarget(dB);
 }
 void AudioDustPress::setBias(float b){
+  if(b == bias) return;
   bias = b;
   curves.setBias(bias);
 }
 void AudioDustPress::setCurveIndex(uint8_t idx){
+  if(idx == curveIndex) return;
   curveIndex = idx;
   curves.setIndex(curveIndex);
 }
 void AudioDustPress::setChaos(float amt){
+  if(amt == chaos) return;
   chaos = amt;
   curves.setChaos(chaos);
 }
-void AudioDustPress::setEnvToDriveDb(float dB){ envToDriveDb = dB; }
-void AudioDustPress::setGateComp(float amt){ gateComp = amt; setChaos(amt); }
-void AudioDustPress::setPreTilt(float dBPerOct){ preTiltDbPerOct = dBPerOct; tilt.setSlope(preTiltDbPerOct); }
-void AudioDustPress::setPostAir(float gainDb){ postAirDb = gainDb; air.setGainDb(postAirDb); }
-void AudioDustPress::setDirt(float amt){ dirt = amt; curves.setDirt(dirt); }
-void AudioDustPress::setCeiling(float dB){ ceilingDb = dB; limiter.setCeilingDb(ceilingDb); }
-void AudioDustPress::setOutputTrimDb(float dB){ outputTrimDb = dB; }
-void AudioDustPress::setMix(float m){ mix = m; }
+void AudioDustPress::setEnvToDriveDb(float dB){
+  if(dB == envToDriveDb) return;
+  envToDriveDb = dB;
+}
+void AudioDustPress::setGateComp(float amt){
+  if(amt == gateComp) return;
+  gateComp = amt;
+  setChaos(amt);
+}
+void AudioDustPress::setPreTilt(float dBPerOct){
+  if(dBPerOct == preTiltDbPerOct) return;
+  preTiltDbPerOct = dBPerOct;
+  tilt.setSlope(preTiltDbPerOct);
+}
+void AudioDustPress::setPostAir(float gainDb){
+  if(gainDb == postAirDb) return;
+  postAirDb = gainDb;
+  air.setGainDb(postAirDb);
+}
+void AudioDustPress::setDirt(float amt){
+  if(amt == dirt) return;
+  dirt = amt;
+  curves.setDirt(dirt);
+}
+void AudioDustPress::setCeiling(float dB){
+  if(dB == ceilingDb) return;
+  ceilingDb = dB;
+  limiter.setCeilingDb(ceilingDb);
+}
+void AudioDustPress::setOutputTrimDb(float dB){
+  if(dB == outputTrimDb) return;
+  outputTrimDb = dB;
+}
+void AudioDustPress::setMix(float m){
+  if(m == mix) return;
+  mix = m;
+}
 
 void AudioDustPress::update(){
   audio_block_t* inL = receiveReadOnly(0);
@@ -37,6 +70,9 @@ void AudioDustPress::update(){
   const float invInt = 1.0f / 32768.0f;
   const float dryMix = 1.0f - mix;
   const float trimLin = powf(10.0f, outputTrimDb / 20.0f);
+  const float gateCompAmt = gateComp;
+  const float envDriveAmt = envToDriveDb;
+  const float compMakeup = 1.0f + gateCompAmt * 0.2f;
 
   for(int i=0;i<AUDIO_BLOCK_SAMPLES;i++){
     const float dryL = inL->data[i] * invInt;
@@ -45,14 +81,13 @@ void AudioDustPress::update(){
 
     // Gate/comp opens with the envelope, lifts quiet tails, then feeds the shaper.
     const float gateOpen = envVal * envVal;
-    const float gateGain = (1.0f - gateComp) + gateComp * gateOpen;
-    const float compMakeup = 1.0f + gateComp * 0.2f;
+    const float gateGain = (1.0f - gateCompAmt) + gateCompAmt * gateOpen;
 
     float wetL = dryL * gateGain * compMakeup;
     float wetR = dryR * gateGain * compMakeup;
 
     // Envelope-driven drive modulation.
-    const float modulatedDrive = driveSmoother.process() + envVal * envToDriveDb;
+    const float modulatedDrive = driveSmoother.process() + envVal * envDriveAmt;
     const float driveLin = powf(10.0f, modulatedDrive / 20.0f);
     wetL *= driveLin;
     wetR *= driveLin;
