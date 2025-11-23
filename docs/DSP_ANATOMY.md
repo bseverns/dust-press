@@ -41,7 +41,7 @@ flowchart LR
 
     subgraph Post[Post Air + Limiter + Mix]
         air[post_air_gain_db]
-        limiter[Limiter (ceiling)]
+        limiter[Limiter ceiling]
         mix[mix + dryMix]
         trim[out_trim_db]
     end
