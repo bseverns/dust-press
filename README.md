@@ -1,4 +1,4 @@
-# DUST PRESS — Dynamic Waveshaper + Envelope Ecology (Matter)
+# DUST PRESS — Dynamic Waveshaper + Envelope Ecology
 
 A playable distortion whose curve morphs with input envelope and a chaos ladder. Whisper = silky saturation; push = crackle and
 foldback. Parallel clean path, pre/post EQ tilt, and a lookahead limiter keep it musical and safe.
