@@ -29,6 +29,7 @@ void AudioDustPress::setGateComp(float amt){
   if(amt == gateComp) return;
   gateComp = amt;
   setChaos(amt);
+  compMakeup = 1.0f + gateComp * 0.2f;
 }
 void AudioDustPress::setPreTilt(float dBPerOct){
   if(dBPerOct == preTiltDbPerOct) return;
@@ -53,10 +54,12 @@ void AudioDustPress::setCeiling(float dB){
 void AudioDustPress::setOutputTrimDb(float dB){
   if(dB == outputTrimDb) return;
   outputTrimDb = dB;
+  outputTrimLin = powf(10.0f, outputTrimDb / 20.0f);
 }
 void AudioDustPress::setMix(float m){
   if(m == mix) return;
   mix = m;
+  dryMix = 1.0f - mix;
 }
 
 void AudioDustPress::update(){
@@ -68,11 +71,11 @@ void AudioDustPress::update(){
   if(!outL || !outR){ if(outL) release(outL); if(outR) release(outR); release(inL); release(inR); return; }
 
   const float invInt = 1.0f / 32768.0f;
-  const float dryMix = 1.0f - mix;
-  const float trimLin = powf(10.0f, outputTrimDb / 20.0f);
+  const float trimLin = outputTrimLin;
   const float gateCompAmt = gateComp;
   const float envDriveAmt = envToDriveDb;
-  const float compMakeup = 1.0f + gateCompAmt * 0.2f;
+  const float compMakeupLocal = compMakeup;
+  const float dryMixLocal = dryMix;
 
   for(int i=0;i<AUDIO_BLOCK_SAMPLES;i++){
     const float dryL = inL->data[i] * invInt;
@@ -83,8 +86,8 @@ void AudioDustPress::update(){
     const float gateOpen = envVal * envVal;
     const float gateGain = (1.0f - gateCompAmt) + gateCompAmt * gateOpen;
 
-    float wetL = dryL * gateGain * compMakeup;
-    float wetR = dryR * gateGain * compMakeup;
+    float wetL = dryL * gateGain * compMakeupLocal;
+    float wetR = dryR * gateGain * compMakeupLocal;
 
     // Envelope-driven drive modulation.
     const float modulatedDrive = driveSmoother.process() + envVal * envDriveAmt;
@@ -107,8 +110,8 @@ void AudioDustPress::update(){
     wetL = limiter.process(wetL);
     wetR = limiter.process(wetR);
 
-    const float mixedL = (wetL * mix + dryL * dryMix) * trimLin;
-    const float mixedR = (wetR * mix + dryR * dryMix) * trimLin;
+    const float mixedL = (wetL * mix + dryL * dryMixLocal) * trimLin;
+    const float mixedR = (wetR * mix + dryR * dryMixLocal) * trimLin;
 
     outL->data[i] = static_cast<int16_t>(fmaxf(-1.0f, fminf(1.0f, mixedL)) * 32767.0f);
     outR->data[i] = static_cast<int16_t>(fmaxf(-1.0f, fminf(1.0f, mixedR)) * 32767.0f);

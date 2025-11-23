@@ -45,11 +45,14 @@ private:
   uint8_t curveIndex = 0;
   float envToDriveDb = 0.0f;
   float gateComp = 0.0f;
+  float compMakeup = 1.0f;
   float preTiltDbPerOct = 0.0f;
   float postAirDb = 0.0f;
   float dirt = 0.0f;
   float chaos = 0.0f;
   float ceilingDb = -1.0f;
   float outputTrimDb = 0.0f;
+  float outputTrimLin = 1.0f;
   float mix = 1.0f;
+  float dryMix = 0.0f;
 };
