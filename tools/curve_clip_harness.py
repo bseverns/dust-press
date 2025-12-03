@@ -174,7 +174,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "input",
         type=pathlib.Path,
-        default=pathlib.Path("docs/assets/sample.wav"),
         help="Path to a dry 16-bit PCM WAV riff to feed the curves.",
     )
     parser.add_argument(
