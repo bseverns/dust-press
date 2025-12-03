@@ -14,6 +14,8 @@ add_library(dustpress_native STATIC
   ../src/SoftSaturation.cpp
   ../src/TiltEQ.cpp
   src/NativeDustPress.cpp
+  src/PluginState.cpp
+  src/PresetLoader.cpp
   src/WavFile.cpp
 )
 

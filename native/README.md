@@ -35,6 +35,22 @@ native/build/dustpress_cli \
 Everything is normalized to +/-1 floats; mono files get doubled to stereo.
 Limiter ceiling defaults to -1 dBFS to mimic the firmware path.
 
+### Pulling presets straight from the Teensy JSON
+```
+native/build/dustpress_cli \
+  --in input.wav \
+  --out output.wav \
+  --preset "Tape Glow" \
+  --save-state host_state.json \
+  --save-preset teensy_roundtrip.json
+```
+- `--preset` / `--preset-index` read `presets/presets.json`, clamp values to
+  **[docs/USAGE.md](../docs/USAGE.md)**, and push them into `NativeDustPress`.
+- `--save-state` dumps a JUCE/VST3-friendly JSON chunk (all parameters, ready
+  for a `ValueTree` or VST3 state blob).
+- `--save-preset` spits out a single Teensy-format preset object so the
+  hardware SD card and host stay glued together.
+
 ## How this maps to the Teensy code
 - The signal flow is a straight port of `AudioDustPress::update`—envelope gate,
   drive modulation, tilt, curve bank, air shelf, lookahead limiter, wet/dry.
