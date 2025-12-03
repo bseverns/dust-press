@@ -18,6 +18,8 @@ public:
 
   void reset(float value = 0.0f);
 
+  float stateValue() const { return state; }
+
 private:
   void updateCoeffs();
 

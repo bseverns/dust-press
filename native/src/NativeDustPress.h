@@ -31,6 +31,15 @@ public:
   void setOutputTrimDb(float dB);
   void setMix(float m);
 
+  struct TelemetrySample {
+    float env = 0.0f;
+    float gateGain = 0.0f;
+    float driveDbApplied = 0.0f;
+    float limiterEnv = 0.0f;
+    float limiterGain = 1.0f;
+  };
+  std::size_t getLatencySamples() const;
+
   // Processes a block of stereo audio. Inputs and outputs are separate
   // buffers of size frameCount, using -1..1 normalized samples.
   void processBlock(const float* inLeft,
@@ -39,9 +48,27 @@ public:
                     float* outRight,
                     std::size_t frameCount);
 
+  // Same processing as above but emits telemetry for each sample so test
+  // harnesses can sanity-check the control signals and limiter behavior.
+  void processBlockWithTelemetry(const float* inLeft,
+                                 const float* inRight,
+                                 float* outLeft,
+                                 float* outRight,
+                                 std::size_t frameCount,
+                                 TelemetrySample* telemetry);
+
+  std::size_t getLimiterLookaheadSamples() const { return limiter.lookaheadSamples(); }
+
   void reset();
 
 private:
+  void processBlockInternal(const float* inLeft,
+                             const float* inRight,
+                             float* outLeft,
+                             float* outRight,
+                             std::size_t frameCount,
+                             TelemetrySample* telemetry);
+
   void refreshOutputTrim();
 
   EnvelopeFollower env;
