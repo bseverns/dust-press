@@ -1,37 +1,24 @@
 #include "DustPressAudioProcessor.h"
 
-namespace {
-constexpr const char* kParamDriveDb = "drive_db";
-constexpr const char* kParamBias = "bias";
-constexpr const char* kParamCurve = "curve_index";
-constexpr const char* kParamChaos = "chaos_level";
-constexpr const char* kParamEnvToDrive = "env_to_drive_db";
-constexpr const char* kParamGateComp = "gate_comp";
-constexpr const char* kParamPreTilt = "pre_tilt_db_per_oct";
-constexpr const char* kParamPostAir = "post_air_gain_db";
-constexpr const char* kParamDirt = "dirt_amount";
-constexpr const char* kParamCeiling = "limiter_ceiling_db";
-constexpr const char* kParamOutputTrim = "out_trim_db";
-constexpr const char* kParamMixPercent = "mix_percent";
-}
+#include "DustPressAudioProcessorEditor.h"
 
 DustPressAudioProcessor::DustPressAudioProcessor()
     : AudioProcessor(BusesProperties()
                          .withInput("Input", juce::AudioChannelSet::stereo(), true)
                          .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
       parameters(*this, nullptr, "DustPressParameters", createParameterLayout()) {
-  params.driveDb = parameters.getRawParameterValue(kParamDriveDb);
-  params.bias = parameters.getRawParameterValue(kParamBias);
-  params.curveIndex = parameters.getRawParameterValue(kParamCurve);
-  params.chaos = parameters.getRawParameterValue(kParamChaos);
-  params.envToDriveDb = parameters.getRawParameterValue(kParamEnvToDrive);
-  params.gateComp = parameters.getRawParameterValue(kParamGateComp);
-  params.preTiltDbPerOct = parameters.getRawParameterValue(kParamPreTilt);
-  params.postAirDb = parameters.getRawParameterValue(kParamPostAir);
-  params.dirtAmount = parameters.getRawParameterValue(kParamDirt);
-  params.ceilingDb = parameters.getRawParameterValue(kParamCeiling);
-  params.outputTrimDb = parameters.getRawParameterValue(kParamOutputTrim);
-  params.mixPercent = parameters.getRawParameterValue(kParamMixPercent);
+  params.driveDb = parameters.getRawParameterValue(DustPressParamIDs::driveDb);
+  params.bias = parameters.getRawParameterValue(DustPressParamIDs::bias);
+  params.curveIndex = parameters.getRawParameterValue(DustPressParamIDs::curve);
+  params.chaos = parameters.getRawParameterValue(DustPressParamIDs::chaos);
+  params.envToDriveDb = parameters.getRawParameterValue(DustPressParamIDs::envToDrive);
+  params.gateComp = parameters.getRawParameterValue(DustPressParamIDs::gateComp);
+  params.preTiltDbPerOct = parameters.getRawParameterValue(DustPressParamIDs::preTilt);
+  params.postAirDb = parameters.getRawParameterValue(DustPressParamIDs::postAir);
+  params.dirtAmount = parameters.getRawParameterValue(DustPressParamIDs::dirt);
+  params.ceilingDb = parameters.getRawParameterValue(DustPressParamIDs::ceiling);
+  params.outputTrimDb = parameters.getRawParameterValue(DustPressParamIDs::outputTrim);
+  params.mixPercent = parameters.getRawParameterValue(DustPressParamIDs::mixPercent);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout
@@ -41,13 +28,13 @@ DustPressAudioProcessor::createParameterLayout() {
   auto driveRange = juce::NormalisableRange<float>(0.0f, 36.0f);
   driveRange.setSkewForCentre(12.0f);
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamDriveDb, "Drive (dB)", driveRange, 12.0f));
+      DustPressParamIDs::driveDb, "Drive (dB)", driveRange, 12.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamBias, "Bias", juce::NormalisableRange<float>(-1.0f, 1.0f), 0.0f));
+      DustPressParamIDs::bias, "Bias", juce::NormalisableRange<float>(-1.0f, 1.0f), 0.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterChoice>(
-      kParamCurve, "Curve",
+      DustPressParamIDs::curve, "Curve",
       juce::StringArray{"tanh", "cubic", "diode", "fold"}, 0));
 
   juce::StringArray chaosLabels;
@@ -59,31 +46,31 @@ DustPressAudioProcessor::createParameterLayout() {
   chaosLabels.add("5");
   chaosLabels.add("6");
   chaosLabels.add("7");
-  layout.push_back(std::make_unique<juce::AudioParameterChoice>(kParamChaos, "Chaos", chaosLabels, 0));
+  layout.push_back(std::make_unique<juce::AudioParameterChoice>(DustPressParamIDs::chaos, "Chaos", chaosLabels, 0));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamEnvToDrive, "Env to Drive (dB)", juce::NormalisableRange<float>(-12.0f, 12.0f), 6.0f));
+      DustPressParamIDs::envToDrive, "Env to Drive (dB)", juce::NormalisableRange<float>(-12.0f, 12.0f), 6.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamGateComp, "GateComp", juce::NormalisableRange<float>(0.0f, 1.0f), 0.2f));
+      DustPressParamIDs::gateComp, "GateComp", juce::NormalisableRange<float>(0.0f, 1.0f), 0.2f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamPreTilt, "Pre Tilt (dB/oct)", juce::NormalisableRange<float>(-6.0f, 6.0f), 0.0f));
+      DustPressParamIDs::preTilt, "Pre Tilt (dB/oct)", juce::NormalisableRange<float>(-6.0f, 6.0f), 0.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamPostAir, "Post Air (dB)", juce::NormalisableRange<float>(-6.0f, 6.0f), 0.0f));
+      DustPressParamIDs::postAir, "Post Air (dB)", juce::NormalisableRange<float>(-6.0f, 6.0f), 0.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamDirt, "Dirt", juce::NormalisableRange<float>(0.0f, 1.0f), 0.1f));
+      DustPressParamIDs::dirt, "Dirt", juce::NormalisableRange<float>(0.0f, 1.0f), 0.1f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamCeiling, "Limiter Ceiling (dB)", juce::NormalisableRange<float>(-6.0f, 0.0f), -1.0f));
+      DustPressParamIDs::ceiling, "Limiter Ceiling (dB)", juce::NormalisableRange<float>(-6.0f, 0.0f), -1.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamOutputTrim, "Output Trim (dB)", juce::NormalisableRange<float>(-12.0f, 6.0f), 0.0f));
+      DustPressParamIDs::outputTrim, "Output Trim (dB)", juce::NormalisableRange<float>(-12.0f, 6.0f), 0.0f));
 
   layout.push_back(std::make_unique<juce::AudioParameterFloat>(
-      kParamMixPercent, "Mix %", juce::NormalisableRange<float>(0.0f, 100.0f), 50.0f));
+      DustPressParamIDs::mixPercent, "Mix %", juce::NormalisableRange<float>(0.0f, 100.0f), 50.0f));
 
   return {layout.begin(), layout.end()};
 }
@@ -185,6 +172,10 @@ void DustPressAudioProcessor::processBlock(juce::AudioBuffer<double>& buffer,
   for (int ch = 2; ch < buffer.getNumChannels(); ++ch) {
     buffer.clear(ch, 0, numSamples);
   }
+}
+
+juce::AudioProcessorEditor* DustPressAudioProcessor::createEditor() {
+  return new DustPressAudioProcessorEditor(*this);
 }
 
 void DustPressAudioProcessor::getStateInformation(juce::MemoryBlock& destData) {
