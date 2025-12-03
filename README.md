@@ -60,6 +60,17 @@ pio device monitor               # watch serial/MIDI chatter
 
 Want the long-form why/how? The new **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** walks through the Horizon-flavored layout and the mapping math.
 
+## Desktop-native playground (first stop toward VST land)
+Need to audition Dust Press off-hardware? There’s now a minimal CMake build under `native/` that wraps the DSP blocks in a float-buffer processor and a CLI renderer. Build it, fling a WAV through, and keep hacking:
+
+```bash
+cmake -S native -B native/build
+cmake --build native/build
+native/build/dustpress_cli --in input.wav --out output.wav --drive-db 10 --curve 2 --mix 0.8
+```
+
+The flow mirrors `AudioDustPress::update` (envelope gate → drive mod → tilt → curve bank → air → limiter → mix). See `native/README.md` for the punkier rundown.
+
 ## Preset listening tour
 Five starter presets live in `presets/presets.json`; they’re clamped to the canonical table in **[docs/USAGE.md](docs/USAGE.md)** so defaults never drift. Think tape-ish sheen (Tape Glow), console-ish warmth (Velvet Push), diode fuzz grime (Soot Fuzz), foldback chaos (Fold Storm), and limiter-forward safety net (Ghost Ceiling). Tweak them or roll your own and let the control map keep you honest.
 
@@ -69,6 +80,7 @@ Five starter presets live in `presets/presets.json`; they’re clamped to the ca
 - `presets/` — starter presets JSON.
 - `docs/` — control map CSV.
 - `tools/` — host-side helpers like the chaos clip harness (see `tools/README.md`).
+- `native/` — desktop CMake build + CLI for tossing WAVs through the DSP.
 
 ## License
 MIT — see `LICENSE`.
