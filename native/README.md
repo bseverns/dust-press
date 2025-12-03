@@ -20,6 +20,20 @@ cmake --build native/build
 ```
 That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 
+### Build the JUCE/VST3 shim
+This repo now speaks DAW. Flip on the plugin target and point CMake at your JUCE install:
+
+```bash
+cmake -S native -B native/build \
+  -DDUSTPRESS_BUILD_PLUGIN=ON \
+  -DCMAKE_PREFIX_PATH=/path/to/JUCE
+cmake --build native/build --target DustPressPlugin
+```
+
+- The plugin wraps `NativeDustPress` directly, so any firmware-era bugfixes land in your DAW the same moment they land on Teensy.
+- Parameters track the [docs/USAGE.md](../docs/USAGE.md) table exactly—drive log taper, bipolar bias/env/tilt, integer curve + chaos, etc.—and state saves through the host.
+- Latency is reported from the lookahead limiter (0.5 ms by default) so your DAW compensates without guesswork.
+
 ## Push a file through the DSP
 ```bash
 native/build/dustpress_cli \

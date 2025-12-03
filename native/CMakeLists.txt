@@ -18,7 +18,7 @@ add_library(dustpress_native STATIC
 )
 
 target_include_directories(dustpress_native
-  PRIVATE
+  PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../src
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party
@@ -34,4 +34,10 @@ target_include_directories(dustpress_cli PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../src
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
+
+option(DUSTPRESS_BUILD_PLUGIN "Build the JUCE/VST3 wrapper around NativeDustPress" OFF)
+
+if(DUSTPRESS_BUILD_PLUGIN)
+  add_subdirectory(plugin)
+endif()
 
