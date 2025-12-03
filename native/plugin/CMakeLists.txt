@@ -43,6 +43,8 @@ juce_generate_juce_header(${DUSTPRESS_PLUGIN_TARGET})
 set(DUSTPRESS_PLUGIN_SOURCES
   DustPressAudioProcessor.cpp
   DustPressAudioProcessor.h
+  DustPressAudioProcessorEditor.cpp
+  DustPressAudioProcessorEditor.h
 )
 
 target_sources(${DUSTPRESS_PLUGIN_TARGET}

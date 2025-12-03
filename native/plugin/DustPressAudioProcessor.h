@@ -7,6 +7,21 @@
 
 #include "NativeDustPress.h"
 
+namespace DustPressParamIDs {
+inline constexpr auto driveDb = "drive_db";
+inline constexpr auto bias = "bias";
+inline constexpr auto curve = "curve_index";
+inline constexpr auto chaos = "chaos_level";
+inline constexpr auto envToDrive = "env_to_drive_db";
+inline constexpr auto gateComp = "gate_comp";
+inline constexpr auto preTilt = "pre_tilt_db_per_oct";
+inline constexpr auto postAir = "post_air_gain_db";
+inline constexpr auto dirt = "dirt_amount";
+inline constexpr auto ceiling = "limiter_ceiling_db";
+inline constexpr auto outputTrim = "out_trim_db";
+inline constexpr auto mixPercent = "mix_percent";
+}  // namespace DustPressParamIDs
+
 class DustPressAudioProcessor : public juce::AudioProcessor {
 public:
   DustPressAudioProcessor();
@@ -20,8 +35,8 @@ public:
   void processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) override;
   void processBlock(juce::AudioBuffer<double>& buffer, juce::MidiBuffer& midiMessages) override;
 
-  juce::AudioProcessorEditor* createEditor() override { return nullptr; }
-  bool hasEditor() const override { return false; }
+  juce::AudioProcessorEditor* createEditor() override;
+  bool hasEditor() const override { return true; }
 
   const juce::String getName() const override { return "DustPress"; }
 
@@ -38,6 +53,9 @@ public:
 
   void getStateInformation(juce::MemoryBlock& destData) override;
   void setStateInformation(const void* data, int sizeInBytes) override;
+
+  juce::AudioProcessorValueTreeState& getValueTreeState() { return parameters; }
+  const juce::AudioProcessorValueTreeState& getValueTreeState() const { return parameters; }
 
 private:
   using APVTS = juce::AudioProcessorValueTreeState;
