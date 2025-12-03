@@ -1,0 +1,71 @@
+#pragma once
+
+#include <cstddef>
+#include <cstdint>
+#include "AirEQ.h"
+#include "CurveBank.h"
+#include "EnvelopeFollower.h"
+#include "LimiterLookahead.h"
+#include "ParamSmoother.h"
+#include "TiltEQ.h"
+
+// Desktop-friendly wrapper that mirrors the Teensy AudioStream version but
+// works on interleaved float buffers. This keeps the signal path identical
+// while letting us reuse the DSP blocks in a host test bed.
+class NativeDustPress {
+public:
+  explicit NativeDustPress(float sampleRate = 48000.0f);
+
+  void setSampleRate(float sr);
+
+  void setDriveDb(float dB);
+  void setBias(float b);
+  void setCurveIndex(uint8_t idx);
+  void setChaos(float amt);
+  void setEnvToDriveDb(float dB);
+  void setGateComp(float amt);
+  void setPreTilt(float dBPerOct);
+  void setPostAir(float gainDb);
+  void setDirt(float amt);
+  void setCeiling(float dB);
+  void setOutputTrimDb(float dB);
+  void setMix(float m);
+
+  // Processes a block of stereo audio. Inputs and outputs are separate
+  // buffers of size frameCount, using -1..1 normalized samples.
+  void processBlock(const float* inLeft,
+                    const float* inRight,
+                    float* outLeft,
+                    float* outRight,
+                    std::size_t frameCount);
+
+  void reset();
+
+private:
+  void refreshOutputTrim();
+
+  EnvelopeFollower env;
+  CurveBank curves;
+  TiltEQ tilt;
+  AirEQ air;
+  LimiterLookahead limiter;
+  ParamSmoother driveSmoother;
+
+  float sampleRate = 48000.0f;
+  float driveDb = 0.0f;
+  float bias = 0.0f;
+  uint8_t curveIndex = 0;
+  float envToDriveDb = 0.0f;
+  float gateComp = 0.0f;
+  float compMakeup = 1.0f;
+  float preTiltDbPerOct = 0.0f;
+  float postAirDb = 0.0f;
+  float dirt = 0.0f;
+  float chaos = 0.0f;
+  float ceilingDb = -1.0f;
+  float outputTrimDb = 0.0f;
+  float outputTrimLin = 1.0f;
+  float mix = 1.0f;
+  float dryMix = 0.0f;
+};
+
