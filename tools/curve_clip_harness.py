@@ -4,7 +4,7 @@ Host-side curve renderer for Dust Press demos.
 
 Drop a dry riff into the repo (16-bit PCM WAV, any channel count), then run this
 script to spit out chaos sweeps per curve under docs/media/. We keep the WAVs out
-of the repo—this harness is your repeatable, binary-free generator.
+of the repo--this harness is your repeatable, binary-free generator.
 
 The math mirrors the embedded CurveBank (bias, dirt, chaos jitter/crackle) and
 lets you set a pre-drive scalar if you want to lean into the folds.
@@ -174,7 +174,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "input",
         type=pathlib.Path,
-        default=pathlib.Path("docs/assets/sample.wav")
+        default=pathlib.Path("docs/assets/sample.wav"),
         help="Path to a dry 16-bit PCM WAV riff to feed the curves.",
     )
     parser.add_argument(
