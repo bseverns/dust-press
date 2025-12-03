@@ -10,6 +10,11 @@ half-lab-bench bridge on the way to a real VST/AudioUnit build.
 - **`dustpress_cli`**: a tiny command-line render tool that mirrors the Teensy
   controls (drive, bias, curve, chaos, tilt, air, limiter, mix) and writes out
   a processed WAV.
+- **`dustpress_probe`**: a scrappy telemetry spigot that streams synthetic
+  audio through `NativeDustPress` while jittering block sizes, sweeping
+  parameters, and hopping across multiple sample rates. It prints limiter
+  peaks to stdout and dumps a CSV of envelope/gate/limiter states so you can
+  spot non-RT-safe behavior before a DAW does.
 - **`third_party/dr_wav.h`**: single-header WAV IO so we avoid extra deps while
   prototyping.
 
@@ -34,6 +39,25 @@ native/build/dustpress_cli \
 ```
 Everything is normalized to +/-1 floats; mono files get doubled to stereo.
 Limiter ceiling defaults to -1 dBFS to mimic the firmware path.
+
+### Stress-test the DSP like a DAW host
+1. Build the native targets (same as above) and run the probe:
+   ```bash
+   cmake -S native -B native/build
+   cmake --build native/build
+   native/build/dustpress_probe --seconds 8 --out native_probe.csv
+   ```
+   It hucks a gnarly test tone through the processor at 44.1/48/96 kHz while
+   smearing block sizes all over the place, modulating drive/bias/gate/mix, and
+   logging limiter/envelope telemetry.
+2. Plot it however you like. A quick-and-dirty Python peek:
+   ```python
+   import pandas as pd
+   df = pd.read_csv("native_probe.csv")
+   df[df.sample_rate==48000].plot(x="sample", y=["env","limiter_env","limiter_gain"])
+   ```
+   Treat it as lab notes: if the limiter gain ever whipsaws or the envelope
+   flatlines when blocks jump from 32 to 384 samples, you've got a regression.
 
 ## How this maps to the Teensy code
 - The signal flow is a straight port of `AudioDustPress::update`—envelope gate,

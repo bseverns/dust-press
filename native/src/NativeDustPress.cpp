@@ -83,6 +83,24 @@ void NativeDustPress::processBlock(const float* inLeft,
                                    float* outLeft,
                                    float* outRight,
                                    std::size_t frameCount){
+  processBlockInternal(inLeft, inRight, outLeft, outRight, frameCount, nullptr);
+}
+
+void NativeDustPress::processBlockWithTelemetry(const float* inLeft,
+                                                const float* inRight,
+                                                float* outLeft,
+                                                float* outRight,
+                                                std::size_t frameCount,
+                                                TelemetrySample* telemetry){
+  processBlockInternal(inLeft, inRight, outLeft, outRight, frameCount, telemetry);
+}
+
+void NativeDustPress::processBlockInternal(const float* inLeft,
+                                           const float* inRight,
+                                           float* outLeft,
+                                           float* outRight,
+                                           std::size_t frameCount,
+                                           TelemetrySample* telemetry){
   const float gateCompAmt = gateComp;
   const float envDriveAmt = envToDriveDb;
   const float compMakeupLocal = compMakeup;
@@ -122,6 +140,14 @@ void NativeDustPress::processBlock(const float* inLeft,
 
     outLeft[i] = std::clamp(mixedL, -1.0f, 1.0f);
     outRight[i] = std::clamp(mixedR, -1.0f, 1.0f);
+
+    if(telemetry){
+      telemetry[i].env = envVal;
+      telemetry[i].gateGain = gateGain;
+      telemetry[i].driveDbApplied = modulatedDrive;
+      telemetry[i].limiterEnv = limiter.currentEnvelope();
+      telemetry[i].limiterGain = limiter.currentGain();
+    }
   }
 }
 
