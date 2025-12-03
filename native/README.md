@@ -26,7 +26,7 @@ cmake --build native/build
 That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 
 ### Build the JUCE/VST3 shim
-This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you.
+This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you **and drop a JUCE install into `native/.juce-kit`** so future builds can reuse it offline.
 
 **Heads up (a.k.a. the "where's LV2_HELPER.cmake?" saga)**: `DUSTPRESS_BUILD_PLUGIN=ON` needs JUCE in the room. By default we auto-fetch it, but if you disable `DUSTPRESS_FETCH_JUCE` you'll need `JUCE_DIR` or `CMAKE_PREFIX_PATH` pointed at a **JUCE install** (not just a raw build tree) so CMake can find `LV2_HELPER.cmake`, `JUCEModuleSupport.cmake`, and friends. If CMake screams about missing JUCE helper files or throws an `Unknown CMake command "juce_add_module"`, it usually means you pointed at an uninstalled JUCE build directory. Fix it by installing JUCE to a prefix—e.g. run `cmake -S <juce> -B <juce>/build -DCMAKE_INSTALL_PREFIX=<juce>/kit`, then `cmake --build <juce>/build --target juceaide` and `cmake --install <juce>/build`—or just rerun `./tools/bootstrap_juce.sh` and let it drop a fresh kit into `native/.juce-kit`. The plugin CMakeLists now preflights the JUCE helpers before calling `find_package` so you get that message early instead of a cryptic stack trace. The `DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN` cache flag stays on by default to spare you a missing-dep smackdown. A repo-local JUCE install at `native/.juce-kit` (built by `tools/bootstrap_juce.sh`) will be picked up automatically if it exists.
 
@@ -34,6 +34,8 @@ This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg V
 cmake --preset native-plugin-release
 cmake --build --preset native-plugin-release --config Release
 ```
+
+The plugin target depends on a helper target that **installs the fetched JUCE build into `native/.juce-kit`** (same as running `tools/bootstrap_juce.sh`, but without the manual dance). If you want to skip the install—maybe you're just iterating on DSP and don't care about a reusable kit—pass `-DDUSTPRESS_INSTALL_FETCHED_JUCE=OFF` to your configure step.
 
 Want to steer the ship yourself? Flip on the plugin target and point CMake at your JUCE install:
 

@@ -2,6 +2,7 @@
 
 option(DUSTPRESS_FETCH_JUCE "Automatically fetch JUCE (plus the VST3 SDK) for plugin builds" ON)
 option(DUSTPRESS_FETCH_VST3_SDK "Allow the JUCE build to pull down the Steinberg VST3 SDK" ON)
+option(DUSTPRESS_INSTALL_FETCHED_JUCE "Install auto-fetched JUCE into a reusable native/.juce-kit" ON)
 set(DUSTPRESS_JUCE_GIT_TAG "7.0.12" CACHE STRING "JUCE tag/branch to fetch when auto-downloading")
 
 set(DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR "${PROJECT_SOURCE_DIR}/.juce-kit" CACHE PATH "Optional JUCE install dir to reuse instead of fetching")
@@ -16,9 +17,34 @@ if(DUSTPRESS_FETCH_JUCE)
     juce
     GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
     GIT_TAG ${DUSTPRESS_JUCE_GIT_TAG}
+    CMAKE_ARGS
+      -DCMAKE_INSTALL_PREFIX=${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}
   )
 
   FetchContent_MakeAvailable(juce)
+
+  if(DUSTPRESS_INSTALL_FETCHED_JUCE)
+    FetchContent_GetProperties(juce)
+
+    if(NOT juce_BINARY_DIR)
+      message(FATAL_ERROR "Expected juce_BINARY_DIR after FetchContent population; cannot install JUCE kit.")
+    endif()
+
+    set(_dustpress_juce_install_config "${CMAKE_BUILD_TYPE}")
+    if(NOT _dustpress_juce_install_config AND CMAKE_CONFIGURATION_TYPES)
+      list(GET CMAKE_CONFIGURATION_TYPES 0 _dustpress_juce_install_config)
+    endif()
+    if(NOT _dustpress_juce_install_config)
+      set(_dustpress_juce_install_config "Release")
+    endif()
+
+    add_custom_target(dustpress_install_fetched_juce
+      COMMAND ${CMAKE_COMMAND} --build "${juce_BINARY_DIR}" --target juceaide --config "${_dustpress_juce_install_config}"
+      COMMAND ${CMAKE_COMMAND} --install "${juce_BINARY_DIR}" --config "${_dustpress_juce_install_config}"
+      BYPRODUCTS "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake"
+      COMMENT "Installing fetched JUCE into ${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR} (${_dustpress_juce_install_config})"
+      VERBATIM)
+  endif()
 else()
   if(DUSTPRESS_FETCH_VST3_SDK)
     set(JUCE_FETCH_VST3_SDK ON CACHE BOOL "" FORCE)
@@ -135,3 +161,7 @@ target_compile_definitions(${DUSTPRESS_PLUGIN_TARGET}
     JUCE_WEB_BROWSER=0
     JUCE_USE_CURL=0
 )
+
+if(DUSTPRESS_FETCH_JUCE AND DUSTPRESS_INSTALL_FETCHED_JUCE)
+  add_dependencies(${DUSTPRESS_PLUGIN_TARGET} dustpress_install_fetched_juce)
+endif()
