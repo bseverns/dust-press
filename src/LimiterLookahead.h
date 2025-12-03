@@ -17,6 +17,8 @@ public:
   float process(float x);
   void processBlock(float* buffer, std::size_t count);
 
+  std::size_t getLatencySamples() const { return delay.size(); }
+
   void reset();
 
 private:

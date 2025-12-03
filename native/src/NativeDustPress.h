@@ -31,6 +31,8 @@ public:
   void setOutputTrimDb(float dB);
   void setMix(float m);
 
+  std::size_t getLatencySamples() const;
+
   // Processes a block of stereo audio. Inputs and outputs are separate
   // buffers of size frameCount, using -1..1 normalized samples.
   void processBlock(const float* inLeft,
