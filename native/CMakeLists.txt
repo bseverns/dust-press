@@ -35,3 +35,8 @@ target_include_directories(dustpress_cli PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
 
+option(DUSTPRESS_BUILD_JUCE_PLUGIN "Build the JUCE VST3/AU preview plugin" OFF)
+if(DUSTPRESS_BUILD_JUCE_PLUGIN)
+  add_subdirectory(juce)
+endif()
+
