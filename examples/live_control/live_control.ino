@@ -1,6 +1,7 @@
 // DUST PRESS live control demo — Teensy 4.x + Audio Shield
-// Reads analog pots + optional MIDI CC and maps them to the Dust Press engine.
-// Pot advice: use an audio/log pot for Drive; Bias and Env→Drive should be wired as bipolar
+// Reads analog pots + optional MIDI CC and maps them to the Dust Press engine using the
+// ranges/tapers from docs/USAGE.md. Pot advice: run a log pot for Drive so most of the
+// throw lives in the tasteful 0–18 dB zone; Bias and Env→Drive should be wired as bipolar
 // (midpoint = 0) so you can sweep negative/positive; Mix can be linear. Values are clamped
 // to the control-map limits from docs/USAGE.md so runaway knobs or rowdy MIDI stay safe.
 
@@ -22,8 +23,8 @@ AudioConnection      patchCord4(dustpress, 1, i2sOut, 1);
 AudioControlSGTL5000 codec;
 
 // --- Hardware inputs ---
-// Swap these to match your wiring. Drive likes a log pot so most of the throw lives in the first
-// 12–18 dB; Bias and Env→Drive expect a bipolar response with 0 V at center.
+// Swap these to match your wiring. Drive likes a log/audio-taper pot; Bias and Env→Drive
+// want a center-detent/bipolar vibe.
 const int POT_DRIVE_PIN       = A0;
 const int POT_BIAS_PIN        = A1;
 const int POT_ENV_DRIVE_PIN   = A2;
@@ -66,8 +67,9 @@ float mapDrive(int raw) {
 float mapBipolar(int raw, float minVal, float maxVal) {
   float norm = clampValue(raw / 1023.0f, 0.0f, 1.0f);
   float bipolar = (norm * 2.0f) - 1.0f;  // -1 at CCW, +1 at CW
-  float span = (maxVal - minVal) * 0.5f;
-  return clampValue(bipolar * span + (minVal + span), minVal, maxVal);
+  float halfSpan = (maxVal - minVal) * 0.5f;
+  float center = (minVal + maxVal) * 0.5f;
+  return clampValue(center + bipolar * halfSpan, minVal, maxVal);
 }
 
 float mapMix(int raw) {
@@ -98,7 +100,9 @@ void handleMidiCc(uint8_t cc, uint8_t val) {
     }
     case CC_ENV_DRIVE: {
       float bipolar = (norm * 2.0f) - 1.0f;
-      float dB = bipolar * (ENV_DRIVE_MAX_DB - 0.0f);  // +/-12 dB
+      float halfSpan = (ENV_DRIVE_MAX_DB - ENV_DRIVE_MIN_DB) * 0.5f;
+      float center = (ENV_DRIVE_MAX_DB + ENV_DRIVE_MIN_DB) * 0.5f;
+      float dB = center + bipolar * halfSpan;
       dustpress.setEnvToDriveDb(clampValue(dB, ENV_DRIVE_MIN_DB, ENV_DRIVE_MAX_DB));
       break;
     }

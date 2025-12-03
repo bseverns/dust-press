@@ -28,8 +28,8 @@ Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos M
 * Want the gory DSP path with tuning notes? Hit **[docs/DSP_ANATOMY.md](docs/DSP_ANATOMY.md)** for a block-by-block walkthrough from gate/comp through the limiter.
 
 ## Controls
-The canonical control map lives in **[docs/USAGE.md](docs/USAGE.md)** (mirrored by `docs/CONTROL_MAP.csv`). Peek there for the full
-table of ranges, tapers, and defaults; the presets loader clamps to that sheet so firmware, docs, and CSV all agree. TL;DR:
+Single source of truth: the control map table in **[docs/USAGE.md](docs/USAGE.md)**. `docs/CONTROL_MAP.csv` mirrors it for spreadsheet
+nerds, but the markdown owns the ranges, tapers, and defaults. Snapshot:
 
 - Drive/Bias/Curve/Env→Drive/Chaos sculpt the dirt shape and how the envelope leans into it.
 - GateComp/Pre Tilt/Post Air shape tone around the shaper.
@@ -49,7 +49,7 @@ If you live in PlatformIO land (or want your rig to share the same control surfa
 
 - `platformio.ini` gives you Teensy 4.0 + 4.1 environments out of the box. USB is set up for MIDI+Serial so you can still spam debug prints while twisting knobs.
 - `src/main.cpp` reads ten analog inputs (drive, bias, env→drive, gate/comp, pre-tilt, post-air, mix, dirt, limiter ceiling, output trim) and two buttons (curve select + chaos step). Pin labels at the top of the file are meant to be swapped to your harness.
-- Default parameter ranges are clamped to **[docs/CONTROL_MAP.csv](docs/CONTROL_MAP.csv)** so the panel can’t exceed the intended safe ranges.
+- Default parameter ranges are clamped to the canonical map in **[docs/USAGE.md](docs/USAGE.md)** (mirrored in `docs/CONTROL_MAP.csv`) so the panel can’t exceed the intended safe ranges.
 
 To build/upload via CLI:
 
@@ -61,13 +61,7 @@ pio device monitor               # watch serial/MIDI chatter
 Want the long-form why/how? The new **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** walks through the Horizon-flavored layout and the mapping math.
 
 ## Preset listening tour
-| Preset | Expected vibe |
-| --- | --- |
-| Tape Glow | Gentle tape-ish push. Tanh curve, ~10 dB drive, slight env lift. Leaves transients intact, adds a wispy halo. |
-| Velvet Push | Cubic curve with mid drive and mild bias. Feels like a warm console bus leaning into saturation when you dig in. |
-| Soot Fuzz | Diode curve, high drive, forward bias. Splattery mid fuzz with some octave grit; keep mix down for parallel hair. |
-| Fold Storm | Foldback curve, hot drive, negative bias, chaos 4. Metallic shredding with random crackle—ride the mix to taste. |
-| Ghost Ceiling | Any curve, moderate drive, ceiling at -3 dB, mix 70%. Limiter-first vibe that keeps the room breathing while you stomp on it. |
+Five starter presets live in `presets/presets.json`; they’re clamped to the canonical table in **[docs/USAGE.md](docs/USAGE.md)** so defaults never drift. Think tape-ish sheen (Tape Glow), console-ish warmth (Velvet Push), diode fuzz grime (Soot Fuzz), foldback chaos (Fold Storm), and limiter-forward safety net (Ghost Ceiling). Tweak them or roll your own and let the control map keep you honest.
 
 ## Folders
 - `src/` — core classes (engine, curve bank, envelope follower, EQs, limiter, smoother).
