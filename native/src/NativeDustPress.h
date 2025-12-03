@@ -38,6 +38,7 @@ public:
     float limiterEnv = 0.0f;
     float limiterGain = 1.0f;
   };
+  std::size_t getLatencySamples() const;
 
   // Processes a block of stereo audio. Inputs and outputs are separate
   // buffers of size frameCount, using -1..1 normalized samples.

@@ -78,6 +78,10 @@ void NativeDustPress::setMix(float m){
   dryMix = 1.0f - mix;
 }
 
+std::size_t NativeDustPress::getLatencySamples() const {
+  return limiter.getLatencySamples();
+}
+
 void NativeDustPress::processBlock(const float* inLeft,
                                    const float* inRight,
                                    float* outLeft,

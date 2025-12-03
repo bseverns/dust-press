@@ -10,6 +10,7 @@
 #include <SPI.h>
 #include <SD.h>
 #include <SerialFlash.h>
+#include <math.h>
 #include "DustPress.h"
 
 // --- Audio graph (same wiring as examples/minimal) ---
@@ -24,7 +25,7 @@ AudioControlSGTL5000 codec;
 
 // --- Hardware inputs ---
 // Swap these to match your wiring. Drive likes a log/audio-taper pot; Bias and Env→Drive
-// want a center-detent/bipolar vibe.
+// want a center-detent/bipolar vibe with a tiny deadband around 0 so it actually rests.
 const int POT_DRIVE_PIN       = A0;
 const int POT_BIAS_PIN        = A1;
 const int POT_ENV_DRIVE_PIN   = A2;
@@ -45,6 +46,7 @@ constexpr float ENV_DRIVE_MIN_DB   = -12.0f;
 constexpr float ENV_DRIVE_MAX_DB   = 12.0f;
 constexpr float MIX_MIN            = 0.0f;
 constexpr float MIX_MAX            = 1.0f;
+constexpr float BIPOLAR_DEADBAND   = 0.025f;  // ~2.5% deadband near center to kill jitter
 
 // Utility clamp so pots + MIDI never outrun the map.
 template <typename T>
@@ -69,7 +71,11 @@ float mapBipolar(int raw, float minVal, float maxVal) {
   float bipolar = (norm * 2.0f) - 1.0f;  // -1 at CCW, +1 at CW
   float halfSpan = (maxVal - minVal) * 0.5f;
   float center = (minVal + maxVal) * 0.5f;
-  return clampValue(center + bipolar * halfSpan, minVal, maxVal);
+  float mapped = center + bipolar * halfSpan;
+  if (fabsf(mapped - center) < BIPOLAR_DEADBAND) {
+    mapped = center;  // deadband to stop wandering near the neutral point
+  }
+  return clampValue(mapped, minVal, maxVal);
 }
 
 float mapMix(int raw) {
@@ -84,6 +90,7 @@ void applyPotReads() {
   dustpress.setMix(mapMix(analogRead(POT_MIX_PIN)));
 }
 
+// MIDI math mirrors the control-map guidance: log-ish Drive, bipolar Bias/Env→Drive, linear Mix.
 void handleMidiCc(uint8_t cc, uint8_t val) {
   float norm = val / 127.0f;
   switch (cc) {
@@ -95,6 +102,9 @@ void handleMidiCc(uint8_t cc, uint8_t val) {
     }
     case CC_BIAS: {
       float bipolar = (norm * 2.0f) - 1.0f;
+      if (fabsf(bipolar) < BIPOLAR_DEADBAND) {
+        bipolar = 0.0f;  // same deadband as the pots so MIDI sits still at center
+      }
       dustpress.setBias(clampValue(bipolar, BIAS_MIN, BIAS_MAX));
       break;
     }
@@ -103,6 +113,9 @@ void handleMidiCc(uint8_t cc, uint8_t val) {
       float halfSpan = (ENV_DRIVE_MAX_DB - ENV_DRIVE_MIN_DB) * 0.5f;
       float center = (ENV_DRIVE_MAX_DB + ENV_DRIVE_MIN_DB) * 0.5f;
       float dB = center + bipolar * halfSpan;
+      if (fabsf(dB - center) < BIPOLAR_DEADBAND * halfSpan * 2.0f) {
+        dB = center;  // treat center-ish MIDI the same as the pot deadband
+      }
       dustpress.setEnvToDriveDb(clampValue(dB, ENV_DRIVE_MIN_DB, ENV_DRIVE_MAX_DB));
       break;
     }

@@ -14,11 +14,13 @@ add_library(dustpress_native STATIC
   ../src/SoftSaturation.cpp
   ../src/TiltEQ.cpp
   src/NativeDustPress.cpp
+  src/PluginState.cpp
+  src/PresetLoader.cpp
   src/WavFile.cpp
 )
 
 target_include_directories(dustpress_native
-  PRIVATE
+  PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../src
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party
@@ -42,4 +44,9 @@ target_include_directories(dustpress_probe PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../src
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
+option(DUSTPRESS_BUILD_PLUGIN "Build the JUCE/VST3 wrapper around NativeDustPress" OFF)
+
+if(DUSTPRESS_BUILD_PLUGIN)
+  add_subdirectory(plugin)
+endif()
 
