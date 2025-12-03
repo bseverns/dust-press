@@ -62,7 +62,9 @@ If you keep a local JUCE clone instead of letting this preset auto-fetch it, two
   If `native/.juce-kit` already exists, the plugin CMakeLists will sniff it automatically—`JUCE_DIR` is set for you. If you see
   CMake errors about missing `LV2_HELPER.cmake` or `JUCEModuleSupport.cmake`, it means you pointed at an uninstalled JUCE build
   tree; rerun the bootstrapper so it installs JUCE into `.juce-kit`, or install your own JUCE build to a prefix and aim
-  `CMAKE_PREFIX_PATH` there.
+  `CMAKE_PREFIX_PATH` there. If CMake specifically mentions `JUCE_DIR='<repo>/.juce-build'` and complains about missing helpers,
+  that's the legacy auto-detection sniffing your half-built tree. Blow away `native/.juce-build` or rerun the bootstrapper so
+  we auto-pick up the installed kit instead of the stale build folder.
 
 - **Point at your own JUCE checkout:**
   1. Configure and install JUCE once so it drops a usable CMake package (swap the prefix to taste):

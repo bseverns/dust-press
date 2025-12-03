@@ -7,6 +7,7 @@ set(DUSTPRESS_JUCE_GIT_TAG "7.0.12" CACHE STRING "JUCE tag/branch to fetch when 
 
 set(DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR "${PROJECT_SOURCE_DIR}/.juce-kit" CACHE PATH "Optional JUCE install dir to reuse instead of fetching")
 set(DUSTPRESS_LOCAL_JUCE_BUILD_DIR "${PROJECT_SOURCE_DIR}/.juce-build" CACHE PATH "Legacy pre-configured JUCE build tree to reuse instead of fetching")
+set(_dustpress_required_juce_helpers LV2_HELPER.cmake JUCEModuleSupport.cmake JUCEUtils.cmake)
 
 if(DUSTPRESS_FETCH_JUCE)
   include(FetchContent)
@@ -54,8 +55,20 @@ else()
   if(NOT JUCE_DIR AND EXISTS "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake")
     set(JUCE_DIR "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}" CACHE PATH "JUCE package dir (auto-populated when present)" FORCE)
   elseif(NOT JUCE_DIR AND EXISTS "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}/JUCEConfig.cmake")
-    # Legacy hand-configured build tree support.
-    set(JUCE_DIR "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}" CACHE PATH "JUCE build dir (auto-populated when present)" FORCE)
+    set(_dustpress_build_helpers_present ON)
+    foreach(_dustpress_helper IN LISTS _dustpress_required_juce_helpers)
+      if(NOT EXISTS "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}/${_dustpress_helper}")
+        set(_dustpress_build_helpers_present OFF)
+        break()
+      endif()
+    endforeach()
+
+    if(_dustpress_build_helpers_present)
+      # Legacy hand-configured build tree support.
+      set(JUCE_DIR "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}" CACHE PATH "JUCE build dir (auto-populated when present)" FORCE)
+    else()
+      message(STATUS "Skipping legacy JUCE build directory at ${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}; helper files are missing. Run tools/bootstrap_juce.sh or install JUCE to a prefix and point JUCE_DIR/CMAKE_PREFIX_PATH at it instead.")
+    endif()
   endif()
 
   # If the user points JUCE_DIR at a raw build tree, CMake will happily pick it
@@ -70,7 +83,7 @@ else()
     endif()
 
     set(_dustpress_missing_helpers)
-    foreach(_dustpress_helper IN ITEMS LV2_HELPER.cmake JUCEModuleSupport.cmake JUCEUtils.cmake)
+    foreach(_dustpress_helper IN LISTS _dustpress_required_juce_helpers)
       if(NOT EXISTS "${JUCE_DIR}/${_dustpress_helper}")
         list(APPEND _dustpress_missing_helpers "${_dustpress_helper}")
       endif()
@@ -102,7 +115,7 @@ else()
 
   if(_dustpress_juce_config_dir)
     set(_dustpress_missing_helpers)
-    foreach(_dustpress_helper IN ITEMS LV2_HELPER.cmake JUCEModuleSupport.cmake JUCEUtils.cmake)
+    foreach(_dustpress_helper IN LISTS _dustpress_required_juce_helpers)
       if(NOT EXISTS "${_dustpress_juce_config_dir}/${_dustpress_helper}")
         list(APPEND _dustpress_missing_helpers "${_dustpress_helper}")
       endif()
