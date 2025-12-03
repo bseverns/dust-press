@@ -17,6 +17,9 @@ public:
   float process(float x);
   void processBlock(float* buffer, std::size_t count);
 
+  float currentEnvelope() const { return envelope; }
+  float currentGain() const { return gainSmooth; }
+  std::size_t lookaheadSamples() const { return delay.size(); }
   std::size_t getLatencySamples() const { return delay.size(); }
 
   void reset();
