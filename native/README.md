@@ -53,7 +53,7 @@ If you keep a local JUCE clone instead of letting this preset auto-fetch it, two
   cmake -S native -B native/build \
     -DDUSTPRESS_BUILD_PLUGIN=ON \
     -DDUSTPRESS_FETCH_JUCE=OFF \
-    -DCMAKE_PREFIX_PATH=native/.juce-build
+    -DCMAKE_PREFIX_PATH=native/.juce-kit
   cmake --build native/build --target DustPressPlugin
   ```
   Multi-config generators (Xcode, Visual Studio) need a config; the bootstrapper defaults to `Release`. Override it when you run the script (e.g. `JUCE_BUILD_CONFIG=Debug ./tools/bootstrap_juce.sh`) if you want a different flavor.
