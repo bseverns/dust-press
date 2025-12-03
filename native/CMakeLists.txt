@@ -40,6 +40,8 @@ target_include_directories(dustpress_cli PRIVATE
 option(DUSTPRESS_BUILD_JUCE_PLUGIN "Build the JUCE VST3/AU preview plugin" OFF)
 if(DUSTPRESS_BUILD_JUCE_PLUGIN)
   add_subdirectory(juce)
+endif()
+
 add_executable(dustpress_probe src/probe.cpp)
 target_link_libraries(dustpress_probe PRIVATE dustpress_native)
 target_include_directories(dustpress_probe PRIVATE
@@ -47,6 +49,7 @@ target_include_directories(dustpress_probe PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../src
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party
 )
+
 option(DUSTPRESS_BUILD_PLUGIN "Build the JUCE/VST3 wrapper around NativeDustPress" OFF)
 
 if(DUSTPRESS_BUILD_PLUGIN)

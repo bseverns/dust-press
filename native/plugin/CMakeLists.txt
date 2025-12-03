@@ -1,6 +1,28 @@
 # JUCE plugin wrapper for the NativeDustPress DSP
 
-find_package(JUCE CONFIG REQUIRED)
+option(DUSTPRESS_FETCH_JUCE "Automatically fetch JUCE (plus the VST3 SDK) for plugin builds" ON)
+option(DUSTPRESS_FETCH_VST3_SDK "Allow the JUCE build to pull down the Steinberg VST3 SDK" ON)
+set(DUSTPRESS_JUCE_GIT_TAG "7.0.12" CACHE STRING "JUCE tag/branch to fetch when auto-downloading")
+
+if(DUSTPRESS_FETCH_JUCE)
+  include(FetchContent)
+  set(JUCE_ENABLE_MODULE_SOURCE_GROUPS OFF CACHE BOOL "" FORCE)
+  set(JUCE_FETCH_VST3_SDK ${DUSTPRESS_FETCH_VST3_SDK} CACHE BOOL "" FORCE)
+
+  FetchContent_Declare(
+    juce
+    GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
+    GIT_TAG ${DUSTPRESS_JUCE_GIT_TAG}
+  )
+
+  FetchContent_MakeAvailable(juce)
+else()
+  if(DUSTPRESS_FETCH_VST3_SDK)
+    set(JUCE_FETCH_VST3_SDK ON CACHE BOOL "" FORCE)
+  endif()
+
+  find_package(JUCE CONFIG REQUIRED)
+endif()
 
 set(DUSTPRESS_PLUGIN_TARGET DustPressPlugin)
 

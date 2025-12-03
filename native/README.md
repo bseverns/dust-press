@@ -26,11 +26,19 @@ cmake --build native/build
 That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 
 ### Build the JUCE/VST3 shim
-This repo now speaks DAW. Flip on the plugin target and point CMake at your JUCE install:
+This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you.
+
+```bash
+cmake --preset native-plugin-release
+cmake --build --preset native-plugin-release --config Release
+```
+
+Want to steer the ship yourself? Flip on the plugin target and point CMake at your JUCE install:
 
 ```bash
 cmake -S native -B native/build \
   -DDUSTPRESS_BUILD_PLUGIN=ON \
+  -DDUSTPRESS_FETCH_JUCE=OFF \
   -DCMAKE_PREFIX_PATH=/path/to/JUCE
 cmake --build native/build --target DustPressPlugin
 ```

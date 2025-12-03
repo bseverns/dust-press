@@ -3,15 +3,23 @@
 This is the scrappy VST3 skin around `NativeDustPress`. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE.md), speaks stereo in/out, and keeps the DSP identical to the firmware path.
 
 ## Build/Install
-1. Install JUCE and make sure CMake can see it (via `CMAKE_PREFIX_PATH` or your package manager).
-2. Configure the native build with the plugin target flipped on:
+1. Use the new preset if you just want the VST3 and don't feel like herding dependencies:
+   ```bash
+   cmake --preset native-plugin-release
+   cmake --build --preset native-plugin-release --config Release
+   ```
+   - The preset flips on the plugin target, fetches JUCE, and lets JUCE fetch the Steinberg VST3 SDK for you.
+2. Prefer hand-managed deps? You can still point at your existing JUCE install:
    ```bash
    cmake -S native -B native/build \
      -DDUSTPRESS_BUILD_PLUGIN=ON \
+     -DDUSTPRESS_FETCH_JUCE=OFF \
      -DCMAKE_PREFIX_PATH=/path/to/JUCE
    cmake --build native/build --target DustPressPlugin
    ```
-3. CMake drops a VST3 bundle under `native/build/DustPressPlugin_artefacts/`. Point your DAW at the VST3 output folder or copy it into your system plug-ins directory.
+3. CMake drops a VST3 bundle under `native/build/plugin-release/DustPressPlugin_artefacts/` (or your custom build dir). Point your DAW at the VST3 output folder or copy it into your system plug-ins directory.
+
+> CI note: `.github/workflows/plugin-build.yml` exercises the preset on macOS, Windows, and Linux, then tars up the artefacts. Signing/notarization hooks are stubbed so you can drop in your own cert flow.
 
 ## Parameter map
 - **Drive (0–36 dB, log taper, default 12 dB)** → `setDriveDb`
