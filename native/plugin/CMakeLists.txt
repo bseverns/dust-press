@@ -21,7 +21,11 @@ else()
     set(JUCE_FETCH_VST3_SDK ON CACHE BOOL "" FORCE)
   endif()
 
-  find_package(JUCE CONFIG REQUIRED)
+  find_package(JUCE CONFIG QUIET)
+
+  if(NOT JUCE_FOUND)
+    message(FATAL_ERROR "JUCE not found. Either set DUSTPRESS_FETCH_JUCE=ON (default) so CMake downloads it, or point JUCE_DIR/CMAKE_PREFIX_PATH at an existing JUCE install before setting DUSTPRESS_BUILD_PLUGIN=ON.")
+  endif()
 endif()
 
 set(DUSTPRESS_PLUGIN_TARGET DustPressPlugin)
