@@ -37,6 +37,32 @@ else()
   if(NOT JUCE_FOUND)
     message(FATAL_ERROR "JUCE not found. Either set DUSTPRESS_FETCH_JUCE=ON (default) so CMake downloads it, or point JUCE_DIR/CMAKE_PREFIX_PATH at a JUCE build directory that contains JUCEConfig.cmake (e.g. <juce>/build). Then re-run CMake with DUSTPRESS_BUILD_PLUGIN=ON.")
   endif()
+
+  # Sanity-check the JUCE package for the helper files that JUCEConfig pulls in.
+  # Pointing JUCE_DIR at an uninstalled build tree will leave these missing and
+  # explode with mysterious "Unknown CMake command" errors. Be loud before that
+  # happens so folks know to install JUCE (or run tools/bootstrap_juce.sh).
+  set(_dustpress_juce_config_dir "${JUCE_DIR}")
+  if(NOT _dustpress_juce_config_dir AND DEFINED JUCE_CONFIG)
+    get_filename_component(_dustpress_juce_config_dir "${JUCE_CONFIG}" DIRECTORY)
+  endif()
+
+  if(_dustpress_juce_config_dir)
+    set(_dustpress_missing_helpers)
+    foreach(_dustpress_helper IN ITEMS LV2_HELPER.cmake JUCEModuleSupport.cmake JUCEUtils.cmake)
+      if(NOT EXISTS "${_dustpress_juce_config_dir}/${_dustpress_helper}")
+        list(APPEND _dustpress_missing_helpers "${_dustpress_helper}")
+      endif()
+    endforeach()
+
+    if(_dustpress_missing_helpers)
+      string(REPLACE ";" "\n- " _dustpress_helper_list "${_dustpress_missing_helpers}")
+      message(FATAL_ERROR
+        "JUCEConfig.cmake was found at '${_dustpress_juce_config_dir}', but the following helper files are missing:\n- ${_dustpress_helper_list}\n"
+        "This usually means you pointed CMAKE_PREFIX_PATH/JUCE_DIR at a JUCE build tree that was never installed."
+        " Reconfigure JUCE with an install prefix and run 'cmake --install', or just run tools/bootstrap_juce.sh to drop a JUCE kit into native/.juce-kit and try again.")
+    endif()
+  endif()
 endif()
 
 set(DUSTPRESS_PLUGIN_TARGET DustPressPlugin)
