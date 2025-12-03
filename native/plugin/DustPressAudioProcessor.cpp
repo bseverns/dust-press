@@ -118,17 +118,30 @@ void DustPressAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
   primeEngineForBlock(numSamples);
 
+  const auto numChannels = buffer.getNumChannels();
   auto* leftIn = buffer.getReadPointer(0);
-  auto* rightIn = buffer.getNumChannels() > 1 ? buffer.getReadPointer(1) : buffer.getReadPointer(0);
-  auto* leftOut = buffer.getWritePointer(0);
-  auto* rightOut = buffer.getNumChannels() > 1 ? buffer.getWritePointer(1) : nullptr;
+  auto* rightIn = numChannels > 1 ? buffer.getReadPointer(1) : leftIn;
 
-  if (rightOut == nullptr) {
-    buffer.setSize(2, numSamples, true, true, true);
-    rightOut = buffer.getWritePointer(1);
+  if (numChannels > 1) {
+    auto* leftOut = buffer.getWritePointer(0);
+    auto* rightOut = buffer.getWritePointer(1);
+    engine.processBlock(leftIn, rightIn, leftOut, rightOut, static_cast<std::size_t>(numSamples));
+  } else {
+    auto* leftOut = buffer.getWritePointer(0);
+
+    for (int i = 0; i < numSamples; ++i) {
+      const auto sample = leftIn[i];
+      scratchLeft[static_cast<std::size_t>(i)] = sample;
+      scratchRight[static_cast<std::size_t>(i)] = sample;
+    }
+
+    engine.processBlock(scratchLeft.data(), scratchRight.data(), scratchLeft.data(), scratchRight.data(),
+                        static_cast<std::size_t>(numSamples));
+
+    for (int i = 0; i < numSamples; ++i) {
+      leftOut[i] = scratchLeft[static_cast<std::size_t>(i)];
+    }
   }
-
-  engine.processBlock(leftIn, rightIn, leftOut, rightOut, static_cast<std::size_t>(numSamples));
 
   for (int ch = 2; ch < buffer.getNumChannels(); ++ch) {
     buffer.clear(ch, 0, numSamples);
@@ -229,7 +242,8 @@ void DustPressAudioProcessor::primeEngineForBlock(int numSamples) {
     refreshLatencyFromEngine();
   }
 
-  if (numSamples != lastBlockSize) {
+  if (numSamples != lastBlockSize || scratchLeft.size() < static_cast<std::size_t>(numSamples) ||
+      scratchRight.size() < static_cast<std::size_t>(numSamples)) {
     lastBlockSize = numSamples;
     resizeScratchBuffers(numSamples);
   }
