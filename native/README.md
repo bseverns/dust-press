@@ -28,7 +28,7 @@ That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 ### Build the JUCE/VST3 shim
 This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you.
 
-**Heads up**: `DUSTPRESS_BUILD_PLUGIN=ON` needs JUCE in the room. By default we auto-fetch it, but if you disable `DUSTPRESS_FETCH_JUCE` you'll need `JUCE_DIR` or `CMAKE_PREFIX_PATH` pointed at a JUCE install. Point it at a JUCE _build_ directory that actually contains `JUCEConfig.cmake` (e.g. run `cmake -S <juce> -B <juce>/build` once, then feed `-DCMAKE_PREFIX_PATH=<juce>/build`). The new `DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN` cache flag stays on by default to spare you a missing-dep smackdown. A repo-local JUCE build at `native/.juce-build` will be picked up automatically if it exists.
+**Heads up**: `DUSTPRESS_BUILD_PLUGIN=ON` needs JUCE in the room. By default we auto-fetch it, but if you disable `DUSTPRESS_FETCH_JUCE` you'll need `JUCE_DIR` or `CMAKE_PREFIX_PATH` pointed at a **JUCE install** (not just a raw build tree) so CMake can find `LV2_HELPER.cmake`, `JUCEModuleSupport.cmake`, and friends. Point it at a JUCE build tree that has been installed to a prefix—e.g. run `cmake -S <juce> -B <juce>/build -DCMAKE_INSTALL_PREFIX=<juce>/kit`, then `cmake --build <juce>/build --target juceaide` and `cmake --install <juce>/build` before configuring Dust Press. The new `DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN` cache flag stays on by default to spare you a missing-dep smackdown. A repo-local JUCE install at `native/.juce-kit` (built by `tools/bootstrap_juce.sh`) will be picked up automatically if it exists.
 
 ```bash
 cmake --preset native-plugin-release
@@ -49,26 +49,31 @@ If you keep a local JUCE clone instead of letting this preset auto-fetch it, two
 
 - **Use the repo-local bootstrapper (recommended):**
   ```bash
-  ./tools/bootstrap_juce.sh  # clones JUCE into native/.juce-src + configures native/.juce-build
+  ./tools/bootstrap_juce.sh  # clones JUCE into native/.juce-src, builds juceaide, installs to native/.juce-kit
   cmake -S native -B native/build \
     -DDUSTPRESS_BUILD_PLUGIN=ON \
     -DDUSTPRESS_FETCH_JUCE=OFF \
-    -DCMAKE_PREFIX_PATH=native/.juce-build
+    -DCMAKE_PREFIX_PATH=native/.juce-kit
   cmake --build native/build --target DustPressPlugin
   ```
-  If `native/.juce-build` already exists, the plugin CMakeLists will sniff it automatically—`JUCE_DIR` is set for you.
+  If `native/.juce-kit` already exists, the plugin CMakeLists will sniff it automatically—`JUCE_DIR` is set for you. If you see
+  CMake errors about missing `LV2_HELPER.cmake` or `JUCEModuleSupport.cmake`, it means you pointed at an uninstalled JUCE build
+  tree; rerun the bootstrapper so it installs JUCE into `.juce-kit`, or install your own JUCE build to a prefix and aim
+  `CMAKE_PREFIX_PATH` there.
 
 - **Point at your own JUCE checkout:**
-  1. Configure JUCE once so it drops `JUCEConfig.cmake` in a build dir:
+  1. Configure and install JUCE once so it drops a usable CMake package (swap the prefix to taste):
      ```bash
-     cmake -S /path/to/JUCE -B /path/to/JUCE/build
+     cmake -S /path/to/JUCE -B /path/to/JUCE/build -DCMAKE_INSTALL_PREFIX=/path/to/JUCE/kit
+     cmake --build /path/to/JUCE/build --target juceaide
+     cmake --install /path/to/JUCE/build
      ```
-  2. Point Dust Press at that build tree when enabling the plugin target:
+  2. Point Dust Press at that installed tree when enabling the plugin target:
      ```bash
      cmake -S native -B native/build \
        -DDUSTPRESS_BUILD_PLUGIN=ON \
        -DDUSTPRESS_FETCH_JUCE=OFF \
-       -DCMAKE_PREFIX_PATH=/path/to/JUCE/build
+       -DCMAKE_PREFIX_PATH=/path/to/JUCE/kit
      cmake --build native/build --target DustPressPlugin
      ```
 

@@ -4,7 +4,8 @@ option(DUSTPRESS_FETCH_JUCE "Automatically fetch JUCE (plus the VST3 SDK) for pl
 option(DUSTPRESS_FETCH_VST3_SDK "Allow the JUCE build to pull down the Steinberg VST3 SDK" ON)
 set(DUSTPRESS_JUCE_GIT_TAG "7.0.12" CACHE STRING "JUCE tag/branch to fetch when auto-downloading")
 
-set(DUSTPRESS_LOCAL_JUCE_BUILD_DIR "${PROJECT_SOURCE_DIR}/.juce-build" CACHE PATH "Optional pre-configured JUCE build tree to reuse instead of fetching")
+set(DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR "${PROJECT_SOURCE_DIR}/.juce-kit" CACHE PATH "Optional JUCE install dir to reuse instead of fetching")
+set(DUSTPRESS_LOCAL_JUCE_BUILD_DIR "${PROJECT_SOURCE_DIR}/.juce-build" CACHE PATH "Legacy pre-configured JUCE build tree to reuse instead of fetching")
 
 if(DUSTPRESS_FETCH_JUCE)
   include(FetchContent)
@@ -23,8 +24,11 @@ else()
     set(JUCE_FETCH_VST3_SDK ON CACHE BOOL "" FORCE)
   endif()
 
-  # Use a repo-local JUCE build dir by default if one already exists.
-  if(NOT JUCE_DIR AND EXISTS "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}/JUCEConfig.cmake")
+  # Use a repo-local JUCE install dir by default if one already exists.
+  if(NOT JUCE_DIR AND EXISTS "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake")
+    set(JUCE_DIR "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}" CACHE PATH "JUCE package dir (auto-populated when present)" FORCE)
+  elseif(NOT JUCE_DIR AND EXISTS "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}/JUCEConfig.cmake")
+    # Legacy hand-configured build tree support.
     set(JUCE_DIR "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}" CACHE PATH "JUCE build dir (auto-populated when present)" FORCE)
   endif()
 
