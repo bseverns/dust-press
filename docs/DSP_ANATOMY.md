@@ -82,15 +82,25 @@ flowchart LR
   - Dirt thickens hits before the curve; start around 0.1–0.2 when running low drive for “chewy” push.
   - Chaos 0–2 sprinkles movement; 3–5 gets audible crackle; 6–7 is glitch-land—lower `drive` or raise `mix` to keep it musical.
 
-### Curve snapshots (chaos sweeps)
-- **Tanh (tape-ish):** [low chaos 1.0](media/tanh_chaos-low.svg) | [mid chaos 3.0](media/tanh_chaos-mid.svg) | [high chaos 6.0](media/tanh_chaos-high.svg)
-  - Listen for the knee staying velvet even as chaos rises; mid chaos adds faint fizz, high chaos starts sprinkling hissy crackle on peaks.
-- **Cubic (console-ish):** [low chaos 1.0](media/cubic_chaos-low.svg) | [mid chaos 3.0](media/cubic_chaos-mid.svg) | [high chaos 6.0](media/cubic_chaos-high.svg)
-  - Low chaos is smooth glue; mid chaos introduces slight edge as the cubic flattening bumps; high chaos spits occasional grain but still hugs the curve.
-- **Diode pair:** [low chaos 1.0](media/diode_chaos-low.svg) | [mid chaos 3.0](media/diode_chaos-mid.svg) | [high chaos 6.0](media/diode_chaos-high.svg)
-  - Check the asymmetry: positive lobes bend harder. Chaos lifts a metallic rasp; by high chaos, crackle rides on the positive side first.
-- **Foldback:** [low chaos 1.0](media/foldback_chaos-low.svg) | [mid chaos 3.0](media/foldback_chaos-mid.svg) | [high chaos 6.0](media/foldback_chaos-high.svg)
-  - Low chaos already folds; mid chaos adds crystalline shatter as folds jitter; high chaos piles on metallicity and early crackle onset—great for industrial clang.
+### Curve snapshots + chaos audio (low/mid/high)
+Short composite riff (sine+saw) slammed into each curve with chaos at 1.0 / 3.0 / 6.0. Plots live in-repo; WAVs are rendered locally with `tools/curve_clip_harness.py` (kept out of git to dodge binary creep). Expected filenames land under `docs/media/` so the links below light up when you drop your generated clips next to the plots.
+
+- **Tanh (tape-ish):**
+  - Low: [plot](media/tanh_chaos-low.svg) • clip target `media/tanh_chaos-low.wav` — velvet knee stays intact; dirt just warms transients.
+  - Mid: [plot](media/tanh_chaos-mid.svg) • clip target `media/tanh_chaos-mid.wav` — faint fizz appears as chaos jitters the knee.
+  - High: [plot](media/tanh_chaos-high.svg) • clip target `media/tanh_chaos-high.wav` — hear the hissy crackle break through the silky knee without hard clipping.
+- **Cubic (console-ish):**
+  - Low: [plot](media/cubic_chaos-low.svg) • clip target `media/cubic_chaos-low.wav` — smooth glue with just a smidge of 3rd-order chew.
+  - Mid: [plot](media/cubic_chaos-mid.svg) • clip target `media/cubic_chaos-mid.wav` — upper partials roughen as the cubic shoulder jiggles.
+  - High: [plot](media/cubic_chaos-high.svg) • clip target `media/cubic_chaos-high.wav` — grainy spit rides the flatted peaks; keep mix handy.
+- **Diode pair:**
+  - Low: [plot](media/diode_chaos-low.svg) • clip target `media/diode_chaos-low.wav` — positive lobe bends harder, asymmetry bites without fizz.
+  - Mid: [plot](media/diode_chaos-mid.svg) • clip target `media/diode_chaos-mid.wav` — metallic rasp starts; asymmetry makes the rasp favor positive swings.
+  - High: [plot](media/diode_chaos-high.svg) • clip target `media/diode_chaos-high.wav` — crackle flares on the positive crest first, leaving negative side comparatively cleaner.
+- **Foldback:**
+  - Low: [plot](media/foldback_chaos-low.svg) • clip target `media/foldback_chaos-low.wav` — immediate folding gives bell-like sheen without chaos glitter.
+  - Mid: [plot](media/foldback_chaos-mid.svg) • clip target `media/foldback_chaos-mid.wav` — folds jitter, adding crystalline shatter and light metallic ring.
+  - High: [plot](media/foldback_chaos-high.svg) • clip target `media/foldback_chaos-high.wav` — foldback clang with early crackle onset; metallicity turns industrial fast.
 
 ## Post Air EQ
 - `setPostAir` adjusts a high-shelf after the shaper (`air.process`), letting you restore or tame highs the shaper exaggerated.

@@ -74,6 +74,7 @@ Want the long-form why/how? The new **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)**
 - `examples/` — minimal wiring sketch plus `presets_demo` for SD/SerialFlash preset loading.
 - `presets/` — starter presets JSON.
 - `docs/` — control map CSV.
+- `tools/` — host-side helpers like the chaos clip harness (see `tools/README.md`).
 
 ## License
 MIT — see `LICENSE`.
