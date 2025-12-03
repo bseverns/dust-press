@@ -4,7 +4,14 @@
 		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/cmake_install.cmake",
 		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/modules/cmake_install.cmake",
 		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/Build/cmake_install.cmake",
-		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/Build/juceaide/cmake_install.cmake"
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/Build/juceaide/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/AudioPerformanceTest/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/AudioPluginHost/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/BinaryBuilder/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/NetworkGraphicsDemo/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/Projucer/cmake_install.cmake",
+		"/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/extras/UnitTestRunner/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

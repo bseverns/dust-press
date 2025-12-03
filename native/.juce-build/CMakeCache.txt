@@ -238,7 +238,7 @@ JUCE_BINARY_DIR:STATIC=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-
 JUCE_BUILD_EXAMPLES:BOOL=OFF
 
 //Add build targets for the Projucer and other tools
-JUCE_BUILD_EXTRAS:BOOL=OFF
+JUCE_BUILD_EXTRAS:BOOL=ON
 
 //Whether or not plugins should be installed to the system after
 // building
@@ -418,7 +418,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -188,6 +188,110 @@ juce_vst3_helper/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/juce_vst3_helper.dir/build.make CMakeFiles/juce_vst3_helper.dir/build
 .PHONY : juce_vst3_helper/fast
 
+#=============================================================================
+# Target rules for targets named AudioPerformanceTest
+
+# Build rule for target.
+AudioPerformanceTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 AudioPerformanceTest
+.PHONY : AudioPerformanceTest
+
+# fast build rule for target.
+AudioPerformanceTest/fast:
+	$(MAKE) $(MAKESILENT) -f extras/AudioPerformanceTest/CMakeFiles/AudioPerformanceTest.dir/build.make extras/AudioPerformanceTest/CMakeFiles/AudioPerformanceTest.dir/build
+.PHONY : AudioPerformanceTest/fast
+
+#=============================================================================
+# Target rules for targets named AudioPluginHost
+
+# Build rule for target.
+AudioPluginHost: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 AudioPluginHost
+.PHONY : AudioPluginHost
+
+# fast build rule for target.
+AudioPluginHost/fast:
+	$(MAKE) $(MAKESILENT) -f extras/AudioPluginHost/CMakeFiles/AudioPluginHost.dir/build.make extras/AudioPluginHost/CMakeFiles/AudioPluginHost.dir/build
+.PHONY : AudioPluginHost/fast
+
+#=============================================================================
+# Target rules for targets named AudioPluginHostData
+
+# Build rule for target.
+AudioPluginHostData: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 AudioPluginHostData
+.PHONY : AudioPluginHostData
+
+# fast build rule for target.
+AudioPluginHostData/fast:
+	$(MAKE) $(MAKESILENT) -f extras/AudioPluginHost/CMakeFiles/AudioPluginHostData.dir/build.make extras/AudioPluginHost/CMakeFiles/AudioPluginHostData.dir/build
+.PHONY : AudioPluginHostData/fast
+
+#=============================================================================
+# Target rules for targets named BinaryBuilder
+
+# Build rule for target.
+BinaryBuilder: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BinaryBuilder
+.PHONY : BinaryBuilder
+
+# fast build rule for target.
+BinaryBuilder/fast:
+	$(MAKE) $(MAKESILENT) -f extras/BinaryBuilder/CMakeFiles/BinaryBuilder.dir/build.make extras/BinaryBuilder/CMakeFiles/BinaryBuilder.dir/build
+.PHONY : BinaryBuilder/fast
+
+#=============================================================================
+# Target rules for targets named NetworkGraphicsDemo
+
+# Build rule for target.
+NetworkGraphicsDemo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NetworkGraphicsDemo
+.PHONY : NetworkGraphicsDemo
+
+# fast build rule for target.
+NetworkGraphicsDemo/fast:
+	$(MAKE) $(MAKESILENT) -f extras/NetworkGraphicsDemo/CMakeFiles/NetworkGraphicsDemo.dir/build.make extras/NetworkGraphicsDemo/CMakeFiles/NetworkGraphicsDemo.dir/build
+.PHONY : NetworkGraphicsDemo/fast
+
+#=============================================================================
+# Target rules for targets named Projucer
+
+# Build rule for target.
+Projucer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Projucer
+.PHONY : Projucer
+
+# fast build rule for target.
+Projucer/fast:
+	$(MAKE) $(MAKESILENT) -f extras/Projucer/CMakeFiles/Projucer.dir/build.make extras/Projucer/CMakeFiles/Projucer.dir/build
+.PHONY : Projucer/fast
+
+#=============================================================================
+# Target rules for targets named ProjucerData
+
+# Build rule for target.
+ProjucerData: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ProjucerData
+.PHONY : ProjucerData
+
+# fast build rule for target.
+ProjucerData/fast:
+	$(MAKE) $(MAKESILENT) -f extras/Projucer/CMakeFiles/ProjucerData.dir/build.make extras/Projucer/CMakeFiles/ProjucerData.dir/build
+.PHONY : ProjucerData/fast
+
+#=============================================================================
+# Target rules for targets named UnitTestRunner
+
+# Build rule for target.
+UnitTestRunner: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 UnitTestRunner
+.PHONY : UnitTestRunner
+
+# fast build rule for target.
+UnitTestRunner/fast:
+	$(MAKE) $(MAKESILENT) -f extras/UnitTestRunner/CMakeFiles/UnitTestRunner.dir/build.make extras/UnitTestRunner/CMakeFiles/UnitTestRunner.dir/build
+.PHONY : UnitTestRunner/fast
+
 modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.o: modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.cpp.o
 .PHONY : modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.o
 
@@ -248,6 +352,14 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... AudioPerformanceTest"
+	@echo "... AudioPluginHost"
+	@echo "... AudioPluginHostData"
+	@echo "... BinaryBuilder"
+	@echo "... NetworkGraphicsDemo"
+	@echo "... Projucer"
+	@echo "... ProjucerData"
+	@echo "... UnitTestRunner"
 	@echo "... juce_lv2_helper"
 	@echo "... juce_vst3_helper"
 	@echo "... modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.o"
