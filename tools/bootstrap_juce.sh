@@ -6,6 +6,10 @@ JUCE_TAG="7.0.12"
 JUCE_SRC_DIR="native/.juce-src"
 JUCE_BUILD_DIR="native/.juce-build"
 JUCE_INSTALL_DIR="native/.juce-kit"
+# Xcode and other multi-config generators need an explicit configuration.
+# Let users override it (e.g. `JUCE_BUILD_CONFIG=Debug ./tools/bootstrap_juce.sh`)
+# but default to Release so we mirror JUCE's own guidance.
+JUCE_BUILD_CONFIG="${JUCE_BUILD_CONFIG:-Release}"
 
 echo "[dust-press] Bootstrapping JUCE ${JUCE_TAG} into ${JUCE_BUILD_DIR}" >&2
 
@@ -19,9 +23,9 @@ fi
 echo "[dust-press] Configuring JUCE CMake build → ${JUCE_BUILD_DIR}" >&2
 cmake -S "${JUCE_SRC_DIR}" -B "${JUCE_BUILD_DIR}" -DCMAKE_INSTALL_PREFIX="${JUCE_INSTALL_DIR}"
 
-echo "[dust-press] Building juceaide + installing CMake package → ${JUCE_INSTALL_DIR}" >&2
-cmake --build "${JUCE_BUILD_DIR}" --target juceaide
-cmake --install "${JUCE_BUILD_DIR}"
+echo "[dust-press] Building juceaide + installing CMake package → ${JUCE_INSTALL_DIR} (config=${JUCE_BUILD_CONFIG})" >&2
+cmake --build "${JUCE_BUILD_DIR}" --target juceaide --config "${JUCE_BUILD_CONFIG}"
+cmake --install "${JUCE_BUILD_DIR}" --config "${JUCE_BUILD_CONFIG}"
 
 cat <<EOF >&2
 

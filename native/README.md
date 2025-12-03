@@ -56,6 +56,7 @@ If you keep a local JUCE clone instead of letting this preset auto-fetch it, two
     -DCMAKE_PREFIX_PATH=native/.juce-kit
   cmake --build native/build --target DustPressPlugin
   ```
+  Multi-config generators (Xcode, Visual Studio) need a config; the bootstrapper defaults to `Release`. Override it when you run the script (e.g. `JUCE_BUILD_CONFIG=Debug ./tools/bootstrap_juce.sh`) if you want a different flavor.
   If `native/.juce-kit` already exists, the plugin CMakeLists will sniff it automatically—`JUCE_DIR` is set for you. If you see
   CMake errors about missing `LV2_HELPER.cmake` or `JUCEModuleSupport.cmake`, it means you pointed at an uninstalled JUCE build
   tree; rerun the bootstrapper so it installs JUCE into `.juce-kit`, or install your own JUCE build to a prefix and aim
