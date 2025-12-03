@@ -4,6 +4,8 @@ option(DUSTPRESS_FETCH_JUCE "Automatically fetch JUCE (plus the VST3 SDK) for pl
 option(DUSTPRESS_FETCH_VST3_SDK "Allow the JUCE build to pull down the Steinberg VST3 SDK" ON)
 set(DUSTPRESS_JUCE_GIT_TAG "7.0.12" CACHE STRING "JUCE tag/branch to fetch when auto-downloading")
 
+set(DUSTPRESS_LOCAL_JUCE_BUILD_DIR "${PROJECT_SOURCE_DIR}/.juce-build" CACHE PATH "Optional pre-configured JUCE build tree to reuse instead of fetching")
+
 if(DUSTPRESS_FETCH_JUCE)
   include(FetchContent)
   set(JUCE_ENABLE_MODULE_SOURCE_GROUPS OFF CACHE BOOL "" FORCE)
@@ -21,10 +23,15 @@ else()
     set(JUCE_FETCH_VST3_SDK ON CACHE BOOL "" FORCE)
   endif()
 
+  # Use a repo-local JUCE build dir by default if one already exists.
+  if(NOT JUCE_DIR AND EXISTS "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}/JUCEConfig.cmake")
+    set(JUCE_DIR "${DUSTPRESS_LOCAL_JUCE_BUILD_DIR}" CACHE PATH "JUCE build dir (auto-populated when present)" FORCE)
+  endif()
+
   find_package(JUCE CONFIG QUIET)
 
   if(NOT JUCE_FOUND)
-    message(FATAL_ERROR "JUCE not found. Either set DUSTPRESS_FETCH_JUCE=ON (default) so CMake downloads it, or point JUCE_DIR/CMAKE_PREFIX_PATH at an existing JUCE install before setting DUSTPRESS_BUILD_PLUGIN=ON.")
+    message(FATAL_ERROR "JUCE not found. Either set DUSTPRESS_FETCH_JUCE=ON (default) so CMake downloads it, or point JUCE_DIR/CMAKE_PREFIX_PATH at a JUCE build directory that contains JUCEConfig.cmake (e.g. <juce>/build). Then re-run CMake with DUSTPRESS_BUILD_PLUGIN=ON.")
   endif()
 endif()
 

@@ -28,7 +28,7 @@ That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 ### Build the JUCE/VST3 shim
 This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you.
 
-**Heads up**: `DUSTPRESS_BUILD_PLUGIN=ON` needs JUCE in the room. By default we auto-fetch it, but if you disable `DUSTPRESS_FETCH_JUCE` you'll need `JUCE_DIR` or `CMAKE_PREFIX_PATH` pointed at a JUCE install. The new `DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN` cache flag stays on by default to spare you a missing-dep smackdown.
+**Heads up**: `DUSTPRESS_BUILD_PLUGIN=ON` needs JUCE in the room. By default we auto-fetch it, but if you disable `DUSTPRESS_FETCH_JUCE` you'll need `JUCE_DIR` or `CMAKE_PREFIX_PATH` pointed at a JUCE install. Point it at a JUCE _build_ directory that actually contains `JUCEConfig.cmake` (e.g. run `cmake -S <juce> -B <juce>/build` once, then feed `-DCMAKE_PREFIX_PATH=<juce>/build`). The new `DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN` cache flag stays on by default to spare you a missing-dep smackdown. A repo-local JUCE build at `native/.juce-build` will be picked up automatically if it exists.
 
 ```bash
 cmake --preset native-plugin-release
@@ -44,6 +44,33 @@ cmake -S native -B native/build \
   -DCMAKE_PREFIX_PATH=/path/to/JUCE
 cmake --build native/build --target DustPressPlugin
 ```
+
+If you keep a local JUCE clone instead of letting this preset auto-fetch it, two quick flows:
+
+- **Use the repo-local bootstrapper (recommended):**
+  ```bash
+  ./tools/bootstrap_juce.sh  # clones JUCE into native/.juce-src + configures native/.juce-build
+  cmake -S native -B native/build \
+    -DDUSTPRESS_BUILD_PLUGIN=ON \
+    -DDUSTPRESS_FETCH_JUCE=OFF \
+    -DCMAKE_PREFIX_PATH=native/.juce-build
+  cmake --build native/build --target DustPressPlugin
+  ```
+  If `native/.juce-build` already exists, the plugin CMakeLists will sniff it automatically—`JUCE_DIR` is set for you.
+
+- **Point at your own JUCE checkout:**
+  1. Configure JUCE once so it drops `JUCEConfig.cmake` in a build dir:
+     ```bash
+     cmake -S /path/to/JUCE -B /path/to/JUCE/build
+     ```
+  2. Point Dust Press at that build tree when enabling the plugin target:
+     ```bash
+     cmake -S native -B native/build \
+       -DDUSTPRESS_BUILD_PLUGIN=ON \
+       -DDUSTPRESS_FETCH_JUCE=OFF \
+       -DCMAKE_PREFIX_PATH=/path/to/JUCE/build
+     cmake --build native/build --target DustPressPlugin
+     ```
 
 - If you want CMake to auto-yeet itself toward a JUCE checkout whenever the plugin target is on, leave `-DDUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN=ON` (default). Turning it off makes `DUSTPRESS_FETCH_JUCE` opt-in—great for air-gapped rigs or when you already have JUCE built locally.
 
