@@ -67,7 +67,8 @@ Five starter presets live in `presets/presets.json`; they’re clamped to the ca
 - `src/` — core classes (engine, curve bank, envelope follower, EQs, limiter, smoother).
 - `examples/` — minimal wiring sketch plus `presets_demo` for SD/SerialFlash preset loading.
 - `presets/` — starter presets JSON.
-- `docs/` — canonical control map markdown + CSV mirror.
+- `docs/` — control map CSV.
+- `tools/` — host-side helpers like the chaos clip harness (see `tools/README.md`).
 
 ## License
 MIT — see `LICENSE`.
