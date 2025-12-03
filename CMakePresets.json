@@ -9,7 +9,7 @@
     {
       "name": "native-plugin-release",
       "displayName": "Native VST3 plugin (Release, fetch JUCE/VST3)",
-      "description": "Builds the JUCE-backed VST3 plugin with auto-fetched dependencies",
+      "description": "Builds the JUCE-backed VST3 plugin with auto-fetched dependencies; if you disable fetching, point JUCE_DIR/CMAKE_PREFIX_PATH at an existing JUCE checkout",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/native/build/plugin-release",
       "cacheVariables": {

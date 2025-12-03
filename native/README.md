@@ -28,6 +28,8 @@ That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 ### Build the JUCE/VST3 shim
 This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you.
 
+**Heads up**: `DUSTPRESS_BUILD_PLUGIN=ON` needs JUCE in the room. By default we auto-fetch it, but if you disable `DUSTPRESS_FETCH_JUCE` you'll need `JUCE_DIR` or `CMAKE_PREFIX_PATH` pointed at a JUCE install. The new `DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN` cache flag stays on by default to spare you a missing-dep smackdown.
+
 ```bash
 cmake --preset native-plugin-release
 cmake --build --preset native-plugin-release --config Release
@@ -42,6 +44,8 @@ cmake -S native -B native/build \
   -DCMAKE_PREFIX_PATH=/path/to/JUCE
 cmake --build native/build --target DustPressPlugin
 ```
+
+- If you want CMake to auto-yeet itself toward a JUCE checkout whenever the plugin target is on, leave `-DDUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN=ON` (default). Turning it off makes `DUSTPRESS_FETCH_JUCE` opt-in—great for air-gapped rigs or when you already have JUCE built locally.
 
 - The plugin wraps `NativeDustPress` directly, so any firmware-era bugfixes land in your DAW the same moment they land on Teensy.
 - Parameters track the [docs/USAGE.md](../docs/USAGE.md) table exactly—drive log taper, bipolar bias/env/tilt, integer curve + chaos, etc.—and state saves through the host.

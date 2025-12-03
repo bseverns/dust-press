@@ -52,6 +52,16 @@ target_include_directories(dustpress_probe PRIVATE
 
 option(DUSTPRESS_BUILD_PLUGIN "Build the JUCE/VST3 wrapper around NativeDustPress" OFF)
 
+# Convenience: if you're chasing the plugin and haven't declared how to get JUCE,
+# auto-opt into the FetchContent path so newcomers don't smash into missing deps.
+option(DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN "Auto-enable JUCE fetching when building the plugin unless you explicitly set DUSTPRESS_FETCH_JUCE" ON)
+
+if(DUSTPRESS_BUILD_PLUGIN AND DUSTPRESS_AUTO_FETCH_JUCE_WHEN_PLUGIN)
+  if(NOT DEFINED DUSTPRESS_FETCH_JUCE)
+    set(DUSTPRESS_FETCH_JUCE ON CACHE BOOL "Automatically fetch JUCE when building the plugin" FORCE)
+  endif()
+endif()
+
 if(DUSTPRESS_BUILD_PLUGIN)
   add_subdirectory(plugin)
 endif()
