@@ -5,3 +5,4 @@
 .vscode/ipch
 docs/media/.DS_Store
 native/build/
+native/.juce-src/
