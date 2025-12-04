@@ -26,11 +26,17 @@ cmake --build native/build
 That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 
 ### JUCE/VST3 plugin build (single source of truth)
-The canonical JUCE/VST3 build flow now mirrors the `native/plugin` README and the
-Horizon-ish preset path. Skip straight to the VST3 with the preset, or point at
-your own JUCE install if you already keep one on disk. Everything below reuses
-`native/.juce-kit` when present so you only fetch JUCE + the Steinberg VST3 SDK
-once.
+The legacy `native/juce` target is gone—one plugin path remains and it lives
+under `native/plugin`. Same presets as Horizon, same DSP core, just a DAW skin
+with a studio-notebook attitude. Skip straight to the VST3 with the preset, or
+point at your own JUCE install if you already keep one on disk. Everything
+below reuses `native/.juce-kit` when present so you only fetch JUCE + the
+Steinberg VST3 SDK once.
+
+The only toggle that matters is `DUSTPRESS_BUILD_PLUGIN=ON`; the retired
+`DUSTPRESS_BUILD_JUCE_PLUGIN` knob left with the `native/juce` directory. The
+remaining flow mirrors Horizon’s JUCE bootstrapper: fetch JUCE (plus the VST3
+SDK), install it into `native/.juce-kit`, and reuse that kit for future builds.
 
 #### JUCE bootstrap prerequisites (aka "please bring your own hammer")
 - `git` and `cmake` need to be on your `PATH` before running `tools/bootstrap_juce.sh`. The script now bails early with install
