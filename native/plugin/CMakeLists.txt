@@ -85,7 +85,7 @@ else()
     set(_dustpress_missing_helpers)
     foreach(_dustpress_helper IN LISTS _dustpress_required_juce_helpers)
       if(NOT EXISTS "${JUCE_DIR}/${_dustpress_helper}")
-        list(APPEND _dustpress_missing_helpers "${_dustpress_helper}")
+        list(APPEND _dustpress_missing_helpers "${JUCE_DIR}/${_dustpress_helper}")
       endif()
     endforeach()
 
@@ -93,8 +93,10 @@ else()
       string(REPLACE ";" "\n- " _dustpress_helper_list "${_dustpress_missing_helpers}")
       message(FATAL_ERROR
         "JUCE_DIR='${JUCE_DIR}' was set, but JUCE helper files are missing:\n- ${_dustpress_helper_list}\n"
-        "This usually means you pointed JUCE_DIR/CMAKE_PREFIX_PATH at a JUCE build tree that was never installed."
-        " Reconfigure JUCE with an install prefix and run 'cmake --install', or just run tools/bootstrap_juce.sh to drop a JUCE kit into native/.juce-kit and try again.")
+        "That path points at a raw JUCE build tree, not an installed kit with the helper CMake modules."
+        " Reconfigure JUCE with an install prefix and run 'cmake --install', or let this project do it for you with DUSTPRESS_FETCH_JUCE=ON"
+        " (default) / tools/bootstrap_juce.sh so ${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR} gains a full JUCE install."
+        " Then retry with JUCE_DIR or CMAKE_PREFIX_PATH aimed at that install instead of the build dir.")
     endif()
   endif()
 
