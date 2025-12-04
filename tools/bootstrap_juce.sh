@@ -2,12 +2,27 @@
 
 set -euo pipefail
 
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 JUCE_TAG="8.0.11"
-JUCE_SRC_DIR="native/.juce-src"
-JUCE_BUILD_DIR="native/.juce-build"
-JUCE_INSTALL_DIR="native/.juce-kit"
-# The JUCE extras (Projucer + juceaide) live in a nested build directory.
+JUCE_SRC_DIR="${REPO_ROOT}/native/.juce-src"
+JUCE_BUILD_DIR="${REPO_ROOT}/native/.juce-build"
+JUCE_INSTALL_DIR="${REPO_ROOT}/native/.juce-kit"
 JUCE_TOOLS_BUILD_DIR="${JUCE_BUILD_DIR}/tools"
+
+require_bin() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    cat <<EOF >&2
+[dust-press] Missing dependency: $1
+  Install it before bootstrapping JUCE. On Debian/Ubuntu: sudo apt-get install -y $1
+  On macOS with Homebrew: brew install $1
+EOF
+    exit 1
+  fi
+}
+
+require_bin git
+require_bin cmake
+
 # Xcode and other multi-config generators need an explicit configuration.
 # Let users override it (e.g. `JUCE_BUILD_CONFIG=Debug ./tools/bootstrap_juce.sh`)
 # but default to Release so we mirror JUCE's own guidance.
@@ -20,6 +35,14 @@ if [ ! -d "${JUCE_SRC_DIR}" ]; then
   git clone --branch "${JUCE_TAG}" --depth 1 https://github.com/juce-framework/JUCE.git "${JUCE_SRC_DIR}"
 else
   echo "[dust-press] JUCE source already present at ${JUCE_SRC_DIR}; skipping clone" >&2
+fi
+
+if [ -f "${JUCE_BUILD_DIR}/CMakeCache.txt" ]; then
+  cache_home=$(grep -E '^CMAKE_HOME_DIRECTORY:INTERNAL=' "${JUCE_BUILD_DIR}/CMakeCache.txt" | cut -d= -f2- || true)
+  if [ "${cache_home}" != "${JUCE_SRC_DIR}" ]; then
+    echo "[dust-press] Nuking stale JUCE build cache (it points at ${cache_home:-unknown}) → ${JUCE_BUILD_DIR}" >&2
+    rm -rf "${JUCE_BUILD_DIR}"
+  fi
 fi
 
 echo "[dust-press] Configuring JUCE CMake build → ${JUCE_BUILD_DIR}" >&2

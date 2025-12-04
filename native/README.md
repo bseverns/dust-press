@@ -25,6 +25,12 @@ cmake --build native/build
 ```
 That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 
+### JUCE bootstrap prerequisites (aka "please bring your own hammer")
+- `git` and `cmake` need to be on your `PATH` before running `tools/bootstrap_juce.sh`. The script now bails early with install
+  hints if either one is missing. Debian/Ubuntu: `sudo apt-get install -y git cmake`. macOS (Homebrew): `brew install git cmake`.
+- If you previously built JUCE from another checkout path and left a `native/.juce-build` cache behind, the bootstrapper will
+  wipe that cache so CMake stops complaining about mismatched source directories.
+
 ### Build the JUCE/VST3 shim
 This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg VST3 SDK for you **and drop a JUCE install into `native/.juce-kit`** so future builds can reuse it offline.
 
