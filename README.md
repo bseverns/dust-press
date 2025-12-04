@@ -71,7 +71,7 @@ native/build/dustpress_cli --in input.wav --out output.wav --drive-db 10 --curve
 
 The flow mirrors `AudioDustPress::update` (envelope gate → drive mod → tilt → curve bank → air → limiter → mix). See `native/README.md` for the punkier rundown.
 
-Need the JUCE/VST3 plugin to mirror Horizon’s host workflow? Hop to **[native/README.md](native/README.md#jucevst3-plugin-build-single-source-of-truth)** for the single, canonical build path.
+Need the JUCE/VST3 plugin to mirror Horizon’s host workflow? Hop to **[native/README.md](native/README.md#jucevst3-plugin-build-single-source-of-truth)** for the single, canonical build path—the legacy `native/juce` stub is gone, and everything funnels through `native/plugin` now.
 
 ## Preset listening tour
 Five starter presets live in `presets/presets.json`; they’re clamped to the canonical table in **[docs/USAGE.md](docs/USAGE.md)** so defaults never drift. Think tape-ish sheen (Tape Glow), console-ish warmth (Velvet Push), diode fuzz grime (Soot Fuzz), foldback chaos (Fold Storm), and limiter-forward safety net (Ghost Ceiling). Tweak them or roll your own and let the control map keep you honest.

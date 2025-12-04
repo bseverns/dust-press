@@ -1,15 +1,17 @@
 # DustPress JUCE plugin target
 
-This is the scrappy VST3 skin around `NativeDustPress`. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE.md), speaks stereo in/out, and keeps the DSP identical to the firmware path.
+This is the scrappy, canonical VST3 skin around `NativeDustPress`. The old
+`native/juce` target is retired; point every plugin experiment at this
+directory. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE.md), speaks stereo in/out, and keeps the DSP identical to the firmware path. Presets come straight from [`presets/presets.json`](../../presets/presets.json) so DAW state matches the Teensy demos.
 
 ## Build/Install
-1. Use the new preset if you just want the VST3 and don't feel like herding dependencies:
+1. Use the preset if you just want the VST3 and don't feel like herding dependencies:
    ```bash
-   cmake --preset native-plugin-release
-   cmake --build --preset native-plugin-release --config Release
-   ```
-   - The preset flips on the plugin target, fetches JUCE, and lets JUCE fetch the Steinberg VST3 SDK for you.
-2. Prefer hand-managed deps? You can still point at your existing JUCE install:
+ cmake --preset native-plugin-release
+  cmake --build --preset native-plugin-release --config Release
+  ```
+   - The preset flips on the plugin target, fetches JUCE, installs it into `native/.juce-kit` for reuse, and lets JUCE fetch the Steinberg VST3 SDK for you—same Horizon-flavored bootstrapper, now the only path.
+2. Prefer hand-managed deps? You can still point at your existing JUCE install. `DUSTPRESS_BUILD_PLUGIN=ON` is the only plugin toggle; the legacy `DUSTPRESS_BUILD_JUCE_PLUGIN` option has been excised:
    ```bash
    cmake -S native -B native/build \
      -DDUSTPRESS_BUILD_PLUGIN=ON \
