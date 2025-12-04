@@ -28,8 +28,8 @@ cmake -S "${JUCE_SRC_DIR}" -B "${JUCE_BUILD_DIR}" \
   -DJUCE_BUILD_EXTRAS=ON
 
 echo "[dust-press] Building juceaide + installing CMake package → ${JUCE_INSTALL_DIR} (config=${JUCE_BUILD_CONFIG})" >&2
-cmake --build "${JUCE_TOOLS_BUILD_DIR}" --target juceaide --config "${JUCE_BUILD_CONFIG}"
-cmake --install "${JUCE_TOOLS_BUILD_DIR}" --config "${JUCE_BUILD_CONFIG}"
+cmake --build "${JUCE_BUILD_DIR}" --target juceaide --config "${JUCE_BUILD_CONFIG}"
+cmake --install "${JUCE_BUILD_DIR}" --config "${JUCE_BUILD_CONFIG}"
 
 cat <<EOF >&2
 
