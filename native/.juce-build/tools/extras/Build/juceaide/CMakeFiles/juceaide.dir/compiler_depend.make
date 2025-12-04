@@ -299,6 +299,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: /Users/bseverns/Docume
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_SparseSet.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_Variant.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_CallbackListenerList.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_IncrementRef.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_LruCache.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_NativeFileHandle.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_AndroidDocument.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_DirectoryIterator.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_File.h \
@@ -310,10 +313,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: /Users/bseverns/Docume
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_RangedDirectoryIterator.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_TemporaryFile.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_WildcardFileFilter.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSON.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONSerialisation.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONUtils.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_Javascript.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSON.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSONSerialisation.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSONUtils.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_FileLogger.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_Logger.h \
@@ -328,6 +330,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: /Users/bseverns/Docume
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_Atomic.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_ByteOrder.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_ContainerDeletePolicy.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_CopyableHeapBlock.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_HeapBlock.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_HeavyweightLeakedObjectDetector.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_LeakedObjectDetector.h \
@@ -343,6 +346,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: /Users/bseverns/Docume
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_ConsoleApplication.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_EnumHelpers.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_Functional.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_OptionsHelpers.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_OrderedContainerHelpers.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_Result.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_RuntimePermissions.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_ScopeGuard.h \
@@ -453,15 +458,22 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: /Users/bseverns/Docume
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/colour/juce_PixelFormats.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_GraphicsContext.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsContext.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsPostScriptRenderer.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsSoftwareRenderer.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_FontRendering.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_JustifiedText.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_Ranges.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_ShapedText.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_SimpleShapedText.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_Unicode.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/effects/juce_DropShadowEffect.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/effects/juce_GlowEffect.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/effects/juce_ImageEffectFilter.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_AttributedString.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_CustomTypeface.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_Font.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_FontFeatures.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_FontOptions.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangement.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangementOptions.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_TextLayout.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_Typeface.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/geometry/juce_AffineTransform.h \
@@ -582,7 +594,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: /Users/bseverns/Docume
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_BubbleComponent.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_DropShadower.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_FocusOutline.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_JUCESplashScreen.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_ComponentDragger.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_DragAndDropContainer.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_DragAndDropTarget.h \
@@ -8633,8 +8644,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_ToolbarItemPalette.cpp:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_ToolbarItemComponent.cpp:
-
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_Slider.cpp:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_Label.cpp:
@@ -9075,6 +9084,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_Font.cpp:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_CustomTypeface.h:
+
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_CustomTypeface.cpp:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_AttributedString.cpp:
@@ -9207,8 +9218,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDDeviceTypes.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDDeviceKeys.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFPlugInCOM.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/values/juce_ValueTree.cpp:
@@ -9337,9 +9346,17 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core.cpp:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_Javascript.h:
+
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_Javascript.cpp:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONUtils.h:
+
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONUtils.cpp:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONSerialisation.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSON.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_common_MimeTypes.cpp:
 
@@ -9591,19 +9608,17 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine/kern_return.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_Logger.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine/boolean.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSButtonTouchBarItem.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTextAlternatives.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_traps.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_voucher_types.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityActions.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_types.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_port.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_interface.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_error.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/lock_set.h:
 
@@ -10105,9 +10120,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CoreVideo.h:
 
-/Library/Developer/CommandLineTools/usr/include/c++/v1/vector:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPopoverTouchBarItem.h:
+
+/Library/Developer/CommandLineTools/usr/include/c++/v1/vector:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSScriptStandardSuiteCommands.h:
 
@@ -10571,9 +10586,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/cstdarg:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/commands/juce_ApplicationCommandInfo.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSURLProtectionSpace.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/commands/juce_ApplicationCommandInfo.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFDictionary.h:
 
@@ -10584,6 +10599,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFCalendar.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFByteOrder.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_JustifiedText.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFBundle.h:
 
@@ -10749,6 +10766,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSText.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSON.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Headers/ApplicationServices.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/limits.h:
@@ -10819,9 +10838,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CIPlugIn.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ScopedWriteLock.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_uintptr_t.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ScopedWriteLock.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATSUI.framework/Headers/ATSUnicode.h:
 
@@ -10874,8 +10893,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSUserDefaultsController.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTreeNode.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTreeController.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_iovec_t.h:
 
@@ -10933,6 +10950,14 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTextAttachment.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_voucher_types.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_Logger.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSButtonTouchBarItem.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTextAlternatives.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTableView.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/image_formats/jpglib/jchuff.c:
@@ -10989,9 +11014,11 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSSplitViewItem.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/positioning/juce_RelativeParallelogram.h:
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_FontOptions.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/pthread/sched.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/positioning/juce_RelativeParallelogram.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSSplitViewController.h:
 
@@ -11065,21 +11092,27 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSRotationGestureRecognizer.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSPersistentHistoryChange.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/PrintCore.framework/Headers/PMPrintAETypes.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/juce_data_structures.h:
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_OptionalScopedPointer.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_TooltipWindow.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_ComponentAnimator.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityRole.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPrintOperation.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPrintPanel.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/pwr_mgt/IOPMLibDefs.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPrintInfo.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/IOMessage.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/emmspi.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_DeletedAtShutdown.cpp:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_SubregionStream.cpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPressureConfiguration.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPressGestureRecognizer.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_FileInputStream.cpp:
 
@@ -11153,10 +11186,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_key_t.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/MacErrors.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSLayoutManager.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSObjectController.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/TargetConditionals.h:
@@ -11164,14 +11193,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSAppleScriptExtensions.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSLayoutConstraint.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSURLRequest.h:
-
-/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/avxintrin.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_posix_availability.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_u_int64_t.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_Font.h:
 
@@ -11219,8 +11240,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSParagraphStyle.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSGroupTouchBarItem.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSFontCollection.h:
@@ -11251,6 +11270,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSGestureRecognizer.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSFormCell.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLCounters.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:
@@ -11258,6 +11279,10 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSFontManager.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/host_security.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/hid/IOHIDDeviceKeys.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_OptionsHelpers.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSFontAssetRequest.h:
 
@@ -11327,6 +11352,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/condition_variable:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_IncrementRef.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSColorPicker.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSCollectionViewGridLayout.h:
@@ -11381,6 +11408,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSAffineTransform.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_SimpleShapedText.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_size_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSAccessibilityCustomAction.h:
@@ -11404,8 +11433,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CoreFoundation.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine/boolean.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers/LSQuarantine.h:
 
@@ -11464,12 +11491,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CIFilterConstructor.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_CallOutBox.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVPixelBufferIOSurface.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSStoryboard.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_ToolbarItemPalette.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers/IconStorage.h:
 
@@ -11537,6 +11558,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_TooltipClient.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_SelectedItemSet.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPopUpButton.h:
@@ -11576,16 +11599,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATSUI.framework/Headers/ATSUnicodeGlyphs.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_pthread/_pthread_once_t.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_SelectedItemSet.h:
-
-/Library/Developer/CommandLineTools/usr/include/c++/v1/__debug:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_wchar_t.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/machine/limits.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_JUCESplashScreen.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/geometry/juce_Parallelogram.h:
 
@@ -11713,7 +11726,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/PrintCore.framework/Headers/PMErrors.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSON.h:
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityRole.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_ComponentAnimator.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSHapticFeedback.h:
 
@@ -11789,15 +11804,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/filebrowser/juce_FileBrowserComponent.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/_types/_wctype_t.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSClipView.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPICTImageRep.h:
-
-/Library/Developer/CommandLineTools/usr/include/c++/v1/new:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/SharedFileList.framework/Headers/SharedFileList.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSONUtils.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/netdb.h:
 
@@ -11816,12 +11825,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/components/juce_CachedComponentImage.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/commands/juce_KeyPressMappingSet.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/PrintCore.framework/Headers/PMPrintAETypes.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_OptionalScopedPointer.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPrintPanel.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/detail/juce_ComponentHelpers.h:
 
@@ -11848,6 +11851,18 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/juce_AccessibilityHandler.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityCellInterface.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSPersistentHistoryChange.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPrintOperation.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/juce_data_structures.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_TooltipWindow.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_types.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityActions.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSOpenPanel.h:
 
@@ -11917,6 +11932,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSPropertyDescription.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSONSerialisation.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSToolbar.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTableViewRowAction.h:
@@ -11955,30 +11972,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/geometry/juce_EdgeTable.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework/Headers/IOMessage.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/emmspi.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_DeletedAtShutdown.cpp:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_SubregionStream.cpp:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPressureConfiguration.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/system/juce_SystemStats.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_Initialisation.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSOrderedSet.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers/WSProtocolHandler.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/stdio.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/native/juce_Process_mac.mm:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangement.h:
-
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/native/juce_Windowing_mac.mm:
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/__node_handle:
@@ -11987,11 +11980,19 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_TextDragAndDropTarget.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_Unicode.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine/_structs.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSUserDefaults.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_ShapedText.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_Ranges.h:
+
 /Library/Developer/CommandLineTools/usr/include/c++/v1/ios:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsSoftwareRenderer.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecCertificateOIDs.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/_types.h:
 
@@ -12023,8 +12024,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/colour/juce_Colour.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_traps.h:
-
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_ScaledImage.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_CallOutBox.cpp:
@@ -12038,6 +12037,12 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_MountedVolumeListChangeDetector.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_Message.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSOrderedSet.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/system/juce_SystemStats.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_Initialisation.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSProgressIndicator.h:
 
@@ -12177,20 +12182,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ThreadLocalValue.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSEntityDescription.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSMediaLibraryBrowserController.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/image_formats/pnglib/pngread.c:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_AndroidDocument.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/oidsattr.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/lock.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ScopedReadLock.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/AuthorizationTags.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_AllocationHooks.h:
@@ -12222,6 +12213,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/usr/include/c++/v1/filesystem:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/dispatch/block.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecCertificateOIDs.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecureTransport.h:
 
@@ -12327,28 +12320,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_MemoryOutputStream.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSProtocolChecker.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSPersistentStoreRequest.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSToolbarItem.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/image_formats/jpglib/jcmarker.c:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_CallbackMessage.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolOptions.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSATSTypesetter.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/FoundationErrors.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/properties/juce_ChoicePropertyComponent.cpp:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFDateFormatter.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_InputSource.h:
-
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_SidePanel.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_Thread.h:
@@ -12399,6 +12370,14 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_DynamicLibrary.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/network/juce_NamedPipe.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsSoftwareRenderer.cpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/alloca.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_OrderedContainerHelpers.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLRenderPipeline.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine/thread_status.h:
@@ -12422,6 +12401,12 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_pthread/_pthread_cond_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSApplication.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/avx512vpopcntdqintrin.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_FileFilter.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_FontRendering.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Accessibility.h:
 
@@ -12461,6 +12446,18 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_ReferenceCountedArray.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers/WSProtocolHandler.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/stdio.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/native/juce_Process_mac.mm:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangement.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_ToolbarItemComponent.cpp:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_CopyableHeapBlock.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecImportExport.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreText.framework/Headers/CTFramesetter.h:
@@ -12477,41 +12474,23 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/maths/juce_Random.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_FileLogger.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreVideo.framework/Headers/CVPixelBufferIOSurface.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSStoryboard.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_ToolbarItemPalette.h:
+
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_RuntimePermissions.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/text/juce_CharPointer_UTF8.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_FileLogger.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSFormCell.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_useconds_t.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_Javascript.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/endian.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/buttons/juce_ToggleButton.h:
-
-/Library/Developer/CommandLineTools/usr/include/c++/v1/__hash_table:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/nl_types.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_EnumHelpers.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONUtils.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONSerialisation.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/maths/juce_MathsFunctions.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gltypes.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_WildcardFileFilter.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/machine/_structs.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSUserDefaults.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_MemoryMappedFile.h:
 
@@ -12537,13 +12516,63 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/deque:
 
-/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/avx512vpopcntdqintrin.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSEntityDescription.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_FileFilter.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSMediaLibraryBrowserController.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/oidsattr.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/lock.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ScopedReadLock.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/image_formats/pnglib/pngread.c:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_AndroidDocument.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSProtocolChecker.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSPersistentStoreRequest.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSToolbarItem.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/image_formats/jpglib/jcmarker.c:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_CallbackMessage.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecProtocolOptions.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSATSTypesetter.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/FoundationErrors.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/properties/juce_ChoicePropertyComponent.cpp:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFDateFormatter.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_InputSource.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_NamedValueSet.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_LruCache.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/_types/_wctype_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSClipView.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPICTImageRep.h:
+
+/Library/Developer/CommandLineTools/usr/include/c++/v1/new:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSRunLoop.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_SparseSet.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/MacErrors.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSLayoutManager.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSTreeController.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSBatchDeleteRequest.h:
 
@@ -12671,10 +12700,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/stddef.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSURLError.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_time.h:
-
 /Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/stdbool.h:
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/utility:
@@ -12724,6 +12749,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/usr/include/c++/v1/queue:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_pthread/_pthread_rwlockattr_t.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_NativeFileHandle.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/libkern/OSSpinLockDeprecated.h:
 
@@ -12782,6 +12809,12 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecReadTransform.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGPDFContext.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_JUCESplashScreen.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_wchar_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/machine/limits.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_Process.h:
 
@@ -12867,6 +12900,10 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/appleapiopts.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_time.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSURLError.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindowTabGroup.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/interprocess/juce_ConnectedChildProcess.cpp:
@@ -12904,6 +12941,14 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_StretchableLayoutManager.cpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSMovie.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_EnumHelpers.h:
+
+/Library/Developer/CommandLineTools/usr/include/c++/v1/__hash_table:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/nl_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_useconds_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSInvocation.h:
 
@@ -12961,8 +13006,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/_types/_uint16_t.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_port.h:
-
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/native/juce_PlatformTimer_generic.cpp:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Security.framework/Headers/SecRequirement.h:
@@ -12974,6 +13017,14 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_FileInputSource.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ReadWriteLock.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSURLRequest.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include/avxintrin.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_posix_availability.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_u_int64_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_mode_t.h:
 
@@ -13002,6 +13053,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/commands/juce_KeyPressMappingSet.cpp:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/filebrowser/juce_FileBrowserListener.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_FontFeatures.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/commands/juce_ApplicationCommandManager.h:
 
@@ -13069,6 +13122,10 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_wint_t.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/endian.h:
+
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/buttons/juce_ToggleButton.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/_limits.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_AlertWindow.cpp:
@@ -13095,9 +13152,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/placement/juce_RectanglePlacement.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/system/juce_TargetPlatform.h:
+/Library/Developer/CommandLineTools/usr/include/c++/v1/__debug:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSPressGestureRecognizer.h:
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/system/juce_TargetPlatform.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/simd/logic.h:
 
@@ -13159,8 +13216,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSHelpManager.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_CustomTypeface.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_blkcnt_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSBatchUpdateRequest.h:
@@ -13201,6 +13256,8 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_endian.h:
 
+/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangementOptions.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/FSEvents.framework/Headers/FSEvents.h:
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/stdio.h:
@@ -13233,8 +13290,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/properties/juce_SliderPropertyComponent.h:
 
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/network/juce_NamedPipe.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/pthread/qos.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_TemporaryFile.h:
@@ -13255,8 +13310,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/memory:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/mach/mach_error.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/CATiledLayer.h:
 
 /Library/Developer/CommandLineTools/usr/include/c++/v1/bit:
@@ -13265,15 +13318,11 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_FixedSizeFunction.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/HIShape.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsSoftwareRenderer.cpp:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/alloca.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSObjectScripting.h:
 
 /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/threads/juce_ScopedLock.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/HIShape.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSSecureTextField.h:
 
@@ -13344,8 +13393,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_too
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreData.framework/Headers/NSFetchedResultsController.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSOutlineView.h:
-
-/Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_NamedValueSet.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CoreImage.framework/Headers/CIImage.h:
 
