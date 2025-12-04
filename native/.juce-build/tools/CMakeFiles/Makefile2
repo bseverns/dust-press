@@ -146,12 +146,12 @@ modules/clean:
 extras/Build/juceaide/CMakeFiles/juceaide.dir/all:
 	$(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/depend
 	$(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target juceaide"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target juceaide"
 .PHONY : extras/Build/juceaide/CMakeFiles/juceaide.dir/all
 
 # Build rule for subdir invocation for target.
 extras/Build/juceaide/CMakeFiles/juceaide.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 extras/Build/juceaide/CMakeFiles/juceaide.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles 0
 .PHONY : extras/Build/juceaide/CMakeFiles/juceaide.dir/rule
@@ -163,7 +163,7 @@ juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/rule
 # codegen rule for target.
 extras/Build/juceaide/CMakeFiles/juceaide.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Finished codegen for target juceaide"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Finished codegen for target juceaide"
 .PHONY : extras/Build/juceaide/CMakeFiles/juceaide.dir/codegen
 
 # clean rule for target.

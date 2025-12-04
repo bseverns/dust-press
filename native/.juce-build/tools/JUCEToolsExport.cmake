@@ -49,10 +49,10 @@ unset(_cmake_expected_targets)
 # Create imported target juce_tools::juceaide
 add_executable(juce_tools::juceaide IMPORTED)
 
-# Import target "juce_tools::juceaide" for configuration "Debug"
-set_property(TARGET juce_tools::juceaide APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+# Import target "juce_tools::juceaide" for configuration "Custom"
+set_property(TARGET juce_tools::juceaide APPEND PROPERTY IMPORTED_CONFIGURATIONS CUSTOM)
 set_target_properties(juce_tools::juceaide PROPERTIES
-  IMPORTED_LOCATION_DEBUG "/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide/juceaide_artefacts/Debug/juceaide"
+  IMPORTED_LOCATION_CUSTOM "/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide/juceaide_artefacts/Custom/juceaide"
   )
 
 # This file does not depend on other imported targets which have

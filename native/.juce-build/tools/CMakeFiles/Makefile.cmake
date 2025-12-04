@@ -71,7 +71,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "modules/CMakeFiles/CMakeDirectoryInformation.cmake"
   "extras/Build/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "extras/Build/juceaide/juceaide_artefacts/JuceLibraryCode/Debug/Defs.txt"
+  "extras/Build/juceaide/juceaide_artefacts/JuceLibraryCode/Custom/Defs.txt"
   "extras/Build/juceaide/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

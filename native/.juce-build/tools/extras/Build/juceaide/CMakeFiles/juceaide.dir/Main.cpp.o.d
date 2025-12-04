@@ -270,6 +270,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_os_inline.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/signal.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_EnumHelpers.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_OrderedContainerHelpers.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_Memory.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/maths/juce_MathsFunctions.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_ByteOrder.h \
@@ -286,6 +287,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_ContainerDeletePolicy.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_HeapBlock.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_MemoryBlock.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_CopyableHeapBlock.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_ReferenceCountedObject.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_ScopedPointer.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_OptionalScopedPointer.h \
@@ -329,7 +331,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_ConsoleApplication.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_Variant.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_NamedValueSet.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSON.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSON.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_DynamicObject.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_HashMap.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/containers/juce_FixedSizeFunction.h \
@@ -345,6 +347,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_File.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_DirectoryIterator.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_RangedDirectoryIterator.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_NativeFileHandle.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_FileInputStream.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_FileOutputStream.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_FileSearchPath.h \
@@ -354,10 +357,9 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_WildcardFileFilter.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_FileInputSource.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/logging/juce_FileLogger.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONUtils.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSONUtils.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/serialisation/juce_Serialisation.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_JSONSerialisation.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/javascript/juce_Javascript.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/json/juce_JSONSerialisation.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/maths/juce_BigInteger.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/maths/juce_Expression.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/maths/juce_Random.h \
@@ -397,7 +399,10 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/memory/juce_Reservoir.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/files/juce_AndroidDocument.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/streams/juce_AndroidDocumentInputSource.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/misc/juce_OptionsHelpers.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_CallbackListenerList.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_LruCache.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/detail/juce_IncrementRef.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/juce_events.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_MessageManager.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/messages/juce_Message.h \
@@ -443,23 +448,30 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_ImageCache.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_ImageConvolutionKernel.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_ImageFileFormat.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangementOptions.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_GraphicsContext.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_Image.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/colour/juce_FillType.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_FontFeatures.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_Typeface.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_FontOptions.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_Font.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_Ranges.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_SimpleShapedText.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_JustifiedText.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_ShapedText.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_AttributedString.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_GlyphArrangement.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_TextLayout.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/fonts/juce_CustomTypeface.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_GraphicsContext.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsContext.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_Image.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/images/juce_ScaledImage.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/colour/juce_FillType.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_FontRendering.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/native/juce_RenderingHelpers.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsSoftwareRenderer.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/contexts/juce_LowLevelGraphicsPostScriptRenderer.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/effects/juce_ImageEffectFilter.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/effects/juce_DropShadowEffect.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/effects/juce_GlowEffect.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/detail/juce_Unicode.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/juce_data_structures.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/undomanager/juce_UndoableAction.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/undomanager/juce_UndoManager.h \
@@ -529,6 +541,16 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_StretchableObjectResizer.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_TabbedButtonBar.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_TabbedComponent.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityCellInterface.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityTableInterface.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityTextInterface.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityValueInterface.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityActions.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityEvent.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityRole.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/juce_AccessibilityState.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/juce_AccessibilityHandler.h \
+  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/drawables/juce_Drawable.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_Viewport.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/menus/juce_PopupMenu.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/menus/juce_MenuBarModel.h \
@@ -540,7 +562,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/positioning/juce_RelativeCoordinatePositioner.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/positioning/juce_RelativeParallelogram.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/positioning/juce_RelativePointPath.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/drawables/juce_Drawable.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/drawables/juce_DrawableShape.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/drawables/juce_DrawableComposite.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/drawables/juce_DrawableImage.h \
@@ -564,7 +585,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/buttons/juce_ToolbarButton.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_DropShadower.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_FocusOutline.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/misc/juce_JUCESplashScreen.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/widgets/juce_TreeView.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_TopLevelWindow.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/windows/juce_MessageBoxOptions.h \
@@ -612,15 +632,6 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o: \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/lookandfeel/juce_LookAndFeel_V3.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/lookandfeel/juce_LookAndFeel_V4.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/mouse/juce_LassoComponent.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityCellInterface.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityTableInterface.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityTextInterface.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/interfaces/juce_AccessibilityValueInterface.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityActions.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityEvent.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/enums/juce_AccessibilityRole.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/juce_AccessibilityState.h \
-  /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/accessibility/juce_AccessibilityHandler.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_FlexItem.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_FlexBox.h \
   /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/layout/juce_GridItem.h \

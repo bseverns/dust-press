@@ -114,10 +114,38 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/j
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.mm.s"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_gui_basics/juce_gui_basics.mm -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.mm.s
 
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp > CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Harfbuzz.cpp -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c > CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics_Sheenbidi.c -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s
+
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics.mm
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_graphics/juce_graphics.mm
 
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.i: cmake_force
@@ -131,7 +159,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juc
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/juce_events.mm
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/juce_events.mm
 
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.i: cmake_force
@@ -142,10 +170,24 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.s"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_events/juce_events.mm -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.s
 
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core_CompilationTime.cpp
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core_CompilationTime.cpp
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core_CompilationTime.cpp > CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i
+
+extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s"
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core_CompilationTime.cpp -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s
+
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core.mm
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_core/juce_core.mm
 
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.i: cmake_force
@@ -159,7 +201,7 @@ extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_co
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/flags.make
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o: /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/juce_data_structures.mm
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o: extras/Build/juceaide/CMakeFiles/juceaide.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o -MF CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o.d -o CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o -c /Users/bseverns/Documents/GitHub/dust-press/native/.juce-src/modules/juce_data_structures/juce_data_structures.mm
 
 extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.i: cmake_force
@@ -175,28 +217,34 @@ juceaide_OBJECTS = \
 "CMakeFiles/juceaide.dir/Main.cpp.o" \
 "CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_tools.cpp.o" \
 "CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.mm.o" \
+"CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o" \
+"CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o" \
 "CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o" \
 "CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o" \
+"CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o" \
 "CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o" \
 "CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o"
 
 # External object files for target juceaide
 juceaide_EXTERNAL_OBJECTS =
 
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_tools.cpp.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.mm.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make
-extras/Build/juceaide/juceaide_artefacts/Debug/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable juceaide_artefacts/Debug/juceaide"
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_tools.cpp.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.mm.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make
+extras/Build/juceaide/juceaide_artefacts/Custom/juceaide: extras/Build/juceaide/CMakeFiles/juceaide.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable juceaide_artefacts/Custom/juceaide"
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools/extras/Build/juceaide && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/juceaide.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-extras/Build/juceaide/CMakeFiles/juceaide.dir/build: extras/Build/juceaide/juceaide_artefacts/Debug/juceaide
+extras/Build/juceaide/CMakeFiles/juceaide.dir/build: extras/Build/juceaide/juceaide_artefacts/Custom/juceaide
 .PHONY : extras/Build/juceaide/CMakeFiles/juceaide.dir/build
 
 extras/Build/juceaide/CMakeFiles/juceaide.dir/clean:

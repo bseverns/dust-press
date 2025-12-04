@@ -224,6 +224,30 @@ __/__/__/modules/juce_core/juce_core.mm.s:
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.s
 .PHONY : __/__/__/modules/juce_core/juce_core.mm.s
 
+__/__/__/modules/juce_core/juce_core_CompilationTime.o: __/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o
+.PHONY : __/__/__/modules/juce_core/juce_core_CompilationTime.o
+
+# target to build an object file
+__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o
+.PHONY : __/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o
+
+__/__/__/modules/juce_core/juce_core_CompilationTime.i: __/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i
+.PHONY : __/__/__/modules/juce_core/juce_core_CompilationTime.i
+
+# target to preprocess a source file
+__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i
+.PHONY : __/__/__/modules/juce_core/juce_core_CompilationTime.cpp.i
+
+__/__/__/modules/juce_core/juce_core_CompilationTime.s: __/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s
+.PHONY : __/__/__/modules/juce_core/juce_core_CompilationTime.s
+
+# target to generate assembly for a file
+__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s
+.PHONY : __/__/__/modules/juce_core/juce_core_CompilationTime.cpp.s
+
 __/__/__/modules/juce_data_structures/juce_data_structures.o: __/__/__/modules/juce_data_structures/juce_data_structures.mm.o
 .PHONY : __/__/__/modules/juce_data_structures/juce_data_structures.o
 
@@ -296,6 +320,54 @@ __/__/__/modules/juce_graphics/juce_graphics.mm.s:
 	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.s
 .PHONY : __/__/__/modules/juce_graphics/juce_graphics.mm.s
 
+__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.o: __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.o
+
+# target to build an object file
+__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+
+__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.i: __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.i
+
+# target to preprocess a source file
+__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.i
+
+__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.s: __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.s
+
+# target to generate assembly for a file
+__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.s
+
+__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.o: __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.o
+
+# target to build an object file
+__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+
+__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.i: __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.i
+
+# target to preprocess a source file
+__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.i
+
+__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.s: __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.s
+
+# target to generate assembly for a file
+__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s:
+	cd /Users/bseverns/Documents/GitHub/dust-press/native/.juce-build/tools && $(MAKE) $(MAKESILENT) -f extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s
+.PHONY : __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.s
+
 __/__/__/modules/juce_gui_basics/juce_gui_basics.o: __/__/__/modules/juce_gui_basics/juce_gui_basics.mm.o
 .PHONY : __/__/__/modules/juce_gui_basics/juce_gui_basics.o
 
@@ -363,6 +435,9 @@ help:
 	@echo "... __/__/__/modules/juce_core/juce_core.o"
 	@echo "... __/__/__/modules/juce_core/juce_core.i"
 	@echo "... __/__/__/modules/juce_core/juce_core.s"
+	@echo "... __/__/__/modules/juce_core/juce_core_CompilationTime.o"
+	@echo "... __/__/__/modules/juce_core/juce_core_CompilationTime.i"
+	@echo "... __/__/__/modules/juce_core/juce_core_CompilationTime.s"
 	@echo "... __/__/__/modules/juce_data_structures/juce_data_structures.o"
 	@echo "... __/__/__/modules/juce_data_structures/juce_data_structures.i"
 	@echo "... __/__/__/modules/juce_data_structures/juce_data_structures.s"
@@ -372,6 +447,12 @@ help:
 	@echo "... __/__/__/modules/juce_graphics/juce_graphics.o"
 	@echo "... __/__/__/modules/juce_graphics/juce_graphics.i"
 	@echo "... __/__/__/modules/juce_graphics/juce_graphics.s"
+	@echo "... __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.o"
+	@echo "... __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.i"
+	@echo "... __/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.s"
+	@echo "... __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.o"
+	@echo "... __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.i"
+	@echo "... __/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.s"
 	@echo "... __/__/__/modules/juce_gui_basics/juce_gui_basics.o"
 	@echo "... __/__/__/modules/juce_gui_basics/juce_gui_basics.i"
 	@echo "... __/__/__/modules/juce_gui_basics/juce_gui_basics.s"
