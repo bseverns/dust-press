@@ -3,7 +3,7 @@
 option(DUSTPRESS_FETCH_JUCE "Automatically fetch JUCE (plus the VST3 SDK) for plugin builds" ON)
 option(DUSTPRESS_FETCH_VST3_SDK "Allow the JUCE build to pull down the Steinberg VST3 SDK" ON)
 option(DUSTPRESS_INSTALL_FETCHED_JUCE "Install auto-fetched JUCE into a reusable native/.juce-kit" ON)
-set(DUSTPRESS_JUCE_GIT_TAG "7.0.12" CACHE STRING "JUCE tag/branch to fetch when auto-downloading")
+set(DUSTPRESS_JUCE_GIT_TAG "8.0.11" CACHE STRING "JUCE tag/branch to fetch when auto-downloading")
 
 set(DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR "${PROJECT_SOURCE_DIR}/.juce-kit" CACHE PATH "Optional JUCE install dir to reuse instead of fetching")
 set(DUSTPRESS_LOCAL_JUCE_BUILD_DIR "${PROJECT_SOURCE_DIR}/.juce-build" CACHE PATH "Legacy pre-configured JUCE build tree to reuse instead of fetching")
@@ -79,7 +79,7 @@ else()
   if(JUCE_DIR)
     if(NOT EXISTS "${JUCE_DIR}/JUCEConfig.cmake")
       message(FATAL_ERROR
-        "JUCE_DIR='${JUCE_DIR}' does not contain JUCEConfig.cmake. Point it at an installed JUCE prefix (e.g. <juce>/kit/lib/cmake/JUCE-7.0.12) or run tools/bootstrap_juce.sh to drop one into native/.juce-kit.")
+        "JUCE_DIR='${JUCE_DIR}' does not contain JUCEConfig.cmake. Point it at an installed JUCE prefix (e.g. <juce>/kit/lib/cmake/JUCE-8.0.11) or run tools/bootstrap_juce.sh to drop one into native/.juce-kit.")
     endif()
 
     set(_dustpress_missing_helpers)

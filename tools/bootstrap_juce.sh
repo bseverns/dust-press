@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-JUCE_TAG="7.0.12"
+JUCE_TAG="8.0.11"
 JUCE_SRC_DIR="native/.juce-src"
 JUCE_BUILD_DIR="native/.juce-build"
 JUCE_INSTALL_DIR="native/.juce-kit"
