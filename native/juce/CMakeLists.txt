@@ -7,7 +7,7 @@ set(JUCE_ENABLE_MODULE_SOURCE_GROUPS ON)
 FetchContent_Declare(
   juce
   GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-  GIT_TAG 7.0.12
+  GIT_TAG 8.0.11
 )
 
 FetchContent_MakeAvailable(juce)
