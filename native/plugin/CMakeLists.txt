@@ -46,13 +46,28 @@ if(DUSTPRESS_FETCH_JUCE)
       set(_dustpress_juce_install_config "Release")
     endif()
 
+    # Some environments drop JUCE into our build tree without the extras already
+    # wired up (and therefore without a juceaide target for the install step).
+    # If we can’t see juceaide yet, explicitly pull in the extras CMakeLists to
+    # stitch that target into our main Ninja graph before we try to build it.
+    if(NOT TARGET juceaide)
+      add_subdirectory("${juce_SOURCE_DIR}/extras/Build" "${juce_BINARY_DIR}/extras")
+    endif()
+
+    # JUCE’s build glues juceaide into the configure step rather than exposing a
+    # durable build target. Drive the install directly; juceaide will have been
+    # produced while configuring the extras subdir above.
+    set(_dustpress_juceaide_bin
+      "${juce_BINARY_DIR}/tools/extras/Build/juceaide/juceaide_artefacts/Custom/juceaide")
+
     # JUCE lives inside the top-level Ninja graph; its build.ninja does not sit
     # under juce_BINARY_DIR. Drive the build/install from the main binary dir
     # so CMake can find the generator files it wrote for the fetch content.
     add_custom_target(dustpress_install_fetched_juce
-      COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target juceaide --config "${_dustpress_juce_install_config}"
       COMMAND ${CMAKE_COMMAND} --install "${CMAKE_BINARY_DIR}" --config "${_dustpress_juce_install_config}"
-      BYPRODUCTS "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake"
+      BYPRODUCTS
+        "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake"
+        "${_dustpress_juceaide_bin}"
       COMMENT "Installing fetched JUCE into ${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR} (${_dustpress_juce_install_config})"
       VERBATIM)
   endif()
