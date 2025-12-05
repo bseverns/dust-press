@@ -20,9 +20,38 @@ if(DUSTPRESS_FETCH_JUCE)
     GIT_TAG ${DUSTPRESS_JUCE_GIT_TAG}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}
+      # Headless CI images frequently lack XRandR/Xinerama headers; juceaide
+      # doesn’t need multi-monitor support, so turn off the X11 multi-head bits
+      # to keep the helper tool building without extra system deps.
+      -DJUCE_USE_XRANDR=0
+      -DJUCE_USE_XINERAMA=0
+      -DCMAKE_CXX_FLAGS=-DJUCE_USE_XRANDR=0\ -DJUCE_USE_XINERAMA=0
+      -DJUCE_USE_ALSA=0
+      # juceaide (the codegen tool JUCE bakes into the build) only lands in the
+      # extras target set. We install JUCE as part of the build to prime a
+      # reusable kit under native/.juce-kit, and the install step shells out to
+      # `cmake --build ... --target juceaide` before running `cmake --install`
+      # so JUCE’s helper CMake modules actually make it into that prefix. Make
+      # sure the extras are on so that target exists for Ninja to build.
+      -DJUCE_BUILD_EXTRAS=ON
   )
 
   FetchContent_MakeAvailable(juce)
+
+  # Force JUCE’s GUI modules to skip optional X11 multi-head helpers so the
+  # juceaide build doesn’t rely on headers that aren’t present in minimal CI
+  # images.
+  set(_dustpress_gui_basics_header "${juce_SOURCE_DIR}/modules/juce_gui_basics/juce_gui_basics.h")
+  if(EXISTS "${_dustpress_gui_basics_header}")
+    file(READ "${_dustpress_gui_basics_header}" _dustpress_gui_basics_contents)
+    set(_dustpress_gui_basics_patched "${_dustpress_gui_basics_contents}")
+    string(REPLACE "#ifndef JUCE_USE_XRANDR\n #define JUCE_USE_XRANDR 1" "#ifndef JUCE_USE_XRANDR\n #define JUCE_USE_XRANDR 0" _dustpress_gui_basics_patched "${_dustpress_gui_basics_patched}")
+    string(REPLACE "#ifndef JUCE_USE_XINERAMA\n #define JUCE_USE_XINERAMA 1" "#ifndef JUCE_USE_XINERAMA\n #define JUCE_USE_XINERAMA 0" _dustpress_gui_basics_patched "${_dustpress_gui_basics_patched}")
+
+    if(NOT _dustpress_gui_basics_patched STREQUAL _dustpress_gui_basics_contents)
+      file(WRITE "${_dustpress_gui_basics_header}" "${_dustpress_gui_basics_patched}")
+    endif()
+  endif()
 
   if(DUSTPRESS_INSTALL_FETCHED_JUCE)
     FetchContent_GetProperties(juce)
@@ -39,13 +68,34 @@ if(DUSTPRESS_FETCH_JUCE)
       set(_dustpress_juce_install_config "Release")
     endif()
 
+    # Always push the JUCE install into our repo-local kit instead of the
+    # default /usr/local prefix so CI jobs without sudo do not explode mid-build.
+    file(MAKE_DIRECTORY "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}")
+
+    # Some environments drop JUCE into our build tree without the extras already
+    # wired up (and therefore without a juceaide target for the install step).
+    # If we can’t see juceaide yet, explicitly pull in the extras CMakeLists to
+    # stitch that target into our main Ninja graph before we try to build it.
+    if(NOT TARGET juceaide)
+      add_compile_definitions(JUCE_USE_XRANDR=0 JUCE_USE_XINERAMA=0)
+      add_subdirectory("${juce_SOURCE_DIR}/extras/Build" "${juce_BINARY_DIR}/extras")
+    endif()
+
+
+    # JUCE’s build glues juceaide into the configure step rather than exposing a
+    # durable build target. Drive the install directly; juceaide will have been
+    # produced while configuring the extras subdir above.
+    set(_dustpress_juceaide_bin
+      "${juce_BINARY_DIR}/tools/extras/Build/juceaide/juceaide_artefacts/Custom/juceaide")
+
     # JUCE lives inside the top-level Ninja graph; its build.ninja does not sit
     # under juce_BINARY_DIR. Drive the build/install from the main binary dir
     # so CMake can find the generator files it wrote for the fetch content.
     add_custom_target(dustpress_install_fetched_juce
-      COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target juceaide --config "${_dustpress_juce_install_config}"
-      COMMAND ${CMAKE_COMMAND} --install "${CMAKE_BINARY_DIR}" --config "${_dustpress_juce_install_config}"
-      BYPRODUCTS "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake"
+      COMMAND ${CMAKE_COMMAND} --install "${CMAKE_BINARY_DIR}" --config "${_dustpress_juce_install_config}" --prefix "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}"
+      BYPRODUCTS
+        "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake"
+        "${_dustpress_juceaide_bin}"
       COMMENT "Installing fetched JUCE into ${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR} (${_dustpress_juce_install_config})"
       VERBATIM)
   endif()
