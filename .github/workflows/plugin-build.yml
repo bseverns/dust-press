@@ -76,6 +76,12 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: choco install ninja --no-progress
 
+      - name: Set up MSVC environment (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       - name: Configure plugin build
         run: cmake -S native -B native/build/plugin-release --preset native-plugin-release
 
