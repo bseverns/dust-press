@@ -20,6 +20,13 @@ if(DUSTPRESS_FETCH_JUCE)
     GIT_TAG ${DUSTPRESS_JUCE_GIT_TAG}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}
+      # juceaide (the codegen tool JUCE bakes into the build) only lands in the
+      # extras target set. We install JUCE as part of the build to prime a
+      # reusable kit under native/.juce-kit, and the install step shells out to
+      # `cmake --build ... --target juceaide` before running `cmake --install`
+      # so JUCE’s helper CMake modules actually make it into that prefix. Make
+      # sure the extras are on so that target exists for Ninja to build.
+      -DJUCE_BUILD_EXTRAS=ON
   )
 
   FetchContent_MakeAvailable(juce)
