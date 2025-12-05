@@ -39,9 +39,12 @@ if(DUSTPRESS_FETCH_JUCE)
       set(_dustpress_juce_install_config "Release")
     endif()
 
+    # JUCE lives inside the top-level Ninja graph; its build.ninja does not sit
+    # under juce_BINARY_DIR. Drive the build/install from the main binary dir
+    # so CMake can find the generator files it wrote for the fetch content.
     add_custom_target(dustpress_install_fetched_juce
-      COMMAND ${CMAKE_COMMAND} --build "${juce_BINARY_DIR}" --target juceaide --config "${_dustpress_juce_install_config}"
-      COMMAND ${CMAKE_COMMAND} --install "${juce_BINARY_DIR}" --config "${_dustpress_juce_install_config}"
+      COMMAND ${CMAKE_COMMAND} --build "${CMAKE_BINARY_DIR}" --target juceaide --config "${_dustpress_juce_install_config}"
+      COMMAND ${CMAKE_COMMAND} --install "${CMAKE_BINARY_DIR}" --config "${_dustpress_juce_install_config}"
       BYPRODUCTS "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}/lib/cmake/JUCE-${DUSTPRESS_JUCE_GIT_TAG}/JUCEConfig.cmake"
       COMMENT "Installing fetched JUCE into ${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR} (${_dustpress_juce_install_config})"
       VERBATIM)
