@@ -200,19 +200,23 @@ void DustPressAudioProcessor::refreshLatencyFromEngine() {
 }
 
 void DustPressAudioProcessor::syncParametersToEngine() {
-  engine.setDriveDb(params.driveDb ? *(params.driveDb) : 0.0f);
-  engine.setBias(params.bias ? *(params.bias) : 0.0f);
-  engine.setCurveIndex(static_cast<uint8_t>(params.curveIndex ? *(params.curveIndex) : 0.0f));
-  engine.setChaos(params.chaos ? *(params.chaos) : 0.0f);
-  engine.setEnvToDriveDb(params.envToDriveDb ? *(params.envToDriveDb) : 0.0f);
-  engine.setGateComp(params.gateComp ? *(params.gateComp) : 0.0f);
-  engine.setPreTilt(params.preTiltDbPerOct ? *(params.preTiltDbPerOct) : 0.0f);
-  engine.setPostAir(params.postAirDb ? *(params.postAirDb) : 0.0f);
-  engine.setDirt(params.dirtAmount ? *(params.dirtAmount) : 0.0f);
-  engine.setCeiling(params.ceilingDb ? *(params.ceilingDb) : -1.0f);
-  engine.setOutputTrimDb(params.outputTrimDb ? *(params.outputTrimDb) : 0.0f);
+  auto readParam = [](std::atomic<float>* param, float fallback) {
+    return param ? param->load(std::memory_order_relaxed) : fallback;
+  };
 
-  const float mixPct = params.mixPercent ? *(params.mixPercent) : 100.0f;
+  engine.setDriveDb(readParam(params.driveDb, 0.0f));
+  engine.setBias(readParam(params.bias, 0.0f));
+  engine.setCurveIndex(static_cast<uint8_t>(readParam(params.curveIndex, 0.0f)));
+  engine.setChaos(readParam(params.chaos, 0.0f));
+  engine.setEnvToDriveDb(readParam(params.envToDriveDb, 0.0f));
+  engine.setGateComp(readParam(params.gateComp, 0.0f));
+  engine.setPreTilt(readParam(params.preTiltDbPerOct, 0.0f));
+  engine.setPostAir(readParam(params.postAirDb, 0.0f));
+  engine.setDirt(readParam(params.dirtAmount, 0.0f));
+  engine.setCeiling(readParam(params.ceilingDb, -1.0f));
+  engine.setOutputTrimDb(readParam(params.outputTrimDb, 0.0f));
+
+  const float mixPct = readParam(params.mixPercent, 100.0f);
   engine.setMix(mixPct * 0.01f);
 }
 
