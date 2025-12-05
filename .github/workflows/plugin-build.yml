@@ -8,8 +8,38 @@ on:
   pull_request:
 
 jobs:
+  firmware:
+    name: Build firmware (Teensy 4.0 / 4.1)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python for PlatformIO
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install PlatformIO
+        run: pip install --upgrade platformio
+
+      - name: Build firmware (Teensy 4.0)
+        run: pio run -e teensy40
+
+      - name: Build firmware (Teensy 4.1)
+        run: pio run -e teensy41
+
+      - name: Upload PlatformIO build artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: platformio-builds
+          path: |
+            .pio/build/teensy40/**
+            .pio/build/teensy41/**
+
   plugin:
     name: Build VST3 on ${{ matrix.os }}
+    needs: firmware
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
