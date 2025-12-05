@@ -1,0 +1,33 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "native-plugin-release",
+      "displayName": "Native VST3 plugin (Release, fetch JUCE/VST3)",
+      "description": "Builds the JUCE-backed VST3 plugin with auto-fetched dependencies; if you disable fetching, point JUCE_DIR/CMAKE_PREFIX_PATH at an existing JUCE checkout",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/plugin-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "DUSTPRESS_BUILD_PLUGIN": "ON",
+        "DUSTPRESS_FETCH_JUCE": "ON",
+        "DUSTPRESS_FETCH_VST3_SDK": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "native-plugin-release",
+      "displayName": "Build DustPress VST3",
+      "configurePreset": "native-plugin-release",
+      "targets": [
+        "DustPressPlugin"
+      ]
+    }
+  ]
+}
