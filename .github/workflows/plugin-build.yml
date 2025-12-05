@@ -82,9 +82,17 @@ jobs:
       - name: Build VST3 bundle
         run: cmake --build --preset native-plugin-release --config Release
 
-      - name: Signing / notarization stub
-        run: echo "TODO: wire up signing/notarization for ${{ matrix.os }} builds."
-
+      - name: Import and sign (Linux/macOS)
+        if: matrix.os != 'windows-latest'
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          printf "%s" "$GPG_PRIVATE_KEY" | gpg --batch --import
+          gpg --batch --yes --pinentry-mode loopback \
+              --passphrase "$GPG_PASSPHRASE" \
+              --detach-sign --output DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig \
+              DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
       - name: Package artefacts
         shell: bash
         run: |
