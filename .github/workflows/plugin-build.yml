@@ -83,7 +83,7 @@ jobs:
           arch: x64
 
       - name: Configure plugin build
-        run: cmake -S native -B native/build/plugin-release --preset native-plugin-release
+        run: cmake --preset native-plugin-release
 
       - name: Build VST3 bundle
         run: cmake --build --preset native-plugin-release --config Release
