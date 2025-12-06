@@ -95,9 +95,9 @@ jobs:
       - name: Package artefacts
         shell: bash
         run: |
-          artefacts_dir="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts"
+          artefacts_dir="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts"
           echo "Collected artefacts under ${artefacts_dir}."
-          find "${artefacts_dir}" -maxdepth 3 -type f -print
+          find "${artefacts_dir}" -maxdepth 5 -type f -print
           tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${artefacts_dir}" .
 
       - name: Import and sign (Linux/macOS, when key present)
