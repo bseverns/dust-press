@@ -100,7 +100,7 @@ jobs:
           find "${artefacts_dir}" -maxdepth 3 -type f -print
           tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${artefacts_dir}" .
 
-           - name: Import and sign (Linux/macOS, when key present)
+      - name: Import and sign (Linux/macOS, when key present)
         if: matrix.os != 'windows-latest' && env.GPG_PRIVATE_KEY != '' && env.GPG_PASSPHRASE != ''
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -109,11 +109,14 @@ jobs:
           printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
           gpg --batch --yes --pinentry-mode loopback \
               --passphrase "$GPG_PASSPHRASE" \
-              --detach-sign --output DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig \
-              DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
+              --detach-sign --output "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig" \
+              "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
 
       - name: Upload VST3 artefacts
         uses: actions/upload-artifact@v4
         with:
           name: DustPressPlugin-${{ matrix.os }}-VST3
-          path: DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
+          path: |
+            DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
+            DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig
+          if-no-files-found: ignore
