@@ -246,3 +246,10 @@ void DustPressAudioProcessor::primeEngineForBlock(int numSamples) {
   syncParametersToEngine();
 }
 
+// ============================================================================
+// JUCE plugin entrypoint
+// ============================================================================
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+{
+    return new DustPressAudioProcessor();
+}

@@ -1,0 +1,13 @@
+# ninja log v7
+3	315	1765065022422747531	/Users/bseverns/Documents/GitHub/dust-press/native/build/plugin-release/_deps/juce-build/tools/CMakeFiles/cmake.verify_globs	2d165962a11e1946
+318	1286	1765065022738458085	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core_CompilationTime.cpp.o	6700e5cbe017ffc7
+317	16075	1765065022737226042	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Sheenbidi.c.o	15377cc16f01e64e
+320	33086	1765065022739968857	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_data_structures/juce_data_structures.mm.o	ed84f0a802f9f68
+315	44855	1765065022735407027	extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o	c0c30e2de4d7d79f
+316	45072	1765065022735926687	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_tools.cpp.o	47bce6defc64001b
+317	73560	1765065022736897174	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o	4adffcba862831e8
+318	93863	1765065022738019660	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_events/juce_events.mm.o	349d1a932069455e
+319	102517	1765065022738929749	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_core/juce_core.mm.o	ba2189aae9f1bcf6
+318	116338	1765065022737555773	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.mm.o	c9e1219f48328484
+316	148997	1765065022736301125	extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.mm.o	82b313f7c7fc944e
+149061	162130	1765065171476735172	extras/Build/juceaide/juceaide_artefacts/Custom/juceaide	9c318acdfa32e90e

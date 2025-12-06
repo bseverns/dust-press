@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/bseverns/Documents/GitHub/dust-press/native/build/plugin-release/_deps/juce-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
