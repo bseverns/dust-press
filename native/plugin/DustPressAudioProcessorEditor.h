@@ -37,21 +37,18 @@ private:
   DustPressAudioProcessor& processor;
   juce::AudioProcessorValueTreeState& state;
 
-  Control drive{};
-  Control bias{};
-  Control envToDrive{};
-
-  Control curve{};
-  Control chaos{};
-
-  Control gateComp{};
-  Control preTilt{};
-  Control postAir{};
-
-  Control dirt{};
-  Control mix{};
-  Control ceiling{};
-  Control output{};
+  Control drive;
+  Control bias;
+  Control envToDrive;
+  Control curve;
+  Control chaos;
+  Control gateComp;
+  Control preTilt;
+  Control postAir;
+  Control dirt;
+  Control mix;
+  Control ceiling;
+  Control output;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DustPressAudioProcessorEditor)
 };
