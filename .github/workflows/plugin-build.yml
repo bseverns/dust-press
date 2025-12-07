@@ -192,6 +192,18 @@ jobs:
               --detach-sign --output "${tarball}.sig" \
               "${tarball}"
 
+      - name: Ad-hoc sign macOS VST3 bundle
+        if: ${{ startsWith(matrix.label, 'macos-') }}
+        run: |
+          set -euo pipefail
+          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
+          bundle="${artefacts_root}/VST3/DustPress.vst3"
+      
+          echo "Signing bundle at: ${bundle}"
+          codesign --force --deep --sign - "${bundle}"
+          echo "Verifying signature:"
+          codesign --verify --deep --verbose=2 "${bundle}" || exit 1
+
       # --- Upload resulting archives for this OS/arch ---
 
       - name: Upload VST3 artefacts
