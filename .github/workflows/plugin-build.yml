@@ -11,6 +11,7 @@ jobs:
   firmware:
     name: Build firmware (Teensy 4.0 / 4.1)
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -50,21 +51,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Clean plugin build directory (POSIX)
-        if: runner.os != 'Windows'
-        run: rm -rf native/build/plugin-release
-
-      - name: Clean plugin build directory (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          if (Test-Path "native/build/plugin-release") {
-            Remove-Item -Recurse -Force "native/build/plugin-release"
-          }
-
-      # --- Install deps BEFORE configure ---
+      # --- Install JUCE / system deps *before* configure ---
 
       - name: Install JUCE build deps (Linux)
-        if: runner.os == 'Linux'
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -84,74 +74,85 @@ jobs:
             libwebkit2gtk-4.1-dev || sudo apt-get install -y libwebkit2gtk-4.0-dev
 
       - name: Install JUCE build deps (macOS)
-        if: runner.os == 'macOS'
+        if: ${{ matrix.os == 'macos-latest' }}
         run: |
           brew update
           brew install ninja
 
       - name: Install JUCE build deps (Windows)
-        if: runner.os == 'Windows'
+        if: ${{ matrix.os == 'windows-latest' }}
         run: choco install ninja --no-progress
 
       - name: Set up MSVC environment (Windows)
-        if: runner.os == 'Windows'
+        if: ${{ matrix.os == 'windows-latest' }}
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
 
-      # --- Configure, once per OS family ---
+      # --- Clean build dir ---
 
-      - name: Configure plugin build (Linux/macOS)
-        if: runner.os != 'Windows'
-        run: cmake --preset native-plugin-release
+      - name: Clean plugin build directory (POSIX)
+        if: ${{ runner.os != 'Windows' }}
+        run: rm -rf native/build/plugin-release
+
+      - name: Clean plugin build directory (Windows)
+        if: ${{ runner.os == 'Windows' }}
+        run: |
+          if (Test-Path "native/build/plugin-release") {
+            Remove-Item -Recurse -Force "native/build/plugin-release"
+          }
+
+      # --- Configure (preset-based, but with MSVC forced via env on Windows) ---
 
       - name: Configure plugin build (Windows)
-        if: runner.os == 'Windows'
-        run: cmake --preset native-plugin-release -G "Ninja" -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
+        if: ${{ runner.os == 'Windows' }}
+        run: cmake --preset native-plugin-release
+        env:
+          CC: cl
+          CXX: cl
+
+      - name: Configure plugin build (non-Windows)
+        if: ${{ runner.os != 'Windows' }}
+        run: cmake --preset native-plugin-release
+
+      # --- Build plugin (VST3 target) ---
 
       - name: Build VST3 bundle
         run: cmake --build --preset native-plugin-release --config Release --target DustPressPlugin_VST3
 
-      # --- Package per-OS ---
+      # --- Package artefacts into a single tarball per OS ---
 
-      - name: Package artefacts (macOS)
-        if: runner.os == 'macOS'
+      - name: Package artefacts
         shell: bash
         run: |
           set -euo pipefail
+
           artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
           vst3_dir="${artefacts_root}/VST3"
           bundle="${vst3_dir}/DustPress.vst3"
-          bin="${bundle}/Contents/MacOS/DustPress"
 
-          echo "Looking for VST3 bundle in: ${vst3_dir}"
-          echo "Bundle path: ${bundle}"
+          echo "Looking for VST3 output in: ${vst3_dir}"
           ls -R "${vst3_dir}"
 
-          if [ ! -f "${bin}" ]; then
-            echo "Error: Plugin binary missing at ${bin}"
-            ls -R "${bundle}/Contents"
-            exit 1
+          # On macOS, sanity-check the bundle contains a Mach-O binary
+          if [ "${RUNNER_OS}" = "macOS" ]; then
+            bin="${bundle}/Contents/MacOS/DustPress"
+            if [ ! -f "${bin}" ]; then
+              echo "Error: Plugin binary missing at ${bin}"
+              echo "Contents of bundle:"
+              ls -R "${bundle}" || true
+              exit 1
+            fi
           fi
 
-          ls -lh "${bin}"
-          file "${bin}" || true
+          # Package the full DustPress.vst3 (file or directory, depending on platform)
+          tarball="DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
+          echo "Creating tarball: ${tarball}"
+          tar -czf "${tarball}" -C "${vst3_dir}" "DustPress.vst3"
+          echo "Tarball contents:"
+          tar -tzf "${tarball}"
 
-          tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${vst3_dir}" "DustPress.vst3"
-
-      - name: Package artefacts (non-macOS)
-        if: runner.os != 'macOS'
-        shell: bash
-        run: |
-          set -euo pipefail
-          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
-          vst3_dir="${artefacts_root}/VST3"
-
-          echo "Looking for VST3 bundle in: ${vst3_dir}"
-          ls -R "${vst3_dir}"
-
-          # For Linux/Windows we just bundle the whole DustPress.vst3 tree
-          tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${vst3_dir}" "DustPress.vst3"
+      # --- Optional signing (Linux/macOS only, if secrets are present) ---
 
       - name: Import and sign (Linux/macOS, when key present)
         if: ${{ runner.os != 'Windows' && secrets.GPG_PRIVATE_KEY != '' && secrets.GPG_PASSPHRASE != '' }}
@@ -160,10 +161,19 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
+
+          tarball="DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
+          if [ ! -f "${tarball}" ]; then
+            echo "Tarball ${tarball} not found, cannot sign."
+            exit 1
+          fi
+
           gpg --batch --yes --pinentry-mode loopback \
               --passphrase "$GPG_PASSPHRASE" \
-              --detach-sign --output "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig" \
-              "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
+              --detach-sign --output "${tarball}.sig" \
+              "${tarball}"
+
+      # --- Upload resulting archives for this OS ---
 
       - name: Upload VST3 artefacts
         uses: actions/upload-artifact@v4
