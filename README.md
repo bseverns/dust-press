@@ -7,7 +7,8 @@ foldback. Parallel clean path, pre/post EQ tilt, and a lookahead limiter keep it
 > are wired up. Expect saturation that leans harder as you dig in while the lookahead limiter keeps the top end honest.
 
 ## Platform
-Teensy 4.x + SGTL5000 (Teensy Audio Library), 44.1 kHz / 128-sample blocks.
+Currently, this codebase lives as a set of VST3 plugins. Making sure this sounds right is the first priority.
+Eventual hardware (what it was made for): Teensy 4.x + SGTL5000 (Teensy Audio Library), 44.1 kHz / 128-sample blocks. Because hardware feels cool.
 
 ## Quick Start
 - Open `examples/minimal/minimal.ino` in Arduino + TeensyDuino for the cleanest wiring demo.
