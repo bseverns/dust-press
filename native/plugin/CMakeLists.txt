@@ -20,9 +20,7 @@ if(DUSTPRESS_FETCH_JUCE)
     GIT_TAG ${DUSTPRESS_JUCE_GIT_TAG}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX=${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}
-      # Headless CI images frequently lack XRandR/Xinerama headers; juceaide
-      # doesn’t need multi-monitor support, so turn off the X11 multi-head bits
-      # to keep the helper tool building without extra system deps.
+      -DJUCE_USE_X11=0
       -DJUCE_USE_XRANDR=0
       -DJUCE_USE_XINERAMA=0
       -DCMAKE_CXX_FLAGS=-DJUCE_USE_XRANDR=0\ -DJUCE_USE_XINERAMA=0
@@ -77,7 +75,7 @@ if(DUSTPRESS_FETCH_JUCE)
     # If we can’t see juceaide yet, explicitly pull in the extras CMakeLists to
     # stitch that target into our main Ninja graph before we try to build it.
     if(NOT TARGET juceaide)
-      add_compile_definitions(JUCE_USE_XRANDR=0 JUCE_USE_XINERAMA=0)
+      add_compile_definitions(JUCE_USE_X11=0 JUCE_USE_XRANDR=0 JUCE_USE_XINERAMA=0)
       add_subdirectory("${juce_SOURCE_DIR}/extras/Build" "${juce_BINARY_DIR}/extras")
     endif()
 

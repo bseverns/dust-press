@@ -60,9 +60,8 @@ jobs:
           if (Test-Path "native/build/plugin-release") {
             Remove-Item -Recurse -Force "native/build/plugin-release"
           }
-      
-      - name: Configure plugin build
-        run: cmake --preset native-plugin-release      
+
+      # --- Install deps BEFORE configure ---
 
       - name: Install JUCE build deps (Linux)
         if: runner.os == 'Linux'
@@ -85,28 +84,38 @@ jobs:
             libwebkit2gtk-4.1-dev || sudo apt-get install -y libwebkit2gtk-4.0-dev
 
       - name: Install JUCE build deps (macOS)
-        if: matrix.os == 'macos-latest'
+        if: runner.os == 'macOS'
         run: |
           brew update
           brew install ninja
 
       - name: Install JUCE build deps (Windows)
-        if: matrix.os == 'windows-latest'
+        if: runner.os == 'Windows'
         run: choco install ninja --no-progress
 
       - name: Set up MSVC environment (Windows)
-        if: matrix.os == 'windows-latest'
+        if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
 
-      - name: Configure plugin build
+      # --- Configure, once per OS family ---
+
+      - name: Configure plugin build (Linux/macOS)
+        if: runner.os != 'Windows'
         run: cmake --preset native-plugin-release
+
+      - name: Configure plugin build (Windows)
+        if: runner.os == 'Windows'
+        run: cmake --preset native-plugin-release -G "Ninja" -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
 
       - name: Build VST3 bundle
         run: cmake --build --preset native-plugin-release --config Release --target DustPressPlugin_VST3
 
-      - name: Package artefacts
+      # --- Package per-OS ---
+
+      - name: Package artefacts (macOS)
+        if: runner.os == 'macOS'
         shell: bash
         run: |
           set -euo pipefail
@@ -117,21 +126,35 @@ jobs:
 
           echo "Looking for VST3 bundle in: ${vst3_dir}"
           echo "Bundle path: ${bundle}"
-          echo "Listing contents:"
           ls -R "${vst3_dir}"
 
           if [ ! -f "${bin}" ]; then
             echo "Error: Plugin binary missing at ${bin}"
-            echo "Contents"
             ls -R "${bundle}/Contents"
             exit 1
           fi
 
+          ls -lh "${bin}"
+          file "${bin}" || true
+
           tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${vst3_dir}" "DustPress.vst3"
-      
+
+      - name: Package artefacts (non-macOS)
+        if: runner.os != 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
+          vst3_dir="${artefacts_root}/VST3"
+
+          echo "Looking for VST3 bundle in: ${vst3_dir}"
+          ls -R "${vst3_dir}"
+
+          # For Linux/Windows we just bundle the whole DustPress.vst3 tree
+          tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${vst3_dir}" "DustPress.vst3"
 
       - name: Import and sign (Linux/macOS, when key present)
-        if: matrix.os != 'windows-latest' && env.GPG_PRIVATE_KEY != '' && env.GPG_PASSPHRASE != ''
+        if: runner.os != 'Windows' && secrets.GPG_PRIVATE_KEY != '' && secrets.GPG_PASSPHRASE != ''
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
@@ -150,4 +173,3 @@ jobs:
             DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
             DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig
           if-no-files-found: ignore
-          run: cmake --build --preset native-plugin-release --config Release --target DustPressPlugin_VST3
