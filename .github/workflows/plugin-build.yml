@@ -154,7 +154,7 @@ jobs:
           tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${vst3_dir}" "DustPress.vst3"
 
       - name: Import and sign (Linux/macOS, when key present)
-        if: runner.os != 'Windows' && secrets.GPG_PRIVATE_KEY != '' && secrets.GPG_PASSPHRASE != ''
+        if: ${{ runner.os != 'Windows' && secrets.GPG_PRIVATE_KEY != '' && secrets.GPG_PASSPHRASE != '' }}
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
