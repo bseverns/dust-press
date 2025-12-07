@@ -75,23 +75,24 @@ if(DUSTPRESS_FETCH_JUCE)
   #   1) Make CoreAudioInternal::StrideIterator public, and
   #   2) Bolt on an iterator_traits specialization for that internal iterator type.
   if(APPLE)
-    set(_dustpress_coreaudio_mac
-        "${juce_SOURCE_DIR}/modules/juce_audio_devices/native/juce_CoreAudio_mac.cpp")
+  set(_dustpress_coreaudio_mac
+      "${juce_SOURCE_DIR}/modules/juce_audio_devices/native/juce_CoreAudio_mac.cpp")
 
-    if(EXISTS "${_dustpress_coreaudio_mac}")
-      file(READ "${_dustpress_coreaudio_mac}" _dustpress_coreaudio_contents)
+  if(EXISTS "${_dustpress_coreaudio_mac}")
+    file(READ "${_dustpress_coreaudio_mac}" _dustpress_coreaudio_contents)
 
-      # 1) Make StrideIterator public (only do this once)
-      if(NOT _dustpress_coreaudio_contents MATCHES "public: struct StrideIterator")
-        string(REPLACE "struct StrideIterator"
-                       "public: struct StrideIterator"
-                       _dustpress_coreaudio_contents
-                       "${_dustpress_coreaudio_contents}")
-      endif()
+    # 1) Make StrideIterator public (only do this once)
+    if(NOT _dustpress_coreaudio_contents MATCHES "public:  template <typename Iterator> struct StrideIterator")
+      string(REPLACE
+        "private: template <typename Iterator> struct StrideIterator"
+        "public:  template <typename Iterator> struct StrideIterator"
+        _dustpress_coreaudio_contents
+        "${_dustpress_coreaudio_contents}")
+    endif()
 
-      # 2) Add the iterator_traits shim (only once)
-      if(NOT _dustpress_coreaudio_contents MATCHES "DustPress StrideIterator iterator_traits shim")
-        string(APPEND _dustpress_coreaudio_contents [[
+    # 2) Add the iterator_traits shim (only once)
+    if(NOT _dustpress_coreaudio_contents MATCHES "DustPress StrideIterator iterator_traits shim")
+      string(APPEND _dustpress_coreaudio_contents [[
 
 // DustPress StrideIterator iterator_traits shim.
 // Makes juce::CoreAudioClasses::CoreAudioInternal::StrideIterator work with
@@ -114,11 +115,11 @@ namespace std
 // End DustPress StrideIterator iterator_traits shim
 
 ]])
-      endif()
-
-      file(WRITE "${_dustpress_coreaudio_mac}" "${_dustpress_coreaudio_contents}")
     endif()
+
+    file(WRITE "${_dustpress_coreaudio_mac}" "${_dustpress_coreaudio_contents}")
   endif()
+endif()
 
   if(DUSTPRESS_INSTALL_FETCHED_JUCE)
     FetchContent_GetProperties(juce)
