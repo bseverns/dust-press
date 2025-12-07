@@ -71,24 +71,33 @@ if(DUSTPRESS_FETCH_JUCE)
   #   no type named 'value_type' in 'std::iterator_traits<
   #     juce::CoreAudioClasses::CoreAudioInternal::StrideIterator<const float *>>'
   #
-  # To keep using JUCE 8.0.11 cleanly on Intel CI, bolt on an iterator_traits
-  # specialization for that internal iterator type.
+  # To keep using JUCE 8.0.11 cleanly on Intel CI and local macOS, we:
+  #   1) Make CoreAudioInternal::StrideIterator public, and
+  #   2) Bolt on an iterator_traits specialization for that internal iterator type.
   if(APPLE)
     set(_dustpress_coreaudio_mac
-      "${juce_SOURCE_DIR}/modules/juce_audio_devices/native/juce_CoreAudio_mac.cpp"
-    )
+        "${juce_SOURCE_DIR}/modules/juce_audio_devices/native/juce_CoreAudio_mac.cpp")
 
     if(EXISTS "${_dustpress_coreaudio_mac}")
       file(READ "${_dustpress_coreaudio_mac}" _dustpress_coreaudio_contents)
 
-      # Only inject once; if the marker is already present, skip.
+      # 1) Make StrideIterator public (only do this once)
+      if(NOT _dustpress_coreaudio_contents MATCHES "public: struct StrideIterator")
+        string(REPLACE "struct StrideIterator"
+                       "public: struct StrideIterator"
+                       _dustpress_coreaudio_contents
+                       "${_dustpress_coreaudio_contents}")
+      endif()
+
+      # 2) Add the iterator_traits shim (only once)
       if(NOT _dustpress_coreaudio_contents MATCHES "DustPress StrideIterator iterator_traits shim")
         string(APPEND _dustpress_coreaudio_contents [[
 
 // DustPress StrideIterator iterator_traits shim.
 // Makes juce::CoreAudioClasses::CoreAudioInternal::StrideIterator work with
 // std::iterator_traits on newer AppleClang/libc++.
-#if defined(__APPLE__)
+#include <iterator>
+
 namespace std
 {
     template <typename Iterator>
@@ -102,12 +111,12 @@ namespace std
         using iterator_category = random_access_iterator_tag;
     };
 }
-#endif // __APPLE__
+// End DustPress StrideIterator iterator_traits shim
 
 ]])
-
-        file(WRITE "${_dustpress_coreaudio_mac}" "${_dustpress_coreaudio_contents}")
       endif()
+
+      file(WRITE "${_dustpress_coreaudio_mac}" "${_dustpress_coreaudio_contents}")
     endif()
   endif()
 
