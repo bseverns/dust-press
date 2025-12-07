@@ -155,11 +155,19 @@ jobs:
       # --- Optional signing (Linux/macOS only, if secrets are present) ---
 
       - name: Import and sign (Linux/macOS, when key present)
-        if: ${{ runner.os != 'Windows' && secrets.GPG_PRIVATE_KEY != '' && secrets.GPG_PASSPHRASE != '' }}
+        if: ${{ runner.os != 'Windows' }}
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
+          set -euo pipefail
+
+          # If secrets are missing, skip signing gracefully
+          if [ -z "${GPG_PRIVATE_KEY:-}" ] || [ -z "${GPG_PASSPHRASE:-}" ]; then
+            echo "GPG secrets not set, skipping signing."
+            exit 0
+          fi
+
           printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
 
           tarball="DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
