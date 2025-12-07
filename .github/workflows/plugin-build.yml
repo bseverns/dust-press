@@ -110,25 +110,11 @@ jobs:
             Remove-Item -Recurse -Force "native/build/plugin-release"
           }
 
-      # --- Configure per-platform ---
+      # --- Configure (per platform, but don't override arch) ---
 
-      - name: Configure plugin build (Linux)
-        if: ${{ runner.os == 'Linux' }}
+      - name: Configure plugin build (Linux/macOS)
+        if: ${{ runner.os != 'Windows' }}
         run: cmake --preset native-plugin-release
-
-      - name: Configure plugin build (macOS Intel)
-        if: ${{ matrix.os == 'macos-13' }}
-        run: |
-          cmake --preset native-plugin-release \
-            -DCMAKE_OSX_ARCHITECTURES=x86_64 \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13
-
-      - name: Configure plugin build (macOS Apple Silicon)
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          cmake --preset native-plugin-release \
-            -DCMAKE_OSX_ARCHITECTURES=arm64 \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
 
       - name: Configure plugin build (Windows)
         if: ${{ runner.os == 'Windows' }}
@@ -171,7 +157,6 @@ jobs:
           echo "Looking for VST3 output in: ${vst3_dir}"
           ls -R "${vst3_dir}"
 
-          # On macOS, sanity-check the bundle contains a Mach-O binary
           if [ "${RUNNER_OS}" = "macOS" ]; then
             bin="${bundle}/Contents/MacOS/DustPress"
             if [ ! -f "${bin}" ]; then
@@ -185,7 +170,6 @@ jobs:
             file "${bin}" || true
           fi
 
-          # Package the full DustPress.vst3 (file or directory, depending on platform)
           tarball="DustPressPlugin_${{ matrix.label }}_VST3.tar.gz"
           echo "Creating tarball: ${tarball}"
           tar -czf "${tarball}" -C "${vst3_dir}" "DustPress.vst3"
@@ -203,7 +187,6 @@ jobs:
         run: |
           set -euo pipefail
 
-          # If secrets are missing, skip signing gracefully
           if [ -z "${GPG_PRIVATE_KEY:-}" ] || [ -z "${GPG_PASSPHRASE:-}" ]; then
             echo "GPG secrets not set, skipping signing."
             exit 0
