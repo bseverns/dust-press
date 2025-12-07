@@ -50,6 +50,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Clean plugin build directory
+        run: rm -rf native/build/plugin-release
+      
+      - name: Configure plugin build
+        run: cmake --preset native-plugin-release      
+
       - name: Install JUCE build deps (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -95,11 +101,34 @@ jobs:
       - name: Package artefacts
         shell: bash
         run: |
+          set -euo pipefail
+      
           artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
           vst3_dir="${artefacts_root}/VST3"
-          echo "Packaging VST3 from ${vst3_dir}"
-          ls -R "${vst3_dir}"
-          tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" -C "${vst3_dir}" "DustPress.vst3"      
+          bundle="${vst3_dir}/DustPress.vst3"
+          macos_bin="${bundle}/Contents/MacOS/DustPress"
+      
+          echo "Looking for VST3 bundle in: ${vst3_dir}"
+          echo "Bundle path: ${bundle}"
+          echo "Listing contents:"
+          find "${vst3_dir}" -maxdepth 5 -print
+      
+          if [ ! -d "${bundle}" ]; then
+            echo "::error::DustPress.vst3 bundle not found at ${bundle}"
+            exit 1
+          fi
+      
+          if [ ! -f "${macos_bin}" ]; then
+            echo "::error::Plugin binary missing at ${macos_bin}"
+            ls -R "${bundle}" || true
+            exit 1
+          fi
+      
+          ls -lh "${macos_bin}"
+      
+          tar -czf "DustPressPlugin_${{ matrix.os }}_VST3.tar.gz" \
+            -C "${vst3_dir}" "DustPress.vst3"
+      
 
       - name: Import and sign (Linux/macOS, when key present)
         if: matrix.os != 'windows-latest' && env.GPG_PRIVATE_KEY != '' && env.GPG_PASSPHRASE != ''
@@ -121,3 +150,4 @@ jobs:
             DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
             DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig
           if-no-files-found: ignore
+          run: cmake --build --preset native-plugin-release --config Release --target DustPressPlugin_VST3
