@@ -110,7 +110,25 @@ jobs:
             Remove-Item -Recurse -Force "native/build/plugin-release"
           }
 
-      # --- Configure (MSVC vs non-Windows) ---
+      # --- Configure per-platform ---
+
+      - name: Configure plugin build (Linux)
+        if: ${{ runner.os == 'Linux' }}
+        run: cmake --preset native-plugin-release
+
+      - name: Configure plugin build (macOS Intel)
+        if: ${{ matrix.os == 'macos-13' }}
+        run: |
+          cmake --preset native-plugin-release \
+            -DCMAKE_OSX_ARCHITECTURES=x86_64 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13
+
+      - name: Configure plugin build (macOS Apple Silicon)
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          cmake --preset native-plugin-release \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
 
       - name: Configure plugin build (Windows)
         if: ${{ runner.os == 'Windows' }}
@@ -119,14 +137,25 @@ jobs:
           CC: cl
           CXX: cl
 
-      - name: Configure plugin build (non-Windows)
-        if: ${{ runner.os != 'Windows' }}
-        run: cmake --preset native-plugin-release
-
       # --- Build plugin (VST3 target) ---
 
       - name: Build VST3 bundle
         run: cmake --build --preset native-plugin-release --config Release --target DustPressPlugin_VST3
+
+      # --- Ad-hoc sign macOS bundles (before packaging) ---
+
+      - name: Ad-hoc sign macOS VST3 bundle
+        if: ${{ startsWith(matrix.label, 'macos-') }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
+          bundle="${artefacts_root}/VST3/DustPress.vst3"
+
+          echo "Signing bundle at: ${bundle}"
+          codesign --force --deep --sign - --timestamp=none "${bundle}"
+          echo "Verifying signature:"
+          codesign --verify --deep --strict --verbose=2 "${bundle}"
 
       # --- Package artefacts into a single tarball per OS/arch ---
 
@@ -163,13 +192,14 @@ jobs:
           echo "Tarball contents:"
           tar -tzf "${tarball}"
 
-      # --- Optional signing (Linux/macOS only, if secrets are present) ---
+      # --- Optional signing (Linux/macOS only, if GPG secrets are present) ---
 
-      - name: Import and sign (Linux/macOS, when key present)
+      - name: Import and sign tarball with GPG (Linux/macOS)
         if: ${{ runner.os != 'Windows' }}
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        shell: bash
         run: |
           set -euo pipefail
 
@@ -191,18 +221,6 @@ jobs:
               --passphrase "$GPG_PASSPHRASE" \
               --detach-sign --output "${tarball}.sig" \
               "${tarball}"
-
-      - name: Ad-hoc sign macOS VST3 bundle
-        if: ${{ startsWith(matrix.label, 'macos-') }}
-        run: |
-          set -euo pipefail
-          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
-          bundle="${artefacts_root}/VST3/DustPress.vst3"
-      
-          echo "Signing bundle at: ${bundle}"
-          codesign --force --deep --sign - "${bundle}"
-          echo "Verifying signature:"
-          codesign --verify --deep --verbose=2 "${bundle}" || exit 1
 
       # --- Upload resulting archives for this OS/arch ---
 
