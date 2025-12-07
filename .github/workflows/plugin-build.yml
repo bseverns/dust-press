@@ -102,18 +102,21 @@ jobs:
             Remove-Item -Recurse -Force "native/build/plugin-release"
           }
 
-      # --- Configure (preset-based, but with MSVC forced via env on Windows) ---
+      # --- Configure (per-OS) ---
 
-      - name: Configure plugin build (Windows)
-        if: ${{ runner.os == 'Windows' }}
+      - name: Configure plugin build (Linux)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: cmake --preset native-plugin-release
-        env:
-          CC: cl
-          CXX: cl
 
-      - name: Configure plugin build (non-Windows)
-        if: ${{ runner.os != 'Windows' }}
-        run: cmake --preset native-plugin-release
+      # Universal macOS build (Intel + Apple Silicon)
+      # If you only want Intel, change to: -DCMAKE_OSX_ARCHITECTURES="x86_64"
+      - name: Configure plugin build (macOS – universal)
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: cmake --preset native-plugin-release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+
+      - name: Configure plugin build (Windows – MSVC + Ninja)
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: cmake --preset native-plugin-release -G "Ninja" -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
 
       # --- Build plugin (VST3 target) ---
 
@@ -145,7 +148,6 @@ jobs:
             fi
           fi
 
-          # Package the full DustPress.vst3 (file or directory, depending on platform)
           tarball="DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
           echo "Creating tarball: ${tarball}"
           tar -czf "${tarball}" -C "${vst3_dir}" "DustPress.vst3"
