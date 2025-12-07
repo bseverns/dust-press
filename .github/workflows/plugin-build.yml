@@ -50,16 +50,21 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Clean plugin build directory
-        shell: bash
+      - name: Clean plugin build directory (POSIX)
+        if: runner.os != 'Windows'
+        run: rm -rf native/build/plugin-release
+
+      - name: Clean plugin build directory (Windows)
+        if: runner.os == 'Windows'
         run: |
-          set -euo pipefail
-          rm -rf native/build/plugin-release || true
+          if (Test-Path "native/build/plugin-release") {
+            Remove-Item -Recurse -Force "native/build/plugin-release"
+          }
       
       - name: Configure plugin build
         run: cmake --preset native-plugin-release      
 
-        - name: Install JUCE build deps (Linux)
+      - name: Install JUCE build deps (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
