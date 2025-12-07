@@ -39,13 +39,21 @@ jobs:
             .pio/build/teensy41/**
 
   plugin:
-    name: Build VST3 on ${{ matrix.os }}
+    name: Build VST3 on ${{ matrix.label }}
     needs: firmware
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            label: linux
+          - os: macos-13        # Intel runner
+            label: macos-x86_64
+          - os: macos-latest    # Apple Silicon runner
+            label: macos-arm64
+          - os: windows-latest
+            label: windows
 
     steps:
       - name: Checkout repo
@@ -54,7 +62,7 @@ jobs:
       # --- Install JUCE / system deps *before* configure ---
 
       - name: Install JUCE build deps (Linux)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ runner.os == 'Linux' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -74,17 +82,17 @@ jobs:
             libwebkit2gtk-4.1-dev || sudo apt-get install -y libwebkit2gtk-4.0-dev
 
       - name: Install JUCE build deps (macOS)
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: ${{ runner.os == 'macOS' }}
         run: |
           brew update
           brew install ninja
 
       - name: Install JUCE build deps (Windows)
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ runner.os == 'Windows' }}
         run: choco install ninja --no-progress
 
       - name: Set up MSVC environment (Windows)
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
@@ -102,28 +110,25 @@ jobs:
             Remove-Item -Recurse -Force "native/build/plugin-release"
           }
 
-      # --- Configure (per-OS) ---
+      # --- Configure (MSVC vs non-Windows) ---
 
-      - name: Configure plugin build (Linux)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+      - name: Configure plugin build (Windows)
+        if: ${{ runner.os == 'Windows' }}
         run: cmake --preset native-plugin-release
+        env:
+          CC: cl
+          CXX: cl
 
-      # Universal macOS build (Intel + Apple Silicon)
-      # If you only want Intel, change to: -DCMAKE_OSX_ARCHITECTURES="x86_64"
-      - name: Configure plugin build (macOS – universal)
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: cmake --preset native-plugin-release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
-
-      - name: Configure plugin build (Windows – MSVC + Ninja)
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: cmake --preset native-plugin-release -G "Ninja" -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
+      - name: Configure plugin build (non-Windows)
+        if: ${{ runner.os != 'Windows' }}
+        run: cmake --preset native-plugin-release
 
       # --- Build plugin (VST3 target) ---
 
       - name: Build VST3 bundle
         run: cmake --build --preset native-plugin-release --config Release --target DustPressPlugin_VST3
 
-      # --- Package artefacts into a single tarball per OS ---
+      # --- Package artefacts into a single tarball per OS/arch ---
 
       - name: Package artefacts
         shell: bash
@@ -146,9 +151,13 @@ jobs:
               ls -R "${bundle}" || true
               exit 1
             fi
+
+            echo "Mach-O info:"
+            file "${bin}" || true
           fi
 
-          tarball="DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
+          # Package the full DustPress.vst3 (file or directory, depending on platform)
+          tarball="DustPressPlugin_${{ matrix.label }}_VST3.tar.gz"
           echo "Creating tarball: ${tarball}"
           tar -czf "${tarball}" -C "${vst3_dir}" "DustPress.vst3"
           echo "Tarball contents:"
@@ -172,7 +181,7 @@ jobs:
 
           printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
 
-          tarball="DustPressPlugin_${{ matrix.os }}_VST3.tar.gz"
+          tarball="DustPressPlugin_${{ matrix.label }}_VST3.tar.gz"
           if [ ! -f "${tarball}" ]; then
             echo "Tarball ${tarball} not found, cannot sign."
             exit 1
@@ -183,13 +192,13 @@ jobs:
               --detach-sign --output "${tarball}.sig" \
               "${tarball}"
 
-      # --- Upload resulting archives for this OS ---
+      # --- Upload resulting archives for this OS/arch ---
 
       - name: Upload VST3 artefacts
         uses: actions/upload-artifact@v4
         with:
-          name: DustPressPlugin-${{ matrix.os }}-VST3
+          name: DustPressPlugin-${{ matrix.label }}-VST3
           path: |
-            DustPressPlugin_${{ matrix.os }}_VST3.tar.gz
-            DustPressPlugin_${{ matrix.os }}_VST3.tar.gz.sig
+            DustPressPlugin_${{ matrix.label }}_VST3.tar.gz
+            DustPressPlugin_${{ matrix.label }}_VST3.tar.gz.sig
           if-no-files-found: ignore
