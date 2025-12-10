@@ -23,6 +23,24 @@ directory. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE
 
 > CI note: `.github/workflows/plugin-build.yml` exercises the preset on macOS, Windows, and Linux, then tars up the artefacts. Signing/notarization hooks are stubbed so you can drop in your own cert flow.
 
+## If nothing appears in `DustPressPlugin_artefacts`
+You should see a juicy bundle at `native/build/plugin-release/DustPressPlugin_artefacts/VST3/DustPressPlugin.vst3`. If that folder stays empty, check these usual suspects:
+
+- **Preset missing Ninja** – the preset leans on Ninja. Install it or swap generators when configuring.
+- **CMake too antique** – JUCE's FetchContent wants a modern CMake (>=3.20ish). Update before retrying.
+- **JUCE/VST3 fetch blocked** – offline or corporate proxies can starve the JUCE/VST3 downloads. Preinstall JUCE/SDKs and point `CMAKE_PREFIX_PATH`/`VST3_SDK_PATH` at them.
+- **Built Debug on a multi-config generator** – Visual Studio/Xcode defaults to Debug; run the release build: `cmake --build --preset native-plugin-release --config Release`.
+
+Still suspicious? On macOS 10.15, manually poke the build to prove the artefact shows up:
+```bash
+cmake -S native -B native/build/plugin-release \
+  -DDUSTPRESS_BUILD_PLUGIN=ON \
+  -DDUSTPRESS_FETCH_JUCE=ON \
+  -DCMAKE_BUILD_TYPE=Release
+cmake --build native/build/plugin-release --config Release --target DustPressPlugin
+open native/build/plugin-release/DustPressPlugin_artefacts/VST3
+```
+
 ## Parameter map
 - **Drive (0–36 dB, log taper, default 12 dB)** → `setDriveDb`
 - **Bias (-1..+1)** → `setBias`
