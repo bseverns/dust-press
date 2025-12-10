@@ -5,11 +5,16 @@ This is the scrappy, canonical VST3 skin around `NativeDustPress`. The old
 directory. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE.md), speaks stereo in/out, and keeps the DSP identical to the firmware path. Presets come straight from [`presets/presets.json`](../../presets/presets.json) so DAW state matches the Teensy demos.
 
 ## Build/Install
+### Prereqs (macOS)
+- **CMake 3.21+** so presets actually run (Catalina ships too old). Quick fix: `brew install cmake`.
+- The shipped preset asks for **Ninja**; grab it with `brew install ninja`.
+- No Ninja, but you trust Xcode? Configure with `-G Xcode` (or a manual `cmake -S native -B native/build -G Xcode ...`) and drive the build from there.
+
 1. Use the preset if you just want the VST3 and don't feel like herding dependencies:
    ```bash
- cmake --preset native-plugin-release
-  cmake --build --preset native-plugin-release --config Release
-  ```
+   cmake --preset native-plugin-release
+   cmake --build --preset native-plugin-release --config Release
+   ```
    - The preset flips on the plugin target, fetches JUCE, installs it into `native/.juce-kit` for reuse, and lets JUCE fetch the Steinberg VST3 SDK for you—same Horizon-flavored bootstrapper, now the only path.
 2. Prefer hand-managed deps? You can still point at your existing JUCE install. `DUSTPRESS_BUILD_PLUGIN=ON` is the only plugin toggle; the legacy `DUSTPRESS_BUILD_JUCE_PLUGIN` option has been excised:
    ```bash
