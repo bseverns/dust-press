@@ -138,15 +138,63 @@ jobs:
 
           find_vst3_bundle() {
             local artefacts_root="$1"
+            local require_binary="$2"
             local bundles=()
 
             while IFS= read -r bundle; do
               bundles+=("${bundle}")
-            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
+            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3" | sort)
 
             if [ "${#bundles[@]}" -eq 0 ]; then
               echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
               find "${artefacts_root}" -maxdepth 4 -print || true
+              return 1
+            fi
+
+            if [ "${require_binary}" = "macos" ] || [ "${require_binary}" = "macOS" ]; then
+              local bundle
+              for bundle in "${bundles[@]}"; do
+                local macos_bin_dir="${bundle}/Contents/MacOS"
+                local macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+                local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+                if [ "${macos_bin_count}" -gt 0 ]; then
+                  if [ "${#bundles[@]}" -gt 1 ]; then
+                    echo "Using bundle with plugin binary: ${bundle}" >&2
+                    printf '  %s\n' "${bundles[@]}" >&2
+                  fi
+                  printf '%s' "${bundle}"
+                  return 0
+                fi
+              done
+
+              echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
+              printf 'Checked bundles:%s' "\n" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
+              return 1
+            fi
+
+            if [ "${require_binary}" = "macos" ] || [ "${require_binary}" = "macOS" ]; then
+              local bundle
+              for bundle in "${bundles[@]}"; do
+                local macos_bin_dir="${bundle}/Contents/MacOS"
+                local macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+                local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+                if [ "${macos_bin_count}" -gt 0 ]; then
+                  if [ "${#bundles[@]}" -gt 1 ]; then
+                    echo "Selecting bundle with plugin binary: ${bundle}" >&2
+                    printf 'Other candidates:%s' "\n" >&2
+                    printf '  %s\n' "${bundles[@]}" >&2
+                  fi
+                  printf '%s' "${bundle}"
+                  return 0
+                fi
+              done
+
+              echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
+              printf 'Checked bundles:%s' "\n" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
               return 1
             fi
 
@@ -161,7 +209,7 @@ jobs:
           artefacts_root="$(pwd)/native/build/plugin-release"
           mkdir -p "${artefacts_root}"
 
-          bundle="$(find_vst3_bundle "${artefacts_root}")"
+          bundle="$(find_vst3_bundle "${artefacts_root}" "macos")"
 
           echo "Signing bundle at: ${bundle}"
           codesign --force --deep --sign - --timestamp=none "${bundle}"
@@ -177,15 +225,40 @@ jobs:
 
           find_vst3_bundle() {
             local artefacts_root="$1"
+            local require_binary="$2"
             local bundles=()
 
             while IFS= read -r bundle; do
               bundles+=("${bundle}")
-            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
+            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3" | sort)
 
             if [ "${#bundles[@]}" -eq 0 ]; then
               echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
               find "${artefacts_root}" -maxdepth 4 -print || true
+              return 1
+            fi
+
+            if [ "${require_binary}" = "macos" ] || [ "${require_binary}" = "macOS" ]; then
+              local bundle
+              for bundle in "${bundles[@]}"; do
+                local macos_bin_dir="${bundle}/Contents/MacOS"
+                local macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+                local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+                if [ "${macos_bin_count}" -gt 0 ]; then
+                  if [ "${#bundles[@]}" -gt 1 ]; then
+                    echo "Selecting bundle with plugin binary: ${bundle}" >&2
+                    printf 'Other candidates:%s' "\n" >&2
+                    printf '  %s\n' "${bundles[@]}" >&2
+                  fi
+                  printf '%s' "${bundle}"
+                  return 0
+                fi
+              done
+
+              echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
+              printf 'Checked bundles:%s' "\n" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
               return 1
             fi
 
@@ -200,7 +273,7 @@ jobs:
           artefacts_root="$(pwd)/native/build/plugin-release"
           mkdir -p "${artefacts_root}"
 
-          bundle="$(find_vst3_bundle "${artefacts_root}")"
+          bundle="$(find_vst3_bundle "${artefacts_root}" "${RUNNER_OS}")"
           vst3_dir="$(dirname "${bundle}")"
 
           echo "Looking for VST3 output in: ${vst3_dir}"
@@ -210,13 +283,6 @@ jobs:
             macos_bin_dir="${bundle}/Contents/MacOS"
             macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
             macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
-
-            if [ "${macos_bin_count}" -eq 0 ]; then
-              echo "Error: No plugin binary found under ${macos_bin_dir}"
-              echo "Contents of bundle:"
-              ls -R "${bundle}" || true
-              exit 1
-            fi
 
             bin="$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | sort | head -n1)"
             if [ "${macos_bin_count}" -gt 1 ]; then
