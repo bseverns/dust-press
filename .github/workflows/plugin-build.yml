@@ -207,15 +207,24 @@ jobs:
           ls -R "${vst3_dir}"
 
           if [ "${RUNNER_OS}" = "macOS" ]; then
-            bin="${bundle}/Contents/MacOS/DustPress"
-            if [ ! -f "${bin}" ]; then
-              echo "Error: Plugin binary missing at ${bin}"
+            macos_bin_dir="${bundle}/Contents/MacOS"
+            macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+            macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+            if [ "${macos_bin_count}" -eq 0 ]; then
+              echo "Error: No plugin binary found under ${macos_bin_dir}"
               echo "Contents of bundle:"
               ls -R "${bundle}" || true
               exit 1
             fi
 
-            echo "Mach-O info:"
+            bin="$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | sort | head -n1)"
+            if [ "${macos_bin_count}" -gt 1 ]; then
+              echo "Found multiple plugin binaries under ${macos_bin_dir}; using ${bin}:"
+              printf '%s\n' "${macos_bins}" | sed 's/^/  /'
+            fi
+
+            echo "Mach-O info for ${bin}:"
             file "${bin}" || true
           fi
 
