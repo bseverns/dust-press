@@ -126,7 +126,15 @@ jobs:
       # --- Build plugin (VST3 target) ---
 
       - name: Build VST3 bundle
-        run: cmake --build --preset native-plugin-release --config Release
+        run: |
+          set -euo pipefail
+
+          # Explicitly ask for the VST3 target alongside the top-level aggregate.
+          # On macOS runners the generic build occasionally skipped the bundle
+          # target, leaving an empty Contents/MacOS directory. Driving both keeps
+          # the artefacts folder honest and makes step ordering obvious in CI.
+          cmake --build --preset native-plugin-release --config Release \
+            --target DustPressPlugin DustPressPlugin_VST3
 
       # --- Ad-hoc sign macOS bundles (before packaging) ---
 
@@ -176,6 +184,8 @@ jobs:
                 echo "Contents/MacOS for ${bundle}:" >&2
                 find "${bundle}/Contents/MacOS" -maxdepth 1 -print || true
               done
+              echo "Other executable-looking files under ${artefacts_root}:" >&2
+              find "${artefacts_root}" -maxdepth 8 -type f -perm -111 -print | sed 's/^/  /' >&2 || true
               return 1
             fi
 
@@ -244,6 +254,8 @@ jobs:
                 echo "Contents/MacOS for ${bundle}:" >&2
                 find "${bundle}/Contents/MacOS" -maxdepth 1 -print || true
               done
+              echo "Other executable-looking files under ${artefacts_root}:" >&2
+              find "${artefacts_root}" -maxdepth 8 -type f -perm -111 -print | sed 's/^/  /' >&2 || true
               return 1
             fi
 
