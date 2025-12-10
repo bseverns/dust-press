@@ -82,10 +82,10 @@ if(DUSTPRESS_FETCH_JUCE)
     file(READ "${_dustpress_coreaudio_mac}" _dustpress_coreaudio_contents)
 
     # 1) Make StrideIterator public (only do this once)
-    if(NOT _dustpress_coreaudio_contents MATCHES "public:  template <typename Iterator> struct StrideIterator")
-      string(REPLACE
-        "private: template <typename Iterator> struct StrideIterator"
-        "public:  template <typename Iterator> struct StrideIterator"
+    if(NOT _dustpress_coreaudio_contents MATCHES "public:[\\n ]*template <typename Iterator>[\\n ]*struct StrideIterator")
+      string(REGEX REPLACE
+        "private:[ \t\r\n]+template <typename Iterator>[ \t\r\n]+struct StrideIterator"
+        "public:\n    template <typename Iterator>\n    struct StrideIterator"
         _dustpress_coreaudio_contents
         "${_dustpress_coreaudio_contents}")
     endif()
