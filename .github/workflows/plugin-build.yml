@@ -135,7 +135,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
+          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts/Release"
           bundle="${artefacts_root}/VST3/DustPress.vst3"
 
           echo "Signing bundle at: ${bundle}"
@@ -150,7 +150,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          artefacts_root="$(pwd)/native/build/plugin-release/native/plugin/DustPressPlugin_artefacts/Release"
+          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts/Release"
           vst3_dir="${artefacts_root}/VST3"
           bundle="${vst3_dir}/DustPress.vst3"
 
