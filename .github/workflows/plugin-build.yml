@@ -48,7 +48,7 @@ jobs:
         include:
           - os: ubuntu-latest
             label: linux
-          - os: macos-13          # Intel
+          - os: macos-15-intel    # Intel
             label: macos-x86_64
           - os: macos-latest      # Apple Silicon
             label: macos-arm64
@@ -138,7 +138,11 @@ jobs:
 
           find_vst3_bundle() {
             local artefacts_root="$1"
-            mapfile -t bundles < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
+            local bundles=()
+
+            while IFS= read -r bundle; do
+              bundles+=("${bundle}")
+            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
 
             if [ "${#bundles[@]}" -eq 0 ]; then
               echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
@@ -173,7 +177,11 @@ jobs:
 
           find_vst3_bundle() {
             local artefacts_root="$1"
-            mapfile -t bundles < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
+            local bundles=()
+
+            while IFS= read -r bundle; do
+              bundles+=("${bundle}")
+            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
 
             if [ "${#bundles[@]}" -eq 0 ]; then
               echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
