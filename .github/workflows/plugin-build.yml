@@ -135,8 +135,31 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts/Release"
-          bundle="${artefacts_root}/VST3/DustPress.vst3"
+
+          find_vst3_bundle() {
+            local artefacts_root="$1"
+            if [ ! -d "${artefacts_root}" ]; then
+              echo "Artefacts root ${artefacts_root} not found" >&2
+              return 1
+            fi
+            mapfile -t bundles < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
+
+            if [ "${#bundles[@]}" -eq 0 ]; then
+              echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
+              find "${artefacts_root}" -maxdepth 4 -print || true
+              return 1
+            fi
+
+            if [ "${#bundles[@]}" -gt 1 ]; then
+              echo "Found multiple DustPress.vst3 bundles, picking the first:" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
+            fi
+
+            printf '%s' "${bundles[0]}"
+          }
+
+          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts"
+          bundle="$(find_vst3_bundle "${artefacts_root}")"
 
           echo "Signing bundle at: ${bundle}"
           codesign --force --deep --sign - --timestamp=none "${bundle}"
@@ -150,9 +173,31 @@ jobs:
         run: |
           set -euo pipefail
 
-          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts/Release"
-          vst3_dir="${artefacts_root}/VST3"
-          bundle="${vst3_dir}/DustPress.vst3"
+          find_vst3_bundle() {
+            local artefacts_root="$1"
+            if [ ! -d "${artefacts_root}" ]; then
+              echo "Artefacts root ${artefacts_root} not found" >&2
+              return 1
+            fi
+            mapfile -t bundles < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
+
+            if [ "${#bundles[@]}" -eq 0 ]; then
+              echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
+              find "${artefacts_root}" -maxdepth 4 -print || true
+              return 1
+            fi
+
+            if [ "${#bundles[@]}" -gt 1 ]; then
+              echo "Found multiple DustPress.vst3 bundles, picking the first:" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
+            fi
+
+            printf '%s' "${bundles[0]}"
+          }
+
+          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts"
+          bundle="$(find_vst3_bundle "${artefacts_root}")"
+          vst3_dir="$(dirname "${bundle}")"
 
           echo "Looking for VST3 output in: ${vst3_dir}"
           ls -R "${vst3_dir}"
