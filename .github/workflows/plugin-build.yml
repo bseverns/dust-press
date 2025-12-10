@@ -126,6 +126,7 @@ jobs:
       # --- Build plugin (VST3 target) ---
 
       - name: Build VST3 bundle
+        shell: bash
         run: |
           set -euo pipefail
 
