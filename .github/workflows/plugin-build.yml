@@ -138,10 +138,6 @@ jobs:
 
           find_vst3_bundle() {
             local artefacts_root="$1"
-            if [ ! -d "${artefacts_root}" ]; then
-              echo "Artefacts root ${artefacts_root} not found" >&2
-              return 1
-            fi
             mapfile -t bundles < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
 
             if [ "${#bundles[@]}" -eq 0 ]; then
@@ -158,7 +154,9 @@ jobs:
             printf '%s' "${bundles[0]}"
           }
 
-          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts"
+          artefacts_root="$(pwd)/native/build/plugin-release"
+          mkdir -p "${artefacts_root}"
+
           bundle="$(find_vst3_bundle "${artefacts_root}")"
 
           echo "Signing bundle at: ${bundle}"
@@ -175,10 +173,6 @@ jobs:
 
           find_vst3_bundle() {
             local artefacts_root="$1"
-            if [ ! -d "${artefacts_root}" ]; then
-              echo "Artefacts root ${artefacts_root} not found" >&2
-              return 1
-            fi
             mapfile -t bundles < <(find "${artefacts_root}" -type d -name "DustPress.vst3")
 
             if [ "${#bundles[@]}" -eq 0 ]; then
@@ -195,7 +189,9 @@ jobs:
             printf '%s' "${bundles[0]}"
           }
 
-          artefacts_root="$(pwd)/native/build/plugin-release/DustPressPlugin_artefacts"
+          artefacts_root="$(pwd)/native/build/plugin-release"
+          mkdir -p "${artefacts_root}"
+
           bundle="$(find_vst3_bundle "${artefacts_root}")"
           vst3_dir="$(dirname "${bundle}")"
 
