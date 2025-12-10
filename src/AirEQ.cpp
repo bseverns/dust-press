@@ -15,20 +15,30 @@ void AirEQ::setGainDb(float g) {
 }
 
 float AirEQ::process(float x) {
+  return process(x, defaultState);
+}
+
+float AirEQ::process(float x, ChannelState& state) {
   // One-pole high shelf anchored around 10 kHz.
-  low += coeff * (x - low);
-  const float high = x - low;
-  return low + high * airGain;
+  state.low += coeff * (x - state.low);
+  const float high = x - state.low;
+  return state.low + high * airGain;
 }
 
 void AirEQ::processBlock(float* buffer, std::size_t count) {
-  for(std::size_t i = 0; i < count; ++i) {
-    buffer[i] = process(buffer[i]);
-  }
+  processBlock(buffer, count, defaultState);
+}
+
+void AirEQ::processBlock(float* buffer, std::size_t count, ChannelState& state) {
+  for(std::size_t i = 0; i < count; ++i) { buffer[i] = process(buffer[i], state); }
 }
 
 void AirEQ::reset(float value) {
-  low = value;
+  reset(defaultState, value);
+}
+
+void AirEQ::reset(ChannelState& state, float value) {
+  state.low = value;
 }
 
 void AirEQ::updateCoeff() {

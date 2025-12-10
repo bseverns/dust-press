@@ -95,16 +95,18 @@ void AudioDustPress::update(){
     wetR *= driveLin;
 
     // Pre-tilt EQ before the shaper.
-    wetL = tilt.process(wetL);
-    wetR = tilt.process(wetR);
+    // Keep channel histories split so the tilt filter doesn't smear stereo.
+    wetL = tilt.process(wetL, tiltLeft);
+    wetR = tilt.process(wetR, tiltRight);
 
     // Bias + chaos/dirt flavored curves.
     wetL = curves.process(wetL);
     wetR = curves.process(wetR);
 
     // Post-air EQ and safety limiting.
-    wetL = air.process(wetL);
-    wetR = air.process(wetR);
+    // Same story for the air shelf: independent states per side.
+    wetL = air.process(wetL, airLeft);
+    wetR = air.process(wetR, airRight);
 
     wetL = limiter.process(wetL);
     wetR = limiter.process(wetR);
