@@ -133,13 +133,27 @@ Limiter ceiling defaults to -1 dBFS to mimic the firmware path.
    smearing block sizes all over the place, modulating drive/bias/gate/mix, and
    logging limiter/envelope telemetry.
 2. Plot it however you like. A quick-and-dirty Python peek:
-   ```python
-   import pandas as pd
-   df = pd.read_csv("native_probe.csv")
-   df[df.sample_rate==48000].plot(x="sample", y=["env","limiter_env","limiter_gain"])
+ ```python
+  import pandas as pd
+  df = pd.read_csv("native_probe.csv")
+  df[df.sample_rate==48000].plot(x="sample", y=["env","limiter_env","limiter_gain"])
+  ```
+  Treat it as lab notes: if the limiter gain ever whipsaws or the envelope
+  flatlines when blocks jump from 32 to 384 samples, you've got a regression.
+
+### Stereo sanity check (aka "stop smearing my right ear")
+Per-channel limiter delay lines now keep left/right in lockstep without
+cross-coupling envelopes. A quick proof before you ship a preset:
+1. Render a one-sided impulse or sine to stereo where **only the left channel**
+   has content (any DAW or `sox -M left.wav -n left_only.wav` works).
+2. Run it through the CLI and keep the limiter active:
+   ```bash
+   native/build/dustpress_cli --in left_only.wav --out sanity.wav --ceiling -1
    ```
-   Treat it as lab notes: if the limiter gain ever whipsaws or the envelope
-   flatlines when blocks jump from 32 to 384 samples, you've got a regression.
+3. Inspect the waveform—left gets the tiny lookahead shift and gain touch,
+   right stays perfectly aligned to the original zeros. If you see the right
+   channel nudged, the limiter paths drifted and need a fix.
+
 ### Pulling presets straight from the Teensy JSON
 ```
 native/build/dustpress_cli \

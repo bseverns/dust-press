@@ -16,6 +16,7 @@ public:
     driveSmoother.setTimeMs(5.0f);
     tilt.setSampleRate(sr);
     air.setSampleRate(sr);
+    limiter.setChannelCount(2);
     limiter.setSampleRate(sr);
   }
   void setDriveDb(float dB);

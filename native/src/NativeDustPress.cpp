@@ -4,6 +4,7 @@
 #include <cmath>
 
 NativeDustPress::NativeDustPress(float sr) : sampleRate(sr) {
+  limiter.setChannelCount(2);
   setSampleRate(sr);
   driveSmoother.setTimeMs(5.0f);
   refreshOutputTrim();
@@ -138,8 +139,8 @@ void NativeDustPress::processBlockInternal(const float* inLeft,
     wetL = air.process(wetL, airLeft);
     wetR = air.process(wetR, airRight);
 
-    wetL = limiter.process(wetL);
-    wetR = limiter.process(wetR);
+    wetL = limiter.process(wetL, 0);
+    wetR = limiter.process(wetR, 1);
 
     const float mixedL = (wetL * mix + dryL * dryMixLocal) * trimLin;
     const float mixedR = (wetR * mix + dryR * dryMixLocal) * trimLin;
@@ -151,8 +152,8 @@ void NativeDustPress::processBlockInternal(const float* inLeft,
       telemetry[i].env = envVal;
       telemetry[i].gateGain = gateGain;
       telemetry[i].driveDbApplied = modulatedDrive;
-      telemetry[i].limiterEnv = limiter.currentEnvelope();
-      telemetry[i].limiterGain = limiter.currentGain();
+      telemetry[i].limiterEnv = limiter.currentEnvelope(0);
+      telemetry[i].limiterGain = limiter.currentGain(0);
     }
   }
 }
