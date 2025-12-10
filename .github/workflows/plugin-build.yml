@@ -155,30 +155,7 @@ jobs:
               local bundle
               for bundle in "${bundles[@]}"; do
                 local macos_bin_dir="${bundle}/Contents/MacOS"
-                local macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
-                local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
-
-                if [ "${macos_bin_count}" -gt 0 ]; then
-                  if [ "${#bundles[@]}" -gt 1 ]; then
-                    echo "Using bundle with plugin binary: ${bundle}" >&2
-                    printf '  %s\n' "${bundles[@]}" >&2
-                  fi
-                  printf '%s' "${bundle}"
-                  return 0
-                fi
-              done
-
-              echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
-              printf 'Checked bundles:%s' "\n" >&2
-              printf '  %s\n' "${bundles[@]}" >&2
-              return 1
-            fi
-
-            if [ "${require_binary}" = "macos" ] || [ "${require_binary}" = "macOS" ]; then
-              local bundle
-              for bundle in "${bundles[@]}"; do
-                local macos_bin_dir="${bundle}/Contents/MacOS"
-                local macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+                local macos_bins="$(find -L "${macos_bin_dir}" -maxdepth 1 \( -type f -o -type l \) -print || true)"
                 local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
 
                 if [ "${macos_bin_count}" -gt 0 ]; then
@@ -195,6 +172,10 @@ jobs:
               echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
               printf 'Checked bundles:%s' "\n" >&2
               printf '  %s\n' "${bundles[@]}" >&2
+              for bundle in "${bundles[@]}"; do
+                echo "Contents/MacOS for ${bundle}:" >&2
+                find "${bundle}/Contents/MacOS" -maxdepth 1 -print || true
+              done
               return 1
             fi
 
@@ -242,7 +223,7 @@ jobs:
               local bundle
               for bundle in "${bundles[@]}"; do
                 local macos_bin_dir="${bundle}/Contents/MacOS"
-                local macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+                local macos_bins="$(find -L "${macos_bin_dir}" -maxdepth 1 \( -type f -o -type l \) -print || true)"
                 local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
 
                 if [ "${macos_bin_count}" -gt 0 ]; then
@@ -259,6 +240,10 @@ jobs:
               echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
               printf 'Checked bundles:%s' "\n" >&2
               printf '  %s\n' "${bundles[@]}" >&2
+              for bundle in "${bundles[@]}"; do
+                echo "Contents/MacOS for ${bundle}:" >&2
+                find "${bundle}/Contents/MacOS" -maxdepth 1 -print || true
+              done
               return 1
             fi
 
@@ -281,7 +266,7 @@ jobs:
 
           if [ "${RUNNER_OS}" = "macOS" ]; then
             macos_bin_dir="${bundle}/Contents/MacOS"
-            macos_bins="$(find "${macos_bin_dir}" -maxdepth 1 -type f -print || true)"
+            macos_bins="$(find -L "${macos_bin_dir}" -maxdepth 1 \( -type f -o -type l \) -print || true)"
             macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
 
             bin="$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | sort | head -n1)"
