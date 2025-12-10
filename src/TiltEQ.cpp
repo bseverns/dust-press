@@ -15,20 +15,30 @@ void TiltEQ::setSlope(float dbPerOct) {
 }
 
 float TiltEQ::process(float x) {
+  return process(x, defaultState);
+}
+
+float TiltEQ::process(float x, ChannelState& state) {
   // One-pole split.
-  low += coeff * (x - low);
-  const float high = x - low;
-  return low * lowGain + high * highGain;
+  state.low += coeff * (x - state.low);
+  const float high = x - state.low;
+  return state.low * lowGain + high * highGain;
 }
 
 void TiltEQ::processBlock(float* buffer, std::size_t count) {
-  for(std::size_t i = 0; i < count; ++i) {
-    buffer[i] = process(buffer[i]);
-  }
+  processBlock(buffer, count, defaultState);
+}
+
+void TiltEQ::processBlock(float* buffer, std::size_t count, ChannelState& state) {
+  for(std::size_t i = 0; i < count; ++i) { buffer[i] = process(buffer[i], state); }
 }
 
 void TiltEQ::reset(float value) {
-  low = value;
+  reset(defaultState, value);
+}
+
+void TiltEQ::reset(ChannelState& state, float value) {
+  state.low = value;
 }
 
 void TiltEQ::updateCoeff() {

@@ -36,7 +36,11 @@ private:
   EnvelopeFollower env;
   CurveBank curves;
   TiltEQ tilt;
+  TiltEQ::ChannelState tiltLeft;
+  TiltEQ::ChannelState tiltRight;
   AirEQ air;
+  AirEQ::ChannelState airLeft;
+  AirEQ::ChannelState airRight;
   LimiterLookahead limiter;
   ParamSmoother driveSmoother;
 

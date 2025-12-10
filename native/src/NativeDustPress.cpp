@@ -127,14 +127,16 @@ void NativeDustPress::processBlockInternal(const float* inLeft,
     wetL *= driveLin;
     wetR *= driveLin;
 
-    wetL = tilt.process(wetL);
-    wetR = tilt.process(wetR);
+    // Filter histories are split per side to keep stereo phase honest.
+    wetL = tilt.process(wetL, tiltLeft);
+    wetR = tilt.process(wetR, tiltRight);
 
     wetL = curves.process(wetL);
     wetR = curves.process(wetR);
 
-    wetL = air.process(wetL);
-    wetR = air.process(wetR);
+    // Same for the airy shelf so left/right don't share decay.
+    wetL = air.process(wetL, airLeft);
+    wetR = air.process(wetR, airRight);
 
     wetL = limiter.process(wetL);
     wetR = limiter.process(wetR);
@@ -159,8 +161,10 @@ void NativeDustPress::reset(){
   env.reset();
   curves.setIndex(curveIndex);
   driveSmoother.reset(driveDb);
-  tilt.reset();
-  air.reset();
+  tilt.reset(tiltLeft);
+  tilt.reset(tiltRight);
+  air.reset(airLeft);
+  air.reset(airRight);
   limiter.reset();
 }
 
