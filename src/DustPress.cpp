@@ -106,8 +106,8 @@ void AudioDustPress::update(){
     wetL = air.process(wetL);
     wetR = air.process(wetR);
 
-    wetL = limiter.process(wetL);
-    wetR = limiter.process(wetR);
+    wetL = limiter.process(wetL, 0);
+    wetR = limiter.process(wetR, 1);
 
     const float mixedL = (wetL * mix + dryL * dryMixLocal) * trimLin;
     const float mixedR = (wetR * mix + dryR * dryMixLocal) * trimLin;
