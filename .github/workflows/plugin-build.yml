@@ -8,6 +8,28 @@ on:
   pull_request:
 
 jobs:
+  probe:
+    name: DustPress probe regression
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Configure probe build
+        run: cmake -S native -B native/build
+
+      - name: Build dustpress_probe
+        run: cmake --build native/build --target dustpress_probe
+
+      - name: Run limiter/envelope regression
+        run: python tools/dustpress_probe_regression.py --probe-path native/build/dustpress_probe --seconds 4.0
+
   firmware:
     name: Build firmware (Teensy 4.0 / 4.1)
     runs-on: ubuntu-latest

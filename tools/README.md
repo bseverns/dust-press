@@ -33,3 +33,30 @@ That renders `tanh/cubic/diode/foldback` variants at chaos 1.0 / 3.0 / 6.0 into:
 ## How faithful is it?
 
 The math is a 1:1 port of `src/CurveBank.cpp` (bias + dirt + chaos jitter/crackle) so the offline renders sound like firmware. No JUCE/PlatformIO baggage—just Python stdlib and a dash of punk intent.
+
+## Limiter probe regression (aka "catch the gremlins before the DAW does")
+
+There's now a headless regression sniff test for the native limiter + envelope path. It drives the baked-in `dustpress_probe` harness with fixed seeds, chews on the CSV telemetry, and compares a few fingerprints against a checked-in baseline (RMS/peaks for the envelopes, limiter gain excursions, output peak).
+
+### Run it locally
+
+```bash
+# Build the native probe once
+cmake -S native -B native/build
+cmake --build native/build --target dustpress_probe
+
+# Reuse the baked seeds + 4-second stimulus at 44.1/48/96 kHz
+python tools/dustpress_probe_regression.py
+```
+
+If you're intentionally reshaping the DSP, regenerate the baseline with intent and a commit message to match:
+
+```bash
+python tools/dustpress_probe_regression.py --update-baseline
+```
+
+The script keeps things lean—streaming RMS/peak math instead of hoarding millions of samples—and screams if any sample rate drifts past the tolerance window.
+
+### CI glue
+
+GitHub Actions runs the same probe on every push/PR (Linux runner) via the `DustPress probe regression` job. If the limiter or envelope math wanders, the workflow goes red before a DAW host ever sees it.
