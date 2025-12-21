@@ -21,6 +21,19 @@ Eventual hardware (what it was made for): Teensy 4.x + SGTL5000 (Teensy Audio Li
 Input → GateComp → Pre Tilt EQ → Drive → Bias → Curve Bank → Chaos Mod → Dirt → Post Air EQ → Lookahead Limiter (Ceiling) → Mix with Dry → Output Trim
                  ↘────────────── Envelope Follower ───────↗
 ```
+### DSP block cheat sheet (who owns what)
+Here’s the “open the hood” version of the napkin flow so you can jump from knob to live code without spelunking. Each stop lists the class wired in `src/DustPress.cpp`, the setters that matter, and where to read the tuning riffs in **[docs/DSP_ANATOMY.md](docs/DSP_ANATOMY.md)**.
+
+| Block order | Class & member | Key setters | Tuning notes |
+| --- | --- | --- | --- |
+| Envelope tap → gate/comp | `EnvelopeFollower env` feeds the gate/open calc; gate depth lives on `setGateComp` and makeup gain is auto-set inside it. | `EnvelopeFollower::setAttackMs`, `EnvelopeFollower::setReleaseMs`, `AudioDustPress::setGateComp` | “Gate/Comp front-door” and “Drive + envelope modulation” explain the envelope math and gate makeup. |
+| Drive (modded by env) | `ParamSmoother driveSmoother` shapes `setDriveDb` jumps before multiplying by the envelope-driven boost from `setEnvToDriveDb`. | `ParamSmoother::setTimeMs`, `ParamSmoother::setTarget`, `AudioDustPress::setDriveDb`, `AudioDustPress::setEnvToDriveDb` | See “Drive + envelope modulation” for how the modulated dB sum is converted and why the smoother exists. |
+| Pre Tilt EQ | `TiltEQ tilt` with per-channel state to keep stereo honest. | `TiltEQ::setSlope`, `AudioDustPress::setPreTilt` | “Pre Tilt EQ” block for dB/oct tricks before the shaper. |
+| Drive curves, bias, chaos, dirt | `CurveBank curves` handles bias offsets, dirt pre-push, chaos jitter/crackle, and the curve selector. | `CurveBank::setIndex`, `CurveBank::setBias`, `CurveBank::setDirt`, `CurveBank::setChaos`, `AudioDustPress::setCurveIndex`, `AudioDustPress::setBias`, `AudioDustPress::setDirt`, `AudioDustPress::setChaos` | “Bias, Chaos, Dirt, and Curve Bank” dives into each curve + chaos range suggestions. |
+| Post Air EQ | `AirEQ air` with stereo channel states. | `AirEQ::setGainDb`, `AudioDustPress::setPostAir` | “Post Air EQ” covers when to lift or pull the shelf after distortion. |
+| Limiter | `LimiterLookahead limiter` clamps post-air peaks with a tiny buffer. | `LimiterLookahead::setCeilingDb`, `LimiterLookahead::setLookaheadMs`, `LimiterLookahead::setSampleRate`, `AudioDustPress::setCeiling` | “Lookahead limiter” spells out ceiling targets and how hard to lean on it. |
+| Mix + trim | Parallel blend and final level happen in `update` via `mix/dryMix` and `outputTrimLin`. | `AudioDustPress::setMix`, `AudioDustPress::setOutputTrimDb` | “Mix + Output trim” reminds you to rebalance after gate/drive tweaks. |
+
 * Envelope follower feeds Env→Drive; curve bank includes tanh/cubic/diode/foldback shapes.
 * Chaos sprinkles jitter and crackle probability onto the chosen curve.
 * GateComp only opens/closes the pre-drive gate + makeup stage. Chaos stays on its own knob—no stealth coupling.
