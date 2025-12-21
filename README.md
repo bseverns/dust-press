@@ -11,10 +11,9 @@ Currently, this codebase lives as a set of VST3 plugins. Making sure this sounds
 Eventual hardware (what it was made for): Teensy 4.x + SGTL5000 (Teensy Audio Library), 44.1 kHz / 128-sample blocks. Because hardware feels cool.
 
 ## Quick Start
-- Open `examples/minimal/minimal.ino` in Arduino + TeensyDuino for the cleanest wiring demo.
-- Or crack open `examples/presets_demo/presets_demo.ino` to see SD/SerialFlash preset loading with JSON clamping.
-- Select Teensy 4.0/4.1 and upload.
-- Feed audio into the Audio Shield; twist `Drive`, `Bias`, and `Env→Drive`.
+- Hardware jam: open `examples/minimal/minimal.ino` or `examples/presets_demo/presets_demo.ino` in Arduino + TeensyDuino, pick
+  Teensy 4.0/4.1, and upload. Wiring and control-surface pinouts now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)**.
+- Feed audio into the Audio Shield; twist `Drive`, `Bias`, and `Env→Drive` to hear the envelope-morphed dirt wake up.
 
 ## Signal Flow (napkin diagram)
 ```
@@ -50,29 +49,17 @@ nerds, but the markdown owns the ranges, tapers, and defaults. Snapshot:
 - Mix/Dirt/Ceiling/Output handle parallel blend, pre-limit soft clip, limiter ceiling, and final trim.
 
 ## Build + Upload (TeensyDuino)
-1. Install [Arduino IDE](https://www.arduino.cc/en/software) and [TeensyDuino](https://www.pjrc.com/teensy/td_download.html) (match versions).
-2. In Arduino, open **File → Examples → dust-press → minimal** (or navigate to `examples/minimal/minimal.ino`).
-3. Tools menu: set **Board** to Teensy 4.0/4.1, **USB Type** to what you need (usually Serial + MIDI), **CPU Speed** 600 MHz.
-4. Connect the Teensy Audio Shield to the Teensy 4.x (line inputs → audio). Plug in USB.
-5. Click **Upload**. If the linker complains about space, remove unused `Serial.print` debugging.
-6. On current builds you should hear the full crush path; verify gate/drive/tilt/air/limit/mix moves in Audio System Design Tool scopes or by ear.
-7. Jam: feed line-level audio, tweak knobs or send control values over whatever UI you wire up.
+Install [Arduino IDE](https://www.arduino.cc/en/software) + [TeensyDuino](https://www.pjrc.com/teensy/td_download.html) (matching versions), open `examples/minimal/minimal.ino` from **File → Examples → dust-press**, set Board to Teensy 4.0/4.1, and upload. Pinouts/control-surface wiring now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** so the front page can stay about intent and signal flow.
 
 ## PlatformIO + Horizon-ish control surface
-If you live in PlatformIO land (or want your rig to share the same control surface vibe as **Horizon**), the repo now ships with `platformio.ini` and a `src/main.cpp` sketch that wires ten knobs + two buttons into the whole control map. Think of it as the Horizon panel transplanted onto Dust Press.
+If you live in PlatformIO land (or want your rig to share the same control surface vibe as **Horizon**), grab the baked-in `platformio.ini` + `src/main.cpp` combo and swap pins to your harness. USB ships as MIDI+Serial so you can still spam debug prints while twisting knobs. The deep wiring map, pin labels, and mapping math now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)**—this page just points you there.
 
-- `platformio.ini` gives you Teensy 4.0 + 4.1 environments out of the box. USB is set up for MIDI+Serial so you can still spam debug prints while twisting knobs.
-- `src/main.cpp` reads ten analog inputs (drive, bias, env→drive, gate/comp, pre-tilt, post-air, mix, dirt, limiter ceiling, output trim) and two buttons (curve select + chaos step). Pin labels at the top of the file are meant to be swapped to your harness.
-- Default parameter ranges are clamped to the canonical map in **[docs/USAGE.md](docs/USAGE.md)** (mirrored in `docs/CONTROL_MAP.csv`) so the panel can’t exceed the intended safe ranges.
-
-To build/upload via CLI:
+CLI reminder:
 
 ```bash
 pio run -e teensy41 -t upload    # or -e teensy40 if that’s your board
 pio device monitor               # watch serial/MIDI chatter
 ```
-
-Want the long-form why/how? The new **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** walks through the Horizon-flavored layout and the mapping math.
 
 ## Desktop-native playground (first stop toward VST land)
 Need to audition Dust Press off-hardware? There’s now a minimal CMake build under `native/` that wraps the DSP blocks in a float-buffer processor and a CLI renderer. Build it, fling a WAV through, and keep hacking:
