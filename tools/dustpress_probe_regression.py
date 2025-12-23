@@ -112,6 +112,14 @@ def parse_args() -> argparse.Namespace:
         help="Rewrite the baseline file using the current DSP output",
     )
     parser.add_argument(
+        "--csv-out",
+        type=Path,
+        help=(
+            "Optional path to stash the raw probe CSV. Handy for CI artefacts or when "
+            "you want to eyeball the telemetry later."
+        ),
+    )
+    parser.add_argument(
         "--keep-csv",
         action="store_true",
         help="Keep the raw probe CSV instead of deleting the temp file",
@@ -190,13 +198,23 @@ def main() -> int:
     probe_path = Path(args.probe_path)
     baseline_path = Path(args.baseline)
 
-    with tempfile.NamedTemporaryFile(prefix="dustpress_probe_", suffix=".csv", delete=not args.keep_csv) as tmp:
-        csv_path = Path(tmp.name)
+    csv_path: Path
+    # If the caller gave us an explicit output path we skip the temp file dance so
+    # CI can scoop up the artefact even on failure. Otherwise fall back to a temp
+    # that evaporates unless --keep-csv is set.
+    if args.csv_out:
+        csv_path = args.csv_out
         run_probe(probe_path, args.seconds, csv_path)
         metrics = load_metrics(csv_path)
+        print(f"Probe CSV written to: {csv_path}")
+    else:
+        with tempfile.NamedTemporaryFile(prefix="dustpress_probe_", suffix=".csv", delete=not args.keep_csv) as tmp:
+            csv_path = Path(tmp.name)
+            run_probe(probe_path, args.seconds, csv_path)
+            metrics = load_metrics(csv_path)
 
-        if args.keep_csv:
-            print(f"Probe CSV kept at: {csv_path}")
+            if args.keep_csv:
+                print(f"Probe CSV kept at: {csv_path}")
 
         if args.update_baseline:
             write_baseline(baseline_path, args.seconds, metrics)
