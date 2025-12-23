@@ -36,7 +36,7 @@ The math is a 1:1 port of `src/CurveBank.cpp` (bias + dirt + chaos jitter/crackl
 
 ## Limiter probe regression (aka "catch the gremlins before the DAW does")
 
-There's now a headless regression sniff test for the native limiter + envelope path. It drives the baked-in `dustpress_probe` harness with fixed seeds, chews on the CSV telemetry, and compares a few fingerprints against a checked-in baseline (RMS/peaks for the envelopes, limiter gain excursions, output peak).
+There's now a headless regression sniff test for the native limiter + envelope path. It drives the baked-in `dustpress_probe` harness with fixed seeds, chews on the CSV telemetry, and compares a few fingerprints against a checked-in baseline (RMS/peaks for the envelopes, limiter gain excursions, output peak). The goal: make DSP experiments fearless *and* catch drift before it sneaks into a DAW bounce.
 
 ### Run it locally
 
@@ -47,6 +47,12 @@ cmake --build native/build --target dustpress_probe
 
 # Reuse the baked seeds + 4-second stimulus at 44.1/48/96 kHz
 python tools/dustpress_probe_regression.py
+
+# Keep the CSV around if you want to eyeball the telemetry later
+python tools/dustpress_probe_regression.py --keep-csv
+
+# Or park it somewhere specific (useful for CI artefacts)
+python tools/dustpress_probe_regression.py --csv-out native/build/probe_telemetry.csv
 ```
 
 If you're intentionally reshaping the DSP, regenerate the baseline with intent and a commit message to match:
@@ -55,8 +61,10 @@ If you're intentionally reshaping the DSP, regenerate the baseline with intent a
 python tools/dustpress_probe_regression.py --update-baseline
 ```
 
+The baseline lives in `tools/dustpress_probe_baseline.json` and records the probe runtime plus per-sample-rate stats. Seeds live in `native/src/probe.cpp`, so everyone runs the same gauntlet.
+
 The script keeps things lean—streaming RMS/peak math instead of hoarding millions of samples—and screams if any sample rate drifts past the tolerance window.
 
 ### CI glue
 
-GitHub Actions runs the same probe on every push/PR (Linux runner) via the `DustPress probe regression` job. If the limiter or envelope math wanders, the workflow goes red before a DAW host ever sees it.
+GitHub Actions runs the same probe on every push/PR (Linux runner) via the `DustPress probe regression` job. We also publish the raw CSV as an artefact so you can diff real telemetry when something goes sideways. If the limiter or envelope math wanders, the workflow goes red before a DAW host ever sees it.

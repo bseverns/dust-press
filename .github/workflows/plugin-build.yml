@@ -28,7 +28,18 @@ jobs:
         run: cmake --build native/build --target dustpress_probe
 
       - name: Run limiter/envelope regression
-        run: python tools/dustpress_probe_regression.py --probe-path native/build/dustpress_probe --seconds 4.0
+        run: |
+          python tools/dustpress_probe_regression.py \
+            --probe-path native/build/dustpress_probe \
+            --seconds 4.0 \
+            --csv-out native/build/probe_telemetry.csv
+
+      - name: Upload probe telemetry CSV
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dustpress-probe-telemetry
+          path: native/build/probe_telemetry.csv
 
   firmware:
     name: Build firmware (Teensy 4.0 / 4.1)
