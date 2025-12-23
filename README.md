@@ -11,8 +11,7 @@ Currently, this codebase lives as a set of VST3 plugins. Making sure this sounds
 Eventual hardware (what it was made for): Teensy 4.x + SGTL5000 (Teensy Audio Library), 44.1 kHz / 128-sample blocks. Because hardware feels cool.
 
 ## Quick Start
-- Hardware jam: open `examples/minimal/minimal.ino` or `examples/presets_demo/presets_demo.ino` in Arduino + TeensyDuino, pick
-  Teensy 4.0/4.1, and upload. Wiring and control-surface pinouts now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)**.
+- Hardware jam: crack open `examples/minimal/minimal.ino` or `examples/presets_demo/presets_demo.ino` in Arduino/TeensyDuino (or the matching PlatformIO env) and blast it to a Teensy 4.0/4.1. Pin maps, upload checklists, and control-surface wiring now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** so this page can stay about sound-shaping intent.
 - Feed audio into the Audio Shield; twist `Drive`, `Bias`, and `Env→Drive` to hear the envelope-morphed dirt wake up.
 
 ## Signal Flow (napkin diagram)
@@ -49,10 +48,10 @@ nerds, but the markdown owns the ranges, tapers, and defaults. Snapshot:
 - Mix/Dirt/Ceiling/Output handle parallel blend, pre-limit soft clip, limiter ceiling, and final trim.
 
 ## Build + Upload (TeensyDuino)
-Install [Arduino IDE](https://www.arduino.cc/en/software) + [TeensyDuino](https://www.pjrc.com/teensy/td_download.html) (matching versions), open `examples/minimal/minimal.ino` from **File → Examples → dust-press**, set Board to Teensy 4.0/4.1, and upload. Pinouts/control-surface wiring now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** so the front page can stay about intent and signal flow.
+Arduino path still lives here—fire up the IDE + TeensyDuino, aim at Teensy 4.0/4.1, and send one of the example sketches. When you need board setup screenshots, wiring pinouts, or “did I pick the right core version?” reminders, jump straight to **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)**.
 
 ## PlatformIO + Horizon-ish control surface
-If you live in PlatformIO land (or want your rig to share the same control surface vibe as **Horizon**), grab the baked-in `platformio.ini` + `src/main.cpp` combo and swap pins to your harness. USB ships as MIDI+Serial so you can still spam debug prints while twisting knobs. The deep wiring map, pin labels, and mapping math now live in **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)**—this page just points you there.
+Same vibe, different toolchain: the repo ships with a PlatformIO preset and Horizon-flavored control surface map. Use it if you want serial + MIDI on the same USB pipe and a structured pinout, then hit **[docs/PLATFORMIO.md](docs/PLATFORMIO.md)** for the full wiring atlas and upload walk-through.
 
 CLI reminder:
 
