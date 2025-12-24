@@ -25,7 +25,7 @@ DustPressAudioProcessorEditor::DustPressAudioProcessorEditor(DustPressAudioProce
   addSlider(ceiling, "Ceiling (dBFS)", DustPressParamIDs::ceiling, " dBFS");
   addSlider(output, "Output (dB)", DustPressParamIDs::outputTrim, " dB");
 
-  setSize(820, 480);
+  setSize(1000, 820);
 }
 
 void DustPressAudioProcessorEditor::paint(juce::Graphics& g) {
