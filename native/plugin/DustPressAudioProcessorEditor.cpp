@@ -4,6 +4,10 @@ namespace {
 constexpr auto kMargin = 14;
 constexpr auto kRowHeight = 120;
 constexpr auto kHeaderHeight = 46;
+constexpr auto kMaxColumns = 4;
+constexpr auto kColumnWidth = 242;
+constexpr auto kTotalWidth = 2 * kMargin + kMaxColumns * kColumnWidth;
+constexpr auto kTotalHeight = kHeaderHeight + 4 * kRowHeight + 2 * kMargin;
 }
 
 DustPressAudioProcessorEditor::DustPressAudioProcessorEditor(DustPressAudioProcessor& p)
@@ -25,7 +29,9 @@ DustPressAudioProcessorEditor::DustPressAudioProcessorEditor(DustPressAudioProce
   addSlider(ceiling, "Ceiling (dBFS)", DustPressParamIDs::ceiling, " dBFS");
   addSlider(output, "Output (dB)", DustPressParamIDs::outputTrim, " dB");
 
-  setSize(1000, 820);
+  setSize(kTotalWidth, kTotalHeight);
+  setResizable(true, true);
+  setResizeLimits(kTotalWidth, kTotalHeight, kTotalWidth * 2, kTotalHeight);
 }
 
 void DustPressAudioProcessorEditor::paint(juce::Graphics& g) {
