@@ -83,8 +83,10 @@ jobs:
             label: linux
           - os: macos-15-intel    # Intel
             label: macos-x86_64
+            expected_arch: x86_64
           - os: macos-latest      # Apple Silicon
             label: macos-arm64
+            expected_arch: arm64
           - os: windows-latest
             label: windows
 
@@ -145,9 +147,15 @@ jobs:
 
       # --- Configure (per platform, but don't override arch) ---
 
-      - name: Configure plugin build (Linux/macOS)
-        if: ${{ runner.os != 'Windows' }}
+      - name: Configure plugin build (Linux)
+        if: ${{ runner.os == 'Linux' }}
         run: cmake --preset native-plugin-release
+
+      - name: Configure plugin build (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        run: |
+          cmake --preset native-plugin-release \
+            -DCMAKE_OSX_ARCHITECTURES=${{ matrix.expected_arch }}
 
       - name: Configure plugin build (Windows)
         if: ${{ runner.os == 'Windows' }}
@@ -169,6 +177,98 @@ jobs:
           # the artefacts folder honest and makes step ordering obvious in CI.
           cmake --build --preset native-plugin-release --config Release \
             --target DustPressPlugin DustPressPlugin_VST3
+
+      - name: Verify macOS VST3 architecture
+        if: ${{ startsWith(matrix.label, 'macos-') }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          expected_arch="${{ matrix.expected_arch }}"
+          label="${{ matrix.label }}"
+          if [ -z "${expected_arch}" ]; then
+            echo "Matrix expected_arch missing for ${label}" >&2
+            exit 1
+          fi
+
+          find_vst3_bundle() {
+            local artefacts_root="$1"
+            local require_binary="$2"
+            local bundles=()
+
+            while IFS= read -r bundle; do
+              bundles+=("${bundle}")
+            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3" | sort)
+
+            if [ "${#bundles[@]}" -eq 0 ]; then
+              echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
+              find "${artefacts_root}" -maxdepth 4 -print || true
+              return 1
+            fi
+
+            if [ "${require_binary}" = "macos" ] || [ "${require_binary}" = "macOS" ]; then
+              local bundle
+              for bundle in "${bundles[@]}"; do
+                local macos_bin_dir="${bundle}/Contents/MacOS"
+                local macos_bins="$(find -L "${macos_bin_dir}" -maxdepth 1 \( -type f -o -type l \) -print || true)"
+                local macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+                if [ "${macos_bin_count}" -gt 0 ]; then
+                  if [ "${#bundles[@]}" -gt 1 ]; then
+                    echo "Selecting bundle with plugin binary: ${bundle}" >&2
+                    printf 'Other candidates:%s' "\n" >&2
+                    printf '  %s\n' "${bundles[@]}" >&2
+                  fi
+                  printf '%s' "${bundle}"
+                  return 0
+                fi
+              done
+
+              echo "No plugin binary found in any DustPress.vst3 bundle under ${artefacts_root}" >&2
+              printf 'Checked bundles:%s' "\n" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
+              for bundle in "${bundles[@]}"; do
+                echo "Contents/MacOS for ${bundle}:" >&2
+                find "${bundle}/Contents/MacOS" -maxdepth 1 -print || true
+              done
+              echo "Other executable-looking files under ${artefacts_root}:" >&2
+              find "${artefacts_root}" -maxdepth 8 -type f -perm -111 -print | sed 's/^/  /' >&2 || true
+              return 1
+            fi
+
+            if [ "${#bundles[@]}" -gt 1 ]; then
+              echo "Found multiple DustPress.vst3 bundles, picking the first:" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
+            fi
+
+            printf '%s' "${bundles[0]}"
+          }
+
+          artefacts_root="$(pwd)/native/build/plugin-release"
+          mkdir -p "${artefacts_root}"
+
+          bundle="$(find_vst3_bundle "${artefacts_root}" "macos")"
+          macos_bin_dir="${bundle}/Contents/MacOS"
+          macos_bins="$(find -L "${macos_bin_dir}" -maxdepth 1 \( -type f -o -type l \) -print || true)"
+          macos_bin_count=$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+          if [ "${macos_bin_count}" -eq 0 ]; then
+            echo "No plugin binary found under ${macos_bin_dir}" >&2
+            exit 1
+          fi
+
+          bin="$(printf '%s\n' "${macos_bins}" | sed '/^$/d' | sort | head -n1)"
+          if [ "${macos_bin_count}" -gt 1 ]; then
+            echo "Found multiple plugin binaries under ${macos_bin_dir}; using ${bin}:"
+            printf '%s\n' "${macos_bins}" | sed 's/^/  /'
+          fi
+
+          echo "Lipo info for ${bin}:"
+          lipo -info "${bin}"
+          if ! lipo -info "${bin}" | grep -q "${expected_arch}"; then
+            echo "Expected arch ${expected_arch} not present in ${bin}" >&2
+            exit 1
+          fi
 
       # --- Ad-hoc sign macOS bundles (before packaging) ---
 
