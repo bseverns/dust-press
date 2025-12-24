@@ -31,7 +31,7 @@ DustPressAudioProcessorEditor::DustPressAudioProcessorEditor(DustPressAudioProce
 
   setSize(kTotalWidth, kTotalHeight);
   setResizable(true, true);
-  setResizeLimits(kTotalWidth, kTotalHeight, kTotalWidth * 2, kTotalHeight);
+  setResizeLimits(kTotalWidth, kTotalHeight, kTotalWidth * 2, kTotalHeight * 2);
 }
 
 void DustPressAudioProcessorEditor::paint(juce::Graphics& g) {
@@ -50,10 +50,12 @@ void DustPressAudioProcessorEditor::resized() {
   auto area = getLocalBounds().reduced(kMargin);
   area.removeFromTop(kHeaderHeight);
 
-  layoutRow(area.removeFromTop(kRowHeight), {&drive, &bias, &envToDrive});
-  layoutRow(area.removeFromTop(kRowHeight), {&curve, &chaos});
-  layoutRow(area.removeFromTop(kRowHeight), {&gateComp, &preTilt, &postAir});
-  layoutRow(area.removeFromTop(kRowHeight), {&dirt, &mix, &ceiling, &output});
+  auto rowHeight = area.getHeight() / 4;
+
+  layoutRow(area.removeFromTop(rowHeight), {&drive, &bias, &envToDrive});
+  layoutRow(area.removeFromTop(rowHeight), {&curve, &chaos});
+  layoutRow(area.removeFromTop(rowHeight), {&gateComp, &preTilt, &postAir});
+  layoutRow(area.removeFromTop(rowHeight), {&dirt, &mix, &ceiling, &output});
 }
 
 void DustPressAudioProcessorEditor::addSlider(Control& control, const juce::String& name,
