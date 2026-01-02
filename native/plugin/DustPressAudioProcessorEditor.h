@@ -13,6 +13,14 @@ public:
   void resized() override;
 
 private:
+  static constexpr int kMargin = 14;
+  static constexpr int kRowHeight = 120;
+  static constexpr int kHeaderHeight = 46;
+  static constexpr int kMaxColumns = 4;
+  static constexpr int kColumnWidth = 242;
+  static constexpr int kTotalWidth = 2 * kMargin + kMaxColumns * kColumnWidth;
+  static constexpr int kTotalHeight = kHeaderHeight + 4 * kRowHeight + 2 * kMargin;
+
   using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
   using ComboAttachment = juce::AudioProcessorValueTreeState::ComboBoxAttachment;
 
@@ -34,8 +42,18 @@ private:
                  const juce::StringArray& options);
   void layoutRow(juce::Rectangle<int> area, std::initializer_list<Control*> controls);
 
+  struct Panel : public juce::Component {
+    explicit Panel(DustPressAudioProcessorEditor& editorToTrack) : editor(editorToTrack) {}
+    void paint(juce::Graphics& g) override;
+    void resized() override;
+
+    DustPressAudioProcessorEditor& editor;
+  };
+
   DustPressAudioProcessor& processor;
   juce::AudioProcessorValueTreeState& state;
+  juce::Viewport viewport;
+  Panel panel;
 
   Control drive;
   Control bias;

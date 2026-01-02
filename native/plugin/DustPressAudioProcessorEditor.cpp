@@ -1,17 +1,11 @@
 #include "DustPressAudioProcessorEditor.h"
 
-namespace {
-constexpr auto kMargin = 14;
-constexpr auto kRowHeight = 120;
-constexpr auto kHeaderHeight = 46;
-constexpr auto kMaxColumns = 4;
-constexpr auto kColumnWidth = 242;
-constexpr auto kTotalWidth = 2 * kMargin + kMaxColumns * kColumnWidth;
-constexpr auto kTotalHeight = kHeaderHeight + 4 * kRowHeight + 2 * kMargin;
-}
-
 DustPressAudioProcessorEditor::DustPressAudioProcessorEditor(DustPressAudioProcessor& p)
-    : AudioProcessorEditor(&p), processor(p), state(p.getValueTreeState()) {
+    : AudioProcessorEditor(&p), processor(p), state(p.getValueTreeState()), panel(*this) {
+  viewport.setViewedComponent(&panel, false);
+  viewport.setScrollBarsShown(true, true);
+  addAndMakeVisible(viewport);
+
   addSlider(drive, "Drive (dB)", DustPressParamIDs::driveDb, " dB");
   addSlider(bias, "Bias", DustPressParamIDs::bias, {}, true);
   addSlider(envToDrive, "Env→Drive (dB)", DustPressParamIDs::envToDrive, " dB", true);
@@ -36,26 +30,14 @@ DustPressAudioProcessorEditor::DustPressAudioProcessorEditor(DustPressAudioProce
 
 void DustPressAudioProcessorEditor::paint(juce::Graphics& g) {
   g.fillAll(juce::Colours::black);
-
-  g.setColour(juce::Colours::darkgrey);
-  g.drawRect(getLocalBounds().reduced(6));
-
-  auto titleArea = getLocalBounds().reduced(kMargin).removeFromTop(kHeaderHeight);
-  g.setColour(juce::Colours::darkorange);
-  g.setFont(juce::Font(20.0f, juce::Font::bold));
-  g.drawFittedText(juce::String::fromUTF8(u8"Dust Press — hardware map, host automation-ready"), titleArea, juce::Justification::centred, 1);
 }
 
 void DustPressAudioProcessorEditor::resized() {
-  auto area = getLocalBounds().reduced(kMargin);
-  area.removeFromTop(kHeaderHeight);
+  viewport.setBounds(getLocalBounds());
 
-  auto rowHeight = area.getHeight() / 4;
-
-  layoutRow(area.removeFromTop(rowHeight), {&drive, &bias, &envToDrive});
-  layoutRow(area.removeFromTop(rowHeight), {&curve, &chaos});
-  layoutRow(area.removeFromTop(rowHeight), {&gateComp, &preTilt, &postAir});
-  layoutRow(area.removeFromTop(rowHeight), {&dirt, &mix, &ceiling, &output});
+  const auto panelWidth = std::max(kTotalWidth, viewport.getWidth());
+  const auto panelHeight = std::max(kTotalHeight, viewport.getHeight());
+  panel.setSize(panelWidth, panelHeight);
 }
 
 void DustPressAudioProcessorEditor::addSlider(Control& control, const juce::String& name,
@@ -77,8 +59,8 @@ void DustPressAudioProcessorEditor::addSlider(Control& control, const juce::Stri
   control.label.setColour(juce::Label::textColourId, juce::Colours::white);
 
   control.usesCombo = false;
-  addAndMakeVisible(control.slider);
-  addAndMakeVisible(control.label);
+  panel.addAndMakeVisible(control.slider);
+  panel.addAndMakeVisible(control.label);
 
   control.sliderAttachment = std::make_unique<SliderAttachment>(state, paramId, control.slider);
 }
@@ -96,8 +78,8 @@ void DustPressAudioProcessorEditor::addChoice(Control& control, const juce::Stri
   control.label.setColour(juce::Label::textColourId, juce::Colours::white);
 
   control.usesCombo = true;
-  addAndMakeVisible(control.combo);
-  addAndMakeVisible(control.label);
+  panel.addAndMakeVisible(control.combo);
+  panel.addAndMakeVisible(control.label);
 
   control.comboAttachment = std::make_unique<ComboAttachment>(state, paramId, control.combo);
 }
@@ -111,4 +93,29 @@ void DustPressAudioProcessorEditor::layoutRow(juce::Rectangle<int> area,
     control->label.setBounds(labelArea);
     control->component().setBounds(column);
   }
+}
+
+void DustPressAudioProcessorEditor::Panel::paint(juce::Graphics& g) {
+  g.fillAll(juce::Colours::black);
+
+  g.setColour(juce::Colours::darkgrey);
+  g.drawRect(getLocalBounds().reduced(6));
+
+  auto titleArea = getLocalBounds().reduced(kMargin).removeFromTop(kHeaderHeight);
+  g.setColour(juce::Colours::darkorange);
+  g.setFont(juce::Font(20.0f, juce::Font::bold));
+  g.drawFittedText(juce::String::fromUTF8(u8"Dust Press — hardware map, host automation-ready"), titleArea,
+                   juce::Justification::centred, 1);
+}
+
+void DustPressAudioProcessorEditor::Panel::resized() {
+  auto area = getLocalBounds().reduced(kMargin);
+  area.removeFromTop(kHeaderHeight);
+
+  auto rowHeight = area.getHeight() / 4;
+
+  editor.layoutRow(area.removeFromTop(rowHeight), {&editor.drive, &editor.bias, &editor.envToDrive});
+  editor.layoutRow(area.removeFromTop(rowHeight), {&editor.curve, &editor.chaos});
+  editor.layoutRow(area.removeFromTop(rowHeight), {&editor.gateComp, &editor.preTilt, &editor.postAir});
+  editor.layoutRow(area.removeFromTop(rowHeight), {&editor.dirt, &editor.mix, &editor.ceiling, &editor.output});
 }
