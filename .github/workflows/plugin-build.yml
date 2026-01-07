@@ -72,7 +72,7 @@ jobs:
             .pio/build/teensy41/**
 
   plugin:
-    name: Build VST3 on ${{ matrix.label }}
+    name: Build VST3 export ${{ matrix.export_label }}
     needs: firmware
     runs-on: ${{ matrix.os }}
     strategy:
@@ -80,15 +80,17 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            label: linux
-          - os: macos-12          # Intel
-            label: macos-12-x86_64
+            export_label: linux
+          - os: macos-13          # Intel runner, targeting macOS 12 export
+            export_label: macos-12-x86_64
             expected_arch: x86_64
+            deployment_target: 12.0
           - os: macos-14          # Apple Silicon
-            label: macos-14-arm64
+            export_label: macos-14-arm64
             expected_arch: arm64
+            deployment_target: 14.0
           - os: windows-latest
-            label: windows
+            export_label: windows
 
     steps:
       - name: Checkout repo
@@ -154,8 +156,15 @@ jobs:
       - name: Configure plugin build (macOS)
         if: ${{ runner.os == 'macOS' }}
         run: |
+          deployment_target="${{ matrix.deployment_target }}"
+          deployment_target_flag=""
+          if [ -n "${deployment_target}" ]; then
+            deployment_target_flag="-DCMAKE_OSX_DEPLOYMENT_TARGET=${deployment_target}"
+          fi
+
           cmake --preset native-plugin-release \
-            -DCMAKE_OSX_ARCHITECTURES=${{ matrix.expected_arch }}
+            -DCMAKE_OSX_ARCHITECTURES=${{ matrix.expected_arch }} \
+            ${deployment_target_flag}
 
       - name: Configure plugin build (Windows)
         if: ${{ runner.os == 'Windows' }}
@@ -179,13 +188,13 @@ jobs:
             --target DustPressPlugin DustPressPlugin_VST3
 
       - name: Verify macOS VST3 architecture
-        if: ${{ startsWith(matrix.label, 'macos-') }}
+        if: ${{ startsWith(matrix.export_label, 'macos-') }}
         shell: bash
         run: |
           set -euo pipefail
 
           expected_arch="${{ matrix.expected_arch }}"
-          label="${{ matrix.label }}"
+          label="${{ matrix.export_label }}"
           if [ -z "${expected_arch}" ]; then
             echo "Matrix expected_arch missing for ${label}" >&2
             exit 1
@@ -273,7 +282,7 @@ jobs:
       # --- Ad-hoc sign macOS bundles (before packaging) ---
 
       - name: Ad-hoc sign macOS VST3 bundle
-        if: ${{ startsWith(matrix.label, 'macos-') }}
+        if: ${{ startsWith(matrix.export_label, 'macos-') }}
         shell: bash
         run: |
           set -euo pipefail
@@ -511,7 +520,7 @@ jobs:
             file "${bin}" || true
           fi
 
-          tarball="DustPressPlugin_${{ matrix.label }}_VST3.tar.gz"
+          tarball="DustPressPlugin_${{ matrix.export_label }}_VST3.tar.gz"
           echo "Creating tarball: ${tarball}"
           tar -czf "${tarball}" -C "${vst3_dir}" "DustPress.vst3"
           echo "Tarball contents:"
@@ -535,7 +544,7 @@ jobs:
 
           printf '%s\n' "$GPG_PRIVATE_KEY" | gpg --batch --import
 
-          tarball="DustPressPlugin_${{ matrix.label }}_VST3.tar.gz"
+          tarball="DustPressPlugin_${{ matrix.export_label }}_VST3.tar.gz"
           if [ ! -f "${tarball}" ]; then
             echo "Tarball ${tarball} not found, cannot sign."
             exit 1
@@ -551,8 +560,8 @@ jobs:
       - name: Upload VST3 artefacts
         uses: actions/upload-artifact@v4
         with:
-          name: DustPressPlugin-${{ matrix.label }}-VST3
+          name: DustPressPlugin-${{ matrix.export_label }}-VST3
           path: |
-            DustPressPlugin_${{ matrix.label }}_VST3.tar.gz
-            DustPressPlugin_${{ matrix.label }}_VST3.tar.gz.sig
+            DustPressPlugin_${{ matrix.export_label }}_VST3.tar.gz
+            DustPressPlugin_${{ matrix.export_label }}_VST3.tar.gz.sig
           if-no-files-found: ignore
