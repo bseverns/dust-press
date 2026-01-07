@@ -341,6 +341,92 @@ jobs:
           echo "Verifying signature:"
           codesign --verify --deep --strict --verbose=2 "${bundle}"
 
+      - name: Validate Linux VST3 bundle contents
+        if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          find_vst3_bundle() {
+            local artefacts_root="$1"
+            local require_binary="$2"
+            local bundles=()
+
+            while IFS= read -r bundle; do
+              bundles+=("${bundle}")
+            done < <(find "${artefacts_root}" -type d -name "DustPress.vst3" | sort)
+
+            if [ "${#bundles[@]}" -eq 0 ]; then
+              echo "No DustPress.vst3 bundle under ${artefacts_root}" >&2
+              find "${artefacts_root}" -maxdepth 4 -print || true
+              return 1
+            fi
+
+            if [ "${#bundles[@]}" -gt 1 ]; then
+              echo "Found multiple DustPress.vst3 bundles, picking the first:" >&2
+              printf '  %s\n' "${bundles[@]}" >&2
+            fi
+
+            printf '%s' "${bundles[0]}"
+          }
+
+          artefacts_root="$(pwd)/native/build/plugin-release"
+          bundle="$(find_vst3_bundle "${artefacts_root}" "linux")"
+
+          linux_bin_dir="${bundle}/Contents/x86_64-linux"
+          linux_bins="$(find -L "${linux_bin_dir}" -maxdepth 1 \( -type f -o -type l \) -print || true)"
+          linux_bin_count=$(printf '%s\n' "${linux_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+          if [ "${linux_bin_count}" -eq 0 ]; then
+            echo "No plugin binary found under ${linux_bin_dir}" >&2
+            echo "Contents for ${bundle}:" >&2
+            find "${bundle}" -maxdepth 4 -print >&2 || true
+            exit 1
+          fi
+
+          echo "Linux VST3 binary candidates:"
+          printf '%s\n' "${linux_bins}" | sed '/^$/d' | sed 's/^/  /'
+
+      - name: Validate Windows VST3 bundle contents
+        if: ${{ runner.os == 'Windows' }}
+        shell: pwsh
+        run: |
+          function Find-Vst3Bundle {
+            param([string]$ArtefactsRoot)
+
+            $bundles = Get-ChildItem -Path $ArtefactsRoot -Recurse -Directory -Filter "DustPress.vst3" |
+              Sort-Object -Property FullName
+
+            if (-not $bundles) {
+              Write-Error "No DustPress.vst3 bundle under $ArtefactsRoot"
+              Get-ChildItem -Path $ArtefactsRoot -Recurse -Depth 4 | ForEach-Object { $_.FullName } | Write-Host
+              exit 1
+            }
+
+            if ($bundles.Count -gt 1) {
+              Write-Warning "Found multiple DustPress.vst3 bundles, picking the first:"
+              $bundles | ForEach-Object { $_.FullName } | Write-Host
+            }
+
+            return $bundles[0].FullName
+          }
+
+          $artefactsRoot = (Join-Path (Get-Location) "native/build/plugin-release")
+          $bundle = Find-Vst3Bundle -ArtefactsRoot $artefactsRoot
+
+          $windowsBinDir = Join-Path $bundle "Contents/x86_64-win"
+          $windowsBins = Get-ChildItem -Path $windowsBinDir -File -ErrorAction SilentlyContinue
+
+          if (-not $windowsBins) {
+            Write-Error "No plugin binary found under $windowsBinDir"
+            Write-Host "Contents for ${bundle}:"
+            Get-ChildItem -Path $bundle -Recurse -Depth 4 | ForEach-Object { $_.FullName } | Write-Host
+            exit 1
+          }
+
+          Write-Host "Windows VST3 binary candidates:"
+          $windowsBins | ForEach-Object { "  $($_.FullName)" } | Write-Host
+
       # --- Package artefacts into a single tarball per OS/arch ---
 
       - name: Package artefacts
