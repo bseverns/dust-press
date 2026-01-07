@@ -5,6 +5,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# macOS builds can default to multi-arch (x86_64 + arm64) when using certain
+# generators, which is a fast path to "my M1 build won’t link" pain. If you're
+# on Apple Silicon and didn't explicitly ask for a fat binary, lock the build
+# to arm64 so the toolchain stays on the rails.
+if(APPLE AND NOT CMAKE_OSX_ARCHITECTURES)
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
+    set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "macOS architectures to build" FORCE)
+  endif()
+endif()
+
 add_library(dustpress_native STATIC
   ../src/AirEQ.cpp
   ../src/CurveBank.cpp
@@ -60,4 +70,3 @@ endif()
 if(DUSTPRESS_BUILD_PLUGIN)
   add_subdirectory(plugin)
 endif()
-

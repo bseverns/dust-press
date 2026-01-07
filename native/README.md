@@ -25,6 +25,33 @@ cmake --build native/build
 ```
 That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 
+### Apple Silicon (arm64) sanity check
+If you’re on an M1/M2/M3 and the build implodes, it’s usually because the
+generator decided to do a **fat (universal) build** without being asked, so
+you end up mixing arm64 objects with x86_64 libs (aka link-chaos). The native
+CMake now defaults to **arm64-only** on Apple Silicon unless you override it,
+but here’s the explicit, “no surprises” recipe:
+
+```bash
+# Make sure Xcode CLT is present
+xcode-select --install
+
+# Force a single-arch arm64 build
+cmake -S native -B native/build -DCMAKE_OSX_ARCHITECTURES=arm64
+cmake --build native/build
+```
+
+If you *do* want a universal binary (maybe you’re shipping to Intel Macs), flip
+the switch on purpose so you know you asked for it:
+
+```bash
+cmake -S native -B native/build -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+cmake --build native/build
+```
+
+Translation: choose your architecture, don’t let the generator choose it for
+you. Fewer surprises, fewer “why does this lib say wrong architecture?” loops.
+
 ### JUCE/VST3 plugin build (single source of truth)
 The legacy `native/juce` target is gone—one plugin path remains and it lives
 under `native/plugin`. Same presets as Horizon, same DSP core, just a DAW skin
