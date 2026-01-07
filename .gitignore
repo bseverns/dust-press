@@ -9,3 +9,5 @@ native/.juce-src/
 .DS_Store
 examples/.DS_Store
 native/.DS_Store
+/native/.juce-kit
+/native/build
