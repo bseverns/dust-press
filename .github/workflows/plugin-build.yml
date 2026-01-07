@@ -81,11 +81,11 @@ jobs:
         include:
           - os: ubuntu-latest
             label: linux
-          - os: macos-15-intel    # Intel
-            label: macos-x86_64
+          - os: macos-12          # Intel
+            label: macos-12-x86_64
             expected_arch: x86_64
-          - os: macos-latest      # Apple Silicon
-            label: macos-arm64
+          - os: macos-14          # Apple Silicon
+            label: macos-14-arm64
             expected_arch: arm64
           - os: windows-latest
             label: windows
