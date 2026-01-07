@@ -419,7 +419,7 @@ jobs:
 
           if (-not $windowsBins) {
             Write-Error "No plugin binary found under $windowsBinDir"
-            Write-Host "Contents for $bundle:"
+            Write-Host "Contents for ${bundle}:"
             Get-ChildItem -Path $bundle -Recurse -Depth 4 | ForEach-Object { $_.FullName } | Write-Host
             exit 1
           }
