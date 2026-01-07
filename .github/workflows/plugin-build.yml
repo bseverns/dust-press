@@ -406,6 +406,13 @@ jobs:
 
           bundle="$(find_vst3_bundle "${artefacts_root}" "${RUNNER_OS}")"
           vst3_dir="$(dirname "${bundle}")"
+          contents_dir="${bundle}/Contents"
+
+          if [ ! -d "${contents_dir}" ]; then
+            echo "Expected Contents directory missing at ${contents_dir}" >&2
+            find "${bundle}" -maxdepth 3 -print || true
+            exit 1
+          fi
 
           echo "Looking for VST3 output in: ${vst3_dir}"
           ls -R "${vst3_dir}"
@@ -423,6 +430,24 @@ jobs:
 
             echo "Mach-O info for ${bin}:"
             file "${bin}" || true
+          elif [ "${RUNNER_OS}" = "Linux" ]; then
+            linux_bins="$(find "${contents_dir}" -path "*/x86_64-linux/*" -type f -print || true)"
+            linux_bin_count=$(printf '%s\n' "${linux_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+            if [ "${linux_bin_count}" -eq 0 ]; then
+              echo "No Linux plugin binary found under ${contents_dir} (expected */x86_64-linux/*)" >&2
+              find "${contents_dir}" -maxdepth 3 -print || true
+              exit 1
+            fi
+          elif [ "${RUNNER_OS}" = "Windows" ]; then
+            win_bins="$(find "${contents_dir}" -path "*-win/*" -type f -print || true)"
+            win_bin_count=$(printf '%s\n' "${win_bins}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+            if [ "${win_bin_count}" -eq 0 ]; then
+              echo "No Windows plugin binary found under ${contents_dir} (expected */*-win/*)" >&2
+              find "${contents_dir}" -maxdepth 3 -print || true
+              exit 1
+            fi
           fi
 
           tarball="DustPressPlugin_${{ matrix.label }}_VST3.tar.gz"
