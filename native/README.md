@@ -29,8 +29,11 @@ That drops `dustpress_cli` and `libdustpress_native.a` into `native/build/`.
 If you’re on an M1/M2/M3 and the build implodes, it’s usually because the
 generator decided to do a **fat (universal) build** without being asked, so
 you end up mixing arm64 objects with x86_64 libs (aka link-chaos). The native
-CMake now defaults to **arm64-only** on Apple Silicon unless you override it,
-but here’s the explicit, “no surprises” recipe:
+CMake now defaults to **arm64-only** on Apple Silicon unless you override it.
+Still, if you’re launching CMake from a Rosetta shell, do yourself a favor and
+either jump into a native arm64 shell or force the arch explicitly so the
+toolchain doesn’t drift. Punk rule: pick your architecture, don’t let it pick
+you.
 
 ```bash
 # Make sure Xcode CLT is present

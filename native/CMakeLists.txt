@@ -10,9 +10,14 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # on Apple Silicon and didn't explicitly ask for a fat binary, lock the build
 # to arm64 so the toolchain stays on the rails.
 if(APPLE AND NOT CMAKE_OSX_ARCHITECTURES)
-  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
+  set(_dustpress_host_arch "${CMAKE_HOST_SYSTEM_PROCESSOR}")
+  if(NOT _dustpress_host_arch AND CMAKE_OSX_ARCHITECTURES)
+    set(_dustpress_host_arch "${CMAKE_OSX_ARCHITECTURES}")
+  endif()
+  if(_dustpress_host_arch MATCHES "^(arm64|arm64e)$")
     set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "macOS architectures to build" FORCE)
   endif()
+  unset(_dustpress_host_arch)
 endif()
 
 add_library(dustpress_native STATIC
