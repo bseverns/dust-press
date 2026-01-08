@@ -19,7 +19,16 @@ directory. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE
      -DCMAKE_PREFIX_PATH=/path/to/JUCE
    cmake --build native/build --target DustPressPlugin
    ```
-3. CMake drops a VST3 bundle under `native/build/plugin-release/DustPressPlugin_artefacts/` (or your custom build dir). Point your DAW at the VST3 output folder or copy it into your system plug-ins directory.
+3. CMake drops a VST3 bundle under `native/build/plugin-release/DustPressPlugin_artefacts/` (or your custom build dir). On macOS the bundle lives one level deeper at `DustPressPlugin_artefacts/Release/VST3/DustPress.vst3` (or `Debug/...` if you built debug). Point your DAW at the VST3 output folder or copy it into your system plug-ins directory.
+
+   If that folder is empty on Apple Silicon, it usually means CMake is running under Rosetta and picked the wrong architecture. Reconfigure with a clean build dir and force arm64:
+   ```bash
+   cmake -S native -B native/build \
+     -DDUSTPRESS_BUILD_PLUGIN=ON \
+     -DCMAKE_OSX_ARCHITECTURES=arm64
+   cmake --build native/build --target DustPressPlugin --config Release
+   ```
+   That keeps the toolchain on the same architecture as your box, which is the difference between "I have a .vst3" and "why is this artefacts folder empty?"
 
 > CI note: `.github/workflows/plugin-build.yml` exercises the preset on macOS, Windows, and Linux, then tars up the artefacts. Signing/notarization hooks are stubbed so you can drop in your own cert flow.
 
