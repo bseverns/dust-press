@@ -50,13 +50,17 @@ cmake -S "${JUCE_SRC_DIR}" -B "${JUCE_BUILD_DIR}" \
   -DCMAKE_INSTALL_PREFIX="${JUCE_INSTALL_DIR}" \
   -DJUCE_BUILD_EXTRAS=ON
 
-echo "[dust-press] Building juceaide + installing CMake package → ${JUCE_INSTALL_DIR} (config=${JUCE_BUILD_CONFIG})" >&2
+echo "[dust-press] Building JUCE helper targets + installing CMake package → ${JUCE_INSTALL_DIR} (config=${JUCE_BUILD_CONFIG})" >&2
 
 # JUCE's juceaide target *usually* sits in the top-level build graph, but on
 # some generators (notably Makefiles on macOS), the target can be tucked under
 # tools/ or extras/Build instead. Try a short list of likely build dirs before
 # we give up so the script works on more default setups.
-juceaide_built=0
+juce_helpers_built=0
+juce_helper_targets=(
+  juceaide
+  juce_lv2_helper
+)
 juceaide_build_dirs=(
   "${JUCE_BUILD_DIR}"
   "${JUCE_TOOLS_BUILD_DIR}"
@@ -65,17 +69,21 @@ juceaide_build_dirs=(
 
 for build_dir in "${juceaide_build_dirs[@]}"; do
   if [ -d "${build_dir}" ]; then
-    echo "[dust-press] Trying juceaide build from ${build_dir}" >&2
-    if cmake --build "${build_dir}" --target juceaide --config "${JUCE_BUILD_CONFIG}"; then
-      juceaide_built=1
-      break
-    fi
+    for target in "${juce_helper_targets[@]}"; do
+      echo "[dust-press] Trying ${target} build from ${build_dir}" >&2
+      if ! cmake --build "${build_dir}" --target "${target}" --config "${JUCE_BUILD_CONFIG}"; then
+        echo "[dust-press] ${target} not available in ${build_dir}" >&2
+        continue 2
+      fi
+    done
+    juce_helpers_built=1
+    break
   fi
 done
 
-if [ "${juceaide_built}" -ne 1 ]; then
+if [ "${juce_helpers_built}" -ne 1 ]; then
   cat <<EOF >&2
-[dust-press] Uh-oh: couldn't build the juceaide target.
+[dust-press] Uh-oh: couldn't build the JUCE helper targets (juceaide + juce_lv2_helper).
   We tried these build dirs:
     - ${JUCE_BUILD_DIR}
     - ${JUCE_TOOLS_BUILD_DIR}
