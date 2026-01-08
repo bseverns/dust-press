@@ -56,11 +56,8 @@ echo "[dust-press] Building JUCE helper targets + installing CMake package → $
 # some generators (notably Makefiles on macOS), the target can be tucked under
 # tools/ or extras/Build instead. Try a short list of likely build dirs before
 # we give up so the script works on more default setups.
-juce_helpers_built=0
-juce_helper_targets=(
-  juceaide
-  juce_lv2_helper
-)
+juceaide_built=0
+juce_lv2_helper_built=0
 juceaide_build_dirs=(
   "${JUCE_BUILD_DIR}"
   "${JUCE_TOOLS_BUILD_DIR}"
@@ -69,21 +66,19 @@ juceaide_build_dirs=(
 
 for build_dir in "${juceaide_build_dirs[@]}"; do
   if [ -d "${build_dir}" ]; then
-    for target in "${juce_helper_targets[@]}"; do
-      echo "[dust-press] Trying ${target} build from ${build_dir}" >&2
-      if ! cmake --build "${build_dir}" --target "${target}" --config "${JUCE_BUILD_CONFIG}"; then
-        echo "[dust-press] ${target} not available in ${build_dir}" >&2
-        continue 2
-      fi
-    done
-    juce_helpers_built=1
+    echo "[dust-press] Trying juceaide build from ${build_dir}" >&2
+    if ! cmake --build "${build_dir}" --target juceaide --config "${JUCE_BUILD_CONFIG}"; then
+      echo "[dust-press] juceaide not available in ${build_dir}" >&2
+      continue
+    fi
+    juceaide_built=1
     break
   fi
 done
 
-if [ "${juce_helpers_built}" -ne 1 ]; then
+if [ "${juceaide_built}" -ne 1 ]; then
   cat <<EOF >&2
-[dust-press] Uh-oh: couldn't build the JUCE helper targets (juceaide + juce_lv2_helper).
+[dust-press] Uh-oh: couldn't build the JUCE helper target (juceaide).
   We tried these build dirs:
     - ${JUCE_BUILD_DIR}
     - ${JUCE_TOOLS_BUILD_DIR}
@@ -94,6 +89,25 @@ if [ "${juce_helpers_built}" -ne 1 ]; then
   and re-run so the configure step can generate the extras/tools targets.
 EOF
   exit 1
+fi
+
+for build_dir in "${juceaide_build_dirs[@]}"; do
+  if [ -d "${build_dir}" ]; then
+    echo "[dust-press] Trying juce_lv2_helper build from ${build_dir}" >&2
+    if cmake --build "${build_dir}" --target juce_lv2_helper --config "${JUCE_BUILD_CONFIG}"; then
+      juce_lv2_helper_built=1
+      break
+    fi
+    echo "[dust-press] juce_lv2_helper not available in ${build_dir}" >&2
+  fi
+done
+
+if [ "${juce_lv2_helper_built}" -ne 1 ]; then
+  cat <<EOF >&2
+[dust-press] Note: juce_lv2_helper target not found. Continuing with juceaide only.
+  If you plan to build LV2s with this JUCE tree, reconfigure JUCE with
+  -DJUCE_BUILD_EXTRAS=ON and ensure the helper target is generated.
+EOF
 fi
 
 cmake --install "${JUCE_BUILD_DIR}" --config "${JUCE_BUILD_CONFIG}"
