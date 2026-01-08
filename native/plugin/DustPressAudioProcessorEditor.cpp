@@ -103,7 +103,7 @@ void DustPressAudioProcessorEditor::Panel::paint(juce::Graphics& g) {
 
   auto titleArea = getLocalBounds().reduced(kMargin).removeFromTop(kHeaderHeight);
   g.setColour(juce::Colours::darkorange);
-  g.setFont(juce::Font(20.0f, juce::Font::bold));
+  g.setFont(juce::Font(juce::FontOptions(20.0f, juce::Font::bold)));
   g.drawFittedText(juce::String::fromUTF8(u8"Dust Press — hardware map, host automation-ready"), titleArea,
                    juce::Justification::centred, 1);
 }
