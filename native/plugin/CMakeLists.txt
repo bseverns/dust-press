@@ -320,6 +320,10 @@ target_compile_definitions(${DUSTPRESS_PLUGIN_TARGET}
     JUCE_USE_CURL=0
 )
 
+if(TARGET ${DUSTPRESS_PLUGIN_TARGET}_VST3)
+  add_dependencies(${DUSTPRESS_PLUGIN_TARGET} ${DUSTPRESS_PLUGIN_TARGET}_VST3)
+endif()
+
 if(DUSTPRESS_FETCH_JUCE AND DUSTPRESS_INSTALL_FETCHED_JUCE)
   add_dependencies(${DUSTPRESS_PLUGIN_TARGET} dustpress_install_fetched_juce)
 endif()
