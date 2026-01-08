@@ -44,6 +44,13 @@ cmake -S native -B native/build -DCMAKE_OSX_ARCHITECTURES=arm64
 cmake --build native/build
 ```
 
+If you only run the commands above, you are **not** building the VST3. You're
+just compiling the native CLI/lib targets (which is still rad, but not a DAW
+plugin). To actually spit out `DustPress.vst3`, you **must** enable the plugin
+target (`DUSTPRESS_BUILD_PLUGIN=ON`) or use the plugin preset. Architecture
+flags do *not* implicitly flip on the plugin. You still have to ask for it like
+you mean it.
+
 If you *do* want a universal binary (maybe you’re shipping to Intel Macs), flip
 the switch on purpose so you know you asked for it:
 
@@ -83,6 +90,23 @@ This repo now speaks DAW. Fast path: let the preset fetch JUCE + the Steinberg V
 cmake --preset native-plugin-release
 cmake --build --preset native-plugin-release --config Release
 ```
+
+If you’re running a plain `cmake --build native/build` and wondering why the
+`DustPressPlugin_artefacts` folder is empty, that build never asked for the
+plugin target. Call it explicitly:
+
+```bash
+cmake -S native -B native/build \
+  -DDUSTPRESS_BUILD_PLUGIN=ON \
+  -DCMAKE_OSX_ARCHITECTURES=arm64
+cmake --build native/build --target DustPressPlugin
+```
+
+Once it lands, the VST3 bundle should show up at:
+`native/build/plugin-release/DustPressPlugin_artefacts/Release/VST3/DustPress.vst3`
+(or `Debug/...` if you built debug). If that path is still empty, re-run CMake
+from a clean build folder so the architecture cache can’t cling to x86_64 like
+it’s 2009.
 
 The plugin target depends on a helper target that **installs the fetched JUCE build into `native/.juce-kit`** (same as running `tools/bootstrap_juce.sh`, but without the manual dance). If you want to skip the install—maybe you're just iterating on DSP and don't care about a reusable kit—pass `-DDUSTPRESS_INSTALL_FETCHED_JUCE=OFF` to your configure step.
 
