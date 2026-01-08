@@ -3,10 +3,10 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-JUCE_TAG="8.0.11"
-JUCE_SRC_DIR="${REPO_ROOT}/native/.juce-src"
-JUCE_BUILD_DIR="${REPO_ROOT}/native/.juce-build"
-JUCE_INSTALL_DIR="${REPO_ROOT}/native/.juce-kit"
+JUCE_TAG="${JUCE_TAG:-8.0.11}"
+JUCE_SRC_DIR="${JUCE_SRC_DIR:-${REPO_ROOT}/native/.juce-src}"
+JUCE_BUILD_DIR="${JUCE_BUILD_DIR:-${REPO_ROOT}/native/.juce-build}"
+JUCE_INSTALL_DIR="${JUCE_INSTALL_DIR:-${REPO_ROOT}/native/.juce-kit}"
 JUCE_TOOLS_BUILD_DIR="${JUCE_BUILD_DIR}/tools"
 
 require_bin() {
@@ -51,7 +51,43 @@ cmake -S "${JUCE_SRC_DIR}" -B "${JUCE_BUILD_DIR}" \
   -DJUCE_BUILD_EXTRAS=ON
 
 echo "[dust-press] Building juceaide + installing CMake package → ${JUCE_INSTALL_DIR} (config=${JUCE_BUILD_CONFIG})" >&2
-cmake --build "${JUCE_BUILD_DIR}" --target juceaide --config "${JUCE_BUILD_CONFIG}"
+
+# JUCE's juceaide target *usually* sits in the top-level build graph, but on
+# some generators (notably Makefiles on macOS), the target can be tucked under
+# tools/ or extras/Build instead. Try a short list of likely build dirs before
+# we give up so the script works on more default setups.
+juceaide_built=0
+juceaide_build_dirs=(
+  "${JUCE_BUILD_DIR}"
+  "${JUCE_TOOLS_BUILD_DIR}"
+  "${JUCE_BUILD_DIR}/extras/Build"
+)
+
+for build_dir in "${juceaide_build_dirs[@]}"; do
+  if [ -d "${build_dir}" ]; then
+    echo "[dust-press] Trying juceaide build from ${build_dir}" >&2
+    if cmake --build "${build_dir}" --target juceaide --config "${JUCE_BUILD_CONFIG}"; then
+      juceaide_built=1
+      break
+    fi
+  fi
+done
+
+if [ "${juceaide_built}" -ne 1 ]; then
+  cat <<EOF >&2
+[dust-press] Uh-oh: couldn't build the juceaide target.
+  We tried these build dirs:
+    - ${JUCE_BUILD_DIR}
+    - ${JUCE_TOOLS_BUILD_DIR}
+    - ${JUCE_BUILD_DIR}/extras/Build
+
+  If your JUCE build lives somewhere else (for example: native/Build),
+  export JUCE_BUILD_DIR before running this script, or wipe ${JUCE_BUILD_DIR}
+  and re-run so the configure step can generate the extras/tools targets.
+EOF
+  exit 1
+fi
+
 cmake --install "${JUCE_BUILD_DIR}" --config "${JUCE_BUILD_CONFIG}"
 
 cat <<EOF >&2
