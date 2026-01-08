@@ -10,11 +10,16 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # on Apple Silicon and didn't explicitly ask for a fat binary, lock the build
 # to arm64 so the toolchain stays on the rails.
 if(APPLE AND NOT CMAKE_OSX_ARCHITECTURES)
+  # Prefer the host CPU when Rosetta is involved: the system processor can
+  # report x86_64 even when the machine is arm64.
   set(_dustpress_host_arch "${CMAKE_HOST_SYSTEM_PROCESSOR}")
+  if(NOT _dustpress_host_arch)
+    set(_dustpress_host_arch "${CMAKE_SYSTEM_PROCESSOR}")
+  endif()
   if(NOT _dustpress_host_arch AND CMAKE_OSX_ARCHITECTURES)
     set(_dustpress_host_arch "${CMAKE_OSX_ARCHITECTURES}")
   endif()
-  if(_dustpress_host_arch MATCHES "^(arm64|arm64e)$")
+  if(_dustpress_host_arch MATCHES "^(arm64|arm64e|aarch64)$")
     set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "macOS architectures to build" FORCE)
   endif()
   unset(_dustpress_host_arch)
