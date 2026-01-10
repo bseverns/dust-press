@@ -19,7 +19,7 @@ directory. It mirrors the control ranges from [`docs/USAGE.md`](../../docs/USAGE
      -DCMAKE_PREFIX_PATH=/path/to/JUCE
    cmake --build native/build --target DustPressPlugin
    ```
-3. CMake drops a VST3 bundle under `native/build/plugin-release/DustPressPlugin_artefacts/` (or your custom build dir). On macOS the bundle lives one level deeper at `DustPressPlugin_artefacts/Release/VST3/DustPress.vst3` (or `Debug/...` if you built debug). Point your DAW at the VST3 output folder or copy it into your system plug-ins directory.
+3. CMake drops a VST3 bundle under `native/build/plugin-release/DustPressPlugin_artefacts/` (or your custom build dir). If you used the manual `-B native/build` path, look under `native/build/plugin/DustPressPlugin_artefacts/` instead. On macOS the bundle lives one level deeper at `DustPressPlugin_artefacts/Release/VST3/DustPress.vst3` (or `Debug/...` if you built debug) when using a multi-config generator; single-config generators (Makefiles/Ninja) put it directly at `DustPressPlugin_artefacts/VST3/DustPress.vst3`. Point your DAW at the VST3 output folder or copy it into your system plug-ins directory.
 
    If that folder is empty on Apple Silicon, it usually means CMake is running under Rosetta and picked the wrong architecture. Reconfigure with a clean build dir and force arm64:
    ```bash

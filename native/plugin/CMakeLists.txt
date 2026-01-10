@@ -150,16 +150,18 @@ endif()
     endif()
 
     # JUCE’s build glues juceaide into the configure step rather than exposing a
-    # durable build target. Drive the install directly; juceaide will have been
-    # produced while configuring the extras subdir above.
+    # durable build target. Build it explicitly before install so the install
+    # step can find the binary, especially on Makefiles builds.
     set(_dustpress_juceaide_bin
       "${juce_BINARY_DIR}/tools/extras/Build/juceaide/juceaide_artefacts/Custom/juceaide"
     )
 
-    # JUCE lives inside the top-level Ninja graph; its build.ninja does not sit
-    # under juce_BINARY_DIR. Drive the build/install from the main binary dir
-    # so CMake can find the generator files it wrote for the fetch content.
+    # Build juceaide in JUCE's extras build tree; that target doesn't always
+    # appear in the top-level Makefiles generator.
     add_custom_target(dustpress_install_fetched_juce
+      COMMAND ${CMAKE_COMMAND} --build "${juce_BINARY_DIR}/extras/Build"
+              --target juceaide
+              --config "${_dustpress_juce_install_config}"
       COMMAND ${CMAKE_COMMAND} --install "${CMAKE_BINARY_DIR}"
               --config "${_dustpress_juce_install_config}"
               --prefix "${DUSTPRESS_LOCAL_JUCE_PACKAGE_DIR}"

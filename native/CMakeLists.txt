@@ -21,6 +21,18 @@ if(APPLE AND NOT CMAKE_OSX_ARCHITECTURES)
   endif()
   if(_dustpress_host_arch MATCHES "^(arm64|arm64e|aarch64)$")
     set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "macOS architectures to build" FORCE)
+  else()
+    # Rosetta can report x86_64 even on Apple Silicon; confirm via sysctl.
+    execute_process(
+      COMMAND sysctl -n hw.optional.arm64
+      OUTPUT_VARIABLE _dustpress_hw_arm64
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+    if(_dustpress_hw_arm64 STREQUAL "1")
+      set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "macOS architectures to build" FORCE)
+    endif()
+    unset(_dustpress_hw_arm64)
   endif()
   unset(_dustpress_host_arch)
 endif()
