@@ -3,15 +3,9 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
-docs/media/.DS_Store
 
 native/.juce-src/
 .DS_Store
-examples/.DS_Store
-native/.DS_Store
 /native/.juce-kit
 /native/build
-native/.DS_Store
-native/.DS_Store
-native/.DS_Store
 /native/.juce-build
